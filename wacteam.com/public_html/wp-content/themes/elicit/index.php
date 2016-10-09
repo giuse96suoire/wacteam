@@ -48,8 +48,8 @@ get_header(); ?>
 				<?php endif; ?><?php if (!is_page()): ?><span class="thecategory"><i class="fa fa-folder-open"></i><?php printf(__(' %s', 'elicit'), get_the_category_list(', ')); ?></span>
 				
 				<?php endif; ?><?php if (!is_page() && !is_single()): ?><span class="thecomment"><i class="fa fa-comments"></i>  <span class="fb-comments-count" data-href="<?php the_permalink() ?>"></span></span>
-			
-					
+				
+				
 
 				
 

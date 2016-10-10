@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.dialog.DialogAlert;
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPassword;
     private ProgressDialog mDialog;
     private ProgressBar mProgressBar;
+    private RelativeLayout mLoginMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
             mGoToActivity(MainActivity.class);
         }
         setContentView(R.layout.activity_login);
-
+        mLoginMain = (RelativeLayout) findViewById(R.id.login_main);
         mSignUp = (Button) findViewById(R.id.btn_signUp);
         mSignIn = (Button) findViewById(R.id.btn_signIn);
         mEmail = (EditText) findViewById(R.id.et_email);
@@ -78,40 +80,39 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void mDoSignUp() {
-//        mShowProgessDialog();
+        mShowProgessDialog();
         mAuth.createUserWithEmailAndPassword(mEmail.getText().toString(), mPassword.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-//                        Toast.makeText(getApplicationContext(), "Sign up complete", Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(this, new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(getApplicationContext(), "Sign up failed!", Toast.LENGTH_LONG).show();
                         String error_code = ((FirebaseAuthException) e).getErrorCode();
                         DialogAlert.mShow(LoginActivity.this, mGetErrorMessage(error_code));
-//                        mDismissProgessDialog();
+                        mDismissProgessDialog();
                     }
                 })
                 .addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-//                        Toast.makeText(LoginActivity.this, "Sign up successed!", Toast.LENGTH_LONG).show();
-//                        mDismissProgessDialog();
+                        Toast.makeText(LoginActivity.this, "Sign up successed!", Toast.LENGTH_LONG).show();
                         mGoToActivity(MainActivity.class);
                     }
                 });
     }
 
     private void mDoSignIn() {
-//        mShowProgessDialog();
+
+        mShowProgessDialog();
+
         mAuth.signInWithEmailAndPassword(mEmail.getText().toString(), mPassword.getText().toString())
+
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Toast.makeText(getApplicationContext(), "Sign in complete", Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -119,9 +120,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(getApplicationContext(), "Sign in failed!", Toast.LENGTH_LONG).show();
                         String error_code = ((FirebaseAuthException) e).getErrorCode();
-
+                        mDismissProgessDialog();
                         DialogAlert.mShow(LoginActivity.this, mGetErrorMessage(error_code));
-//                        mDismissProgessDialog();
 
                     }
                 })
@@ -129,7 +129,6 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(getApplicationContext(), "Sign in successed!", Toast.LENGTH_LONG).show();
-//                        mDismissProgessDialog();
                         mGoToActivity(MainActivity.class);
 
                     }
@@ -179,11 +178,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void mShowProgessDialog() {
-        mProgressBar.setVisibility(View.GONE);
+        if (mProgressBar == null)
+            mProgressBar = (ProgressBar) findViewById(R.id.pb_wait);
+        mProgressBar.setVisibility(View.VISIBLE);
+        mLoginMain.setVisibility(View.INVISIBLE);
     }
 
     private void mDismissProgessDialog() {
-        mProgressBar.setVisibility(View.INVISIBLE);
+        if (mProgressBar != null)
+            mProgressBar.setVisibility(View.INVISIBLE);
+        mLoginMain.setVisibility(View.VISIBLE);
 
     }
 

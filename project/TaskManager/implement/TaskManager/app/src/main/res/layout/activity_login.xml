@@ -24,17 +24,16 @@
             android:layout_gravity="center"
             android:indeterminate="true"
             android:indeterminateDrawable="@drawable/progress_bar_circular"
-            android:visibility="invisible"
-            />
+            android:visibility="invisible" />
 
     </FrameLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/login_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
-        android:id="@+id/login_main">
+        android:layout_centerVertical="true">
 
         <EditText
             android:id="@+id/et_email"
@@ -128,6 +127,28 @@
             android:textColor="#ffffff"
             android:textSize="18dp"
             android:textStyle="italic" />
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/tv_alertInternet"
+            android:layout_below="@+id/tv_forgotPass"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="44dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:gravity="bottom"
+            android:text="Online mode (touch to swicth)"
+            android:id="@+id/tv_currentMode"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 
 </RelativeLayout>

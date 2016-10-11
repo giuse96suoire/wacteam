@@ -14,28 +14,53 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.dev.wacteam.taskmanager.manager.EnumDefine;
+import com.dev.wacteam.taskmanager.manager.SettingsManager;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+    private TextView mTvUserFullName, mTvUserEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        init();
+        if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE)) {
+            mSwitchToOnlineMode();
+            System.out.println("IS ONLINE MODE");
+        } else {
+            System.out.println("IS OFFLINE MODE");
+        }
+
+
+    }
+
+    private void mSwitchToOnlineMode() {
         mAuth = FirebaseAuth.getInstance();
         mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (mAuth.getCurrentUser() == null) {
+                    mUser = null;
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     finish();
+                } else {
+                    mUser = mAuth.getCurrentUser();
+//                    mUpdateUserUI();
                 }
             }
         });
-        setContentView(R.layout.activity_main);
+    }
+
+    private void init() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -56,6 +81,30 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+    }
+
+    private void mUpdateUserUI() {
+        mTvUserFullName = (TextView) findViewById(R.id.tv_userFullName);
+        if (mTvUserFullName == null) {
+            System.out.println("=====================> NULL");
+        }
+        mTvUserEmail = (TextView) findViewById(R.id.tv_userEmail);
+
+        if (mUser.getDisplayName() == null) {
+            mTvUserFullName.setText("Your name here");
+        } else {
+            mTvUserFullName.setText(mUser.getDisplayName());
+        }
+        if (mUser.getEmail() == null) {
+            mTvUserEmail.setText("Your email here");
+
+        } else {
+            mTvUserEmail.setText(mUser.getEmail());
+
+        }
+
     }
 
     @Override
@@ -109,11 +158,22 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.nav_signOut) {
-            mAuth.signOut();
+            if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE)) {
+                mAuth.signOut();
+            } else {
+                mGoToActivity(LoginActivity.class);
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void mGoToActivity(Class c) {
+        Intent intent = new Intent(getApplicationContext(), c);
+        startActivity(intent);
+        this.finish();
+
     }
 }

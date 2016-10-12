@@ -1,12 +1,5 @@
 package com.dev.wacteam.taskmanager.manager;
 
-import android.content.Context;
-import android.content.Intent;
-
-import com.dev.wacteam.taskmanager.MainActivity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 /**
  * Created by giuse96suoire on 10/11/2016.
  */

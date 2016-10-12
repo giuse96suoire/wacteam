@@ -1,4 +1,4 @@
-package com.dev.wacteam.taskmanager;
+package com.dev.wacteam.taskmanager.activity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -20,12 +20,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.dialog.DialogAlert;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.manager.ModeManager;
 import com.dev.wacteam.taskmanager.manager.NetworkManager;
-import com.dev.wacteam.taskmanager.manager.NotificationsManager;
 import com.dev.wacteam.taskmanager.manager.SettingsManager;
+import com.dev.wacteam.taskmanager.model.User;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +36,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     private CallbackManager mCallbackManager;
@@ -70,8 +76,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         if (NetworkManager.mIsConnectToNetwork(LoginActivity.this) && mIsCurrentUser()) { // if has network connection
-                mGoToActivity(MainActivity.class); // go to main activity
-                this.finish();
+            mGoToActivity(MainActivity.class); // go to main activity
+            this.finish();
         } else {
             // check if user is login in offline mode
         }
@@ -193,7 +199,8 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
                                     Toast.makeText(LoginActivity.this, "Sign up successed!", Toast.LENGTH_LONG).show();
-                                    mGoToActivity(MainActivity.class);
+                                    mCheckIfNewUser(authResult.getUser().getUid());
+//                                    mGoToActivity(MainActivity.class);
                                 }
                             });
                 } else {
@@ -261,8 +268,9 @@ public class LoginActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
+                                    mCheckIfNewUser(authResult.getUser().getUid());
                                     Toast.makeText(getApplicationContext(), "Sign in successed!", Toast.LENGTH_LONG).show();
-                                    mGoToActivity(MainActivity.class);
+//                                    mGoToActivity(MainActivity.class);
 
                                 }
                             });
@@ -408,4 +416,25 @@ public class LoginActivity extends AppCompatActivity {
         }
     };
 
+    private void mCheckIfNewUser(String userId) {
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child(EnumDefine.FIREBASE_CHILD.USERS.toString() + "/" + userId);
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (user == null || user.getmFullName() == null || user.getmDob() == null) {
+                    mGoToActivity(FirstSetting.class);
+                } else {
+                    mGoToActivity(MainActivity.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(LoginActivity.this, "ERROR WHEN CHECK", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+    }
 }

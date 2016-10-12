@@ -1,11 +1,17 @@
 package com.dev.wacteam.taskmanager.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -29,8 +35,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import layout.FriendFragment;
+import layout.HomeFragment;
+import layout.ProfileFragment;
+import layout.ProjectFragment;
+import layout.SettingFragment;
+import layout.TodayFragment;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,ProfileFragment.OnFragmentInteractionListener,
+        FriendFragment.OnFragmentInteractionListener,SettingFragment.OnFragmentInteractionListener,
+HomeFragment.OnFragmentInteractionListener,ProjectFragment.OnFragmentInteractionListener,TodayFragment.OnFragmentInteractionListener{
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private TextView mTvUserFullName, mTvUserEmail;
@@ -45,6 +60,13 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (findViewById(R.id.content_main) != null) {
+            if (savedInstanceState != null) {
+                return;
+            }
+            ProfileFragment blankFragment1 = new ProfileFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.content_main, blankFragment1).commit();
+        }
         init();
         if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) {
             mSwitchToOnlineMode();
@@ -163,6 +185,12 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+    public void callFragment(Fragment fragment){
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.content_main,fragment);
+        transaction.commit();
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -170,18 +198,19 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) { // camera fragment
+        if (id == R.id.nav_profile) { // camera fragment
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            callFragment(new ProfileFragment());
+        } else if (id == R.id.nav_friend) {
+            callFragment(new FriendFragment());
+        } else if (id == R.id.nav_setting) {
+            callFragment(new SettingFragment());
+        } else if (id == R.id.nav_allProject) {
+            callFragment(new ProjectFragment());
+        } else if (id == R.id.nav_today) {
+            callFragment(new TodayFragment());
+        } else if (id == R.id.nav_home) {
+            callFragment(new HomeFragment());
         } else if (id == R.id.nav_signOut) {
             if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) {
                 mAuth.signOut();
@@ -200,5 +229,10 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
         this.finish();
 
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        //
     }
 }

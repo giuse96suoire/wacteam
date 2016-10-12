@@ -7,12 +7,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.os.Process;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -37,8 +35,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 
-import org.w3c.dom.Text;
-
 public class LoginActivity extends AppCompatActivity {
     private CallbackManager mCallbackManager;
     private LoginButton mLoginButton;
@@ -52,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView mTvAlertInternet;
     private AlertDialog mAlertDialog;
     private TextView mTvCurrentMode;
+    private TextView mTvForgotPass;
     static final String ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
 
     @Override
@@ -60,9 +57,10 @@ public class LoginActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter(ACTION);
         this.registerReceiver(mReceiver, filter);
         mAuth = FirebaseAuth.getInstance();
-        if (NetworkManager.mIsConnectToNetwork(LoginActivity.this)) {
-            if (mIsCurrentUser()) {
-                mGoToActivity(MainActivity.class);
+        if (NetworkManager.mIsConnectToNetwork(LoginActivity.this)) { // if has network connection
+            if (mIsCurrentUser()) { // if user is logined
+                mGoToActivity(MainActivity.class); // go to main activity
+                this.finish();
             }
         } else {
             // check if user is login in offline mode
@@ -75,7 +73,30 @@ public class LoginActivity extends AppCompatActivity {
         mEmail = (EditText) findViewById(R.id.et_email);
         mPassword = (EditText) findViewById(R.id.et_password);
         mTvCurrentMode = (TextView) findViewById(R.id.tv_currentMode);
-        mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE +" MODE (Touch to switch)");
+        mTvForgotPass = (TextView) findViewById(R.id.tv_forgotPass);
+        mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE + " MODE");
+        mTvForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mIsValidEmail(mEmail.getText().toString())) {
+                    mResetPassword(mEmail.getText().toString());
+                } else {
+                    Toast.makeText(LoginActivity.this, "Email invalid!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        mTvCurrentMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) {
+                    ModeManager.mSwitchMode(EnumDefine.MODE.OFFLINE);
+                    mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE + " MODE");
+                } else {
+                    ModeManager.mSwitchMode(EnumDefine.MODE.ONLINE);
+                    mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE + " MODE");
+                }
+            }
+        });
         mSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +121,43 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         this.finish();
 
+    }
+
+    private void mResetPassword(String email) {
+        if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString()) && NetworkManager.mIsConnectToNetwork(LoginActivity.this)) {
+            mAuth.sendPasswordResetEmail(email);
+            new AlertDialog.Builder(LoginActivity.this)
+                    .setTitle("Successed")
+                    .setMessage("An email have been sent to your email to reset password! Please check your inbox.")
+                    .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ModeManager.mSwitchMode(EnumDefine.MODE.ONLINE); // set current mode to OFFLINE
+                            mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE + " MODE");
+
+                        }
+                    })
+                    .show();
+        } else {
+            new AlertDialog.Builder(LoginActivity.this)
+                    .setTitle("Error")
+                    .setMessage("Can't reset password in Offline mode.")
+                    .setPositiveButton("Online mode", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ModeManager.mSwitchMode(EnumDefine.MODE.ONLINE); // set current mode to OFFLINE
+                            mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE + " MODE");
+
+                        }
+                    })
+                    .setNegativeButton("Offline mode", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).setCancelable(false)
+                    .show();
+        }
     }
 
     private void mDoSignUp() {
@@ -146,7 +204,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean mIsValidEmail(String email) { // check if email is valid format (only use when sign up in offline mode)
-        return false;
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
     }
 
     private boolean mIsValidPassword(String password) {  // check if password is valid format (only use when sign up in offline mode)
@@ -283,7 +344,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             ModeManager.mSwitchMode(EnumDefine.MODE.ONLINE); // set current mode to OFFLINE
-                            mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE +" MODE (Touch to switch)");
+                            mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE + " MODE");
 
                         }
                     })
@@ -302,7 +363,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             ModeManager.mSwitchMode(EnumDefine.MODE.OFFLINE); // set current mode to OFFLINE
-                            mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE +" MODE (Touch to switch)");
+                            mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE + " MODE");
                         }
                     })
                     .setNegativeButton("Close app", new DialogInterface.OnClickListener() {

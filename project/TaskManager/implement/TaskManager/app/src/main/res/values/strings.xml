@@ -2,11 +2,23 @@
     <string name="app_name">Task Manager</string>
     <string name="app_id">1143162455758089</string>
     <string name="title_activity_main">MainActivity</string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_settings">Settings</string>
-
-    <string name="errorCode"></string>
+    <string name="action_settings">Setting</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+    <string name="ERROR_INVALID_CUSTOM_TOKEN">Error! Login failed! Please try again!</string>
+    <string name="ERROR_CUSTOM_TOKEN_MISMATCH">Login failed! Please try again!</string>
+    <string name="ERROR_INVALID_CREDENTIAL">Login failed! Please try again!</string>
+    <string name="ERROR_INVALID_EMAIL">Email is invalid! Please check email value!</string>
+    <string name="ERROR_WRONG_PASSWORD">Wrong password!</string>
+    <string name="ERROR_USER_MISMATCH">Login failed! Please try again!</string>
+    <string name="ERROR_REQUIRES_RECENT_LOGIN">Login failed! Please try again!</string>
+    <string name="ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL">You have logined in other device! Please check!</string>
+    <string name="ERROR_EMAIL_ALREADY_IN_USE">Email is existed! Please login or use other email!</string>
+    <string name="ERROR_CREDENTIAL_ALREADY_IN_USE">Other account is in use, please logout!</string>
+    <string name="ERROR_USER_DISABLED">User has been banned by admin! Please contact admin!</string>
+    <string name="ERROR_USER_TOKEN_EXPIRED">Login failed! Please try again!</string>
+    <string name="ERROR_USER_NOT_FOUND">Your account is not exist!</string>
+    <string name="ERROR_INVALID_USER_TOKEN">Login failed! Please try again!</string>
+    <string name="ERROR_OPERATION_NOT_ALLOWED">Login failed! Please try again!</string>
+    <string name="ERROR_WEAK_PASSWORD">Wrong password!</string>
 </resources>

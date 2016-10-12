@@ -16,8 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.dev.wacteam.taskmanager.database.DatabaseManager;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
+import com.dev.wacteam.taskmanager.manager.NotificationsManager;
 import com.dev.wacteam.taskmanager.manager.SettingsManager;
+import com.dev.wacteam.taskmanager.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -28,17 +31,23 @@ public class MainActivity extends AppCompatActivity
     private TextView mTvUserFullName, mTvUserEmail;
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        NotificationsManager.mNotify(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE)) {
+        if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) {
             mSwitchToOnlineMode();
             System.out.println("IS ONLINE MODE");
         } else {
             System.out.println("IS OFFLINE MODE");
         }
-
+       
 
     }
 
@@ -158,7 +167,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.nav_signOut) {
-            if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE)) {
+            if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) {
                 mAuth.signOut();
             } else {
                 mGoToActivity(LoginActivity.class);

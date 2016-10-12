@@ -8,4 +8,8 @@ public class EnumDefine {
     public enum MODE {
         ONLINE, OFFLINE;
     }
+
+    public enum FIREBASE_CHILD {
+        USERS, PROJECTS, STATISTIC
+    }
 }

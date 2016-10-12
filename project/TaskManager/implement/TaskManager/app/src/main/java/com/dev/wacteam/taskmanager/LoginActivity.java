@@ -24,6 +24,7 @@ import com.dev.wacteam.taskmanager.dialog.DialogAlert;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.manager.ModeManager;
 import com.dev.wacteam.taskmanager.manager.NetworkManager;
+import com.dev.wacteam.taskmanager.manager.NotificationsManager;
 import com.dev.wacteam.taskmanager.manager.SettingsManager;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
@@ -52,16 +53,25 @@ public class LoginActivity extends AppCompatActivity {
     static final String ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onResume() {
+        super.onResume();
         IntentFilter filter = new IntentFilter(ACTION);
         this.registerReceiver(mReceiver, filter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.unregisterReceiver(mReceiver);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-        if (NetworkManager.mIsConnectToNetwork(LoginActivity.this)) { // if has network connection
-            if (mIsCurrentUser()) { // if user is logined
+        if (NetworkManager.mIsConnectToNetwork(LoginActivity.this) && mIsCurrentUser()) { // if has network connection
                 mGoToActivity(MainActivity.class); // go to main activity
                 this.finish();
-            }
         } else {
             // check if user is login in offline mode
         }
@@ -279,37 +289,38 @@ public class LoginActivity extends AppCompatActivity {
     private String mGetErrorMessage(String errorCode) {//get error message when sign in or sign up
         switch (errorCode) {
             case "ERROR_INVALID_CUSTOM_TOKEN":
-                return "Error! Login failed! Please try again!";
+                return getResources().getString(R.string.ERROR_INVALID_CUSTOM_TOKEN);
             case "ERROR_CUSTOM_TOKEN_MISMATCH":
-                return "Error! Login failed! Please try again!";
+                return getResources().getString(R.string.ERROR_CUSTOM_TOKEN_MISMATCH);
             case "ERROR_INVALID_CREDENTIAL":
-                return "Error! Login failed! Please try again!";
+                return getResources().getString(R.string.ERROR_INVALID_CREDENTIAL);
             case "ERROR_INVALID_EMAIL":
-                return "Email is invalid! Please check email value!";
+                return getResources().getString(R.string.ERROR_INVALID_EMAIL);
             case "ERROR_WRONG_PASSWORD":
-                return "Wrong password!";
+                return getResources().getString(R.string.ERROR_WRONG_PASSWORD);
             case "ERROR_USER_MISMATCH":
-                return "Error! Login failed! Please try again!";
+                return getResources().getString(R.string.ERROR_USER_MISMATCH);
             case "ERROR_REQUIRES_RECENT_LOGIN":
-                return "Error! Login failed! Please try again!";
+                return getResources().getString(R.string.ERROR_REQUIRES_RECENT_LOGIN);
             case "ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL":
-                return "You have logined in other device! Please check!";
+                return getResources().getString(R.string.ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL);
             case "ERROR_EMAIL_ALREADY_IN_USE":
-                return "Email is existed! Please login or use other email!";
+                return getResources().getString(R.string.ERROR_EMAIL_ALREADY_IN_USE);
             case "ERROR_CREDENTIAL_ALREADY_IN_USE":
-                return "Other account is in use, please logout!";
+                return getResources().getString(R.string.ERROR_CREDENTIAL_ALREADY_IN_USE);
             case "ERROR_USER_DISABLED":
-                return "User has been banned by admin! Please contact admin!";
+                return getResources().getString(R.string.ERROR_USER_DISABLED);
             case "ERROR_USER_TOKEN_EXPIRED":
-                return "Error! Login failed! Please try again!";
+                return getResources().getString(R.string.ERROR_USER_TOKEN_EXPIRED);
             case "ERROR_USER_NOT_FOUND":
-                return "Your account is not exist!";
+                return getResources().getString(R.string.ERROR_USER_NOT_FOUND);
             case "ERROR_INVALID_USER_TOKEN":
-                return "Error! Login failed! Please try again!";
+                return getResources().getString(R.string.ERROR_INVALID_USER_TOKEN);
             case "ERROR_OPERATION_NOT_ALLOWED":
-                return "Error! Login failed! Please try again!";
+                return getResources().getString(R.string.ERROR_OPERATION_NOT_ALLOWED);
             case "ERROR_WEAK_PASSWORD":
-                return "Wrong password!";
+                return getResources().getString(R.string.ERROR_WEAK_PASSWORD);
+
         }
         return null;
     }

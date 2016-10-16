@@ -4,24 +4,31 @@ package com.dev.wacteam.taskmanager.database;
  * Created by giuse96suoire on 10/16/2016.
  */
 
-public class LocalUser implements ModelInterface {
+public class LocalUser implements BaseModel {
+
+
     @Override
-    public void create() {
+    public void mCreate(Object o) {
 
     }
 
     @Override
-    public void update() {
+    public void mUpdate(Object o) {
 
     }
 
     @Override
-    public void delete() {
+    public void mDelete(Object o) {
 
     }
 
     @Override
-    public void reset() {
+    public void mReset(Object o) {
 
+    }
+
+    @Override
+    public Object mFind(String key) {
+        return null;
     }
 }

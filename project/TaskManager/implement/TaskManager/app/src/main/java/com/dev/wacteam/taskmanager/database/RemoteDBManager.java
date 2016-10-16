@@ -10,35 +10,19 @@ import com.google.firebase.database.ValueEventListener;
 /**
  * Created by giuse96suoire on 10/12/2016.
  */
-public class RemoteDBManager {
+public abstract class RemoteDBManager {
 
+    private DatabaseReference mDatabase;
 
-    private static DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-
-    public static boolean mIsExistChild(String child) {
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child(child);
-        db.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user == null || user.getDisplayName() == null || user.getDob() == null) {
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        return false;
+    public RemoteDBManager() {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public static void mWrite(String child, Object value) {
+    public void mWrite(String child, Object value) {
         mDatabase.child(child).setValue(value);
     }
 
-    public static void mRemove(String child) {
+    public void mDelete(String child) {
         mDatabase.child(child).removeValue();
     }
 

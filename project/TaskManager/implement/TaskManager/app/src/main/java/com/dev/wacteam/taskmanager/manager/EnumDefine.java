@@ -4,7 +4,7 @@ package com.dev.wacteam.taskmanager.manager;
  * Created by giuse96suoire on 10/11/2016.
  */
 public class EnumDefine {
-
+    public static int PICK_IMAGE_CODE = 0;
     public enum MODE {
         ONLINE, OFFLINE;
     }

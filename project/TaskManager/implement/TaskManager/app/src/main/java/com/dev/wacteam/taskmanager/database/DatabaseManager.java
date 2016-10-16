@@ -18,7 +18,7 @@ public class DatabaseManager {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                if (user == null || user.getmFullName() == null || user.getmDob() == null) {
+                if (user == null || user.getDisplayName() == null || user.getDob() == null) {
 
                 }
             }
@@ -30,24 +30,25 @@ public class DatabaseManager {
         });
         return false;
     }
-//    private Context mContext;
 
+//    private Context mContext;
+//
 //    public DatabaseManager(Context context) {
 //        this.mContext = context;
 //    }
-//
-//    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-//
-//    public void mWrite(String child, Object value) {
-//        mDatabase.child(child).setValue(value);
-//    }
-//
+
+    private static DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+    public static void mWrite(String child, Object value) {
+        mDatabase.child(child).setValue(value);
+    }
+
 //    public void mDelete(String child) {
 //        mDatabase.child(child).removeValue();
 //        mDatabase.child(child).removeValue(new DatabaseReference.CompletionListener() {
 //            @Override
 //            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-//                Toast.makeText(mContext,"Delete complete", Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext, "Delete complete", Toast.LENGTH_LONG).show();
 //            }
 //        });
 //    }

@@ -10,8 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,18 +21,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.database.DatabaseManager;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.manager.NotificationsManager;
 import com.dev.wacteam.taskmanager.manager.SettingsManager;
 import com.dev.wacteam.taskmanager.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
+import io.realm.RealmList;
 import layout.FriendFragment;
 import layout.HomeFragment;
 import layout.ProfileFragment;
@@ -43,9 +38,9 @@ import layout.SettingFragment;
 import layout.TodayFragment;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,ProfileFragment.OnFragmentInteractionListener,
-        FriendFragment.OnFragmentInteractionListener,SettingFragment.OnFragmentInteractionListener,
-HomeFragment.OnFragmentInteractionListener,ProjectFragment.OnFragmentInteractionListener,TodayFragment.OnFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener, ProfileFragment.OnFragmentInteractionListener,
+        FriendFragment.OnFragmentInteractionListener, SettingFragment.OnFragmentInteractionListener,
+        HomeFragment.OnFragmentInteractionListener, ProjectFragment.OnFragmentInteractionListener, TodayFragment.OnFragmentInteractionListener {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private TextView mTvUserFullName, mTvUserEmail;
@@ -74,19 +69,16 @@ HomeFragment.OnFragmentInteractionListener,ProjectFragment.OnFragmentInteraction
         } else {
             System.out.println("IS OFFLINE MODE");
         }
-//        FirebaseUser mUser = mAuth.getCurrentUser();
-//        User user = new User();
-//        user.setmAvatarUrl("abc/abc.jpg");
-//        user.setmFullName("Huynhmh");
-//        user.setmDob(new Date());
-//        user.setmUserId(mUser.getUid());
-//        user.setmEmail("giuse96suoire@gmail.com");
-//        user.setmSetting(new Setting());
-//        new DatabaseManager(this).mWrite("user/" + mUser.getUid(), user);
+        User user = new User();
+        user.setUid("123");
+        user.setDisplayName("haha");
+
+
+
+
 
 
     }
-
 
 
     private void mSwitchToOnlineMode() {
@@ -185,10 +177,11 @@ HomeFragment.OnFragmentInteractionListener,ProjectFragment.OnFragmentInteraction
 
         return super.onOptionsItemSelected(item);
     }
-    public void callFragment(Fragment fragment){
+
+    public void callFragment(Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.content_main,fragment);
+        transaction.replace(R.id.content_main, fragment);
         transaction.commit();
     }
 

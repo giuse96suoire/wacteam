@@ -422,7 +422,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                if (user == null || user.getmFullName() == null || user.getmDob() == null) {
+                if (user == null || user.getDisplayName() == null || user.getDob() == null) {
                     mGoToActivity(FirstSetting.class);
                 } else {
                     mGoToActivity(MainActivity.class);

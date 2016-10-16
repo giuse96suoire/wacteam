@@ -30,14 +30,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center">
+
         <EditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
             android:background="@drawable/boder_edittext"
-            android:fontFamily="sans-serif-smallcaps"
             android:hint="Email"
+            android:fontFamily="monospace"
             android:inputType="textEmailAddress"
             android:paddingLeft="50dp"
             android:textColor="#ffffff"
@@ -49,8 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/et_email"
             android:layout_marginTop="10dp"
+            android:fontFamily="monospace"
             android:background="@drawable/boder_edittext"
-            android:fontFamily="sans-serif-smallcaps"
             android:hint="Password"
             android:inputType="textPassword"
             android:paddingLeft="50dp"
@@ -59,20 +60,20 @@
 
         <ImageView
             android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_height="22dp"
             android:layout_alignLeft="@id/et_email"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="160dp"
-            android:background="@drawable/mail" />
+            android:layout_marginTop="161dp"
+            android:background="@drawable/email_vector" />
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignLeft="@id/et_password"
+            android:layout_width="24dp"
+            android:layout_height="22dp"
+            android:layout_alignParentStart="true"
             android:layout_below="@id/et_email"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="9dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/password" />
+            android:background="@drawable/password_vector" />
 
         <LinearLayout
             android:id="@+id/btn_group"
@@ -124,19 +125,17 @@
             android:textStyle="italic" />
 
 
-
-
         <TextView
             android:id="@+id/tv_currentMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tv_forgotPass"
             android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_forgotPass"
             android:text="Online mode"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"
             android:textColor="@color/cardview_light_background"
-            android:layout_alignTop="@+id/tv_forgotPass"
-            android:layout_alignEnd="@+id/tv_forgotPass" />
+            android:textStyle="bold" />
 
 
     </RelativeLayout>

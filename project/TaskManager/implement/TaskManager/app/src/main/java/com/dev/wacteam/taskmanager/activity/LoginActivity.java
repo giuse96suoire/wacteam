@@ -64,6 +64,8 @@ public class LoginActivity extends AppCompatActivity {
     private final int TIME_OUT = 2000;
     private TextView mTvStatus;
     static final String ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
+    private Timer timer;
+    private int current_time = 0;
 
     @Override
     protected void onResume() {
@@ -141,25 +143,29 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    static Timer timer;
-    int current_time = 0;
 
     private void mCountTimeOut() {
+        Toast.makeText(LoginActivity.this, "Start timer", Toast.LENGTH_LONG).show();
         System.out.println("START TIMER =================>");
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 System.out.println("RUN TIMER =================>");
-                System.out.println("CURRENT TIME : "+current_time);
 
                 if (current_time == TIME_OUT) {
                     mTvStatus.setText("Can't connect to server, please check internet, stop connect to server...");
+                    Toast.makeText(LoginActivity.this, "Can't connect to server, please check internet, stop connect to server..." , Toast.LENGTH_SHORT).show();
+
                     timer.cancel();
                 } else if (current_time == 15000) {
                     mTvStatus.setText("Slow connection! Please wait...");
+                    Toast.makeText(LoginActivity.this, "Slow connection! Please wait...", Toast.LENGTH_SHORT).show();
+
 
                 } else if (current_time == 5000) {
+                    Toast.makeText(LoginActivity.this, "Tips: you can login in offline mode without internet connection." , Toast.LENGTH_SHORT).show();
+
                     mTvStatus.setText("Tips: you can login in offline mode without internet connection.");
                 } else if (current_time == 10000) {
                     mTvStatus.setText("Tips: always turn on Syns data to offline setting to use when offline.");
@@ -167,6 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                 current_time++;
             }
         }, 1000, 1000);
+
 
     }
 

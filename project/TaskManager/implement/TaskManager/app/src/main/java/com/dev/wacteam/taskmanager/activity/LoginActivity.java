@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,6 +43,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class LoginActivity extends AppCompatActivity {
     private CallbackManager mCallbackManager;
     private LoginButton mLoginButton;
@@ -56,6 +60,9 @@ public class LoginActivity extends AppCompatActivity {
     private AlertDialog mAlertDialog;
     private TextView mTvCurrentMode;
     private TextView mTvForgotPass;
+    private FrameLayout mFlProgressFrame;
+    private final int TIME_OUT = 2000;
+    private TextView mTvStatus;
     static final String ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
 
     @Override
@@ -86,8 +93,10 @@ public class LoginActivity extends AppCompatActivity {
         mLoginMain = (RelativeLayout) findViewById(R.id.login_main);
         mSignUp = (Button) findViewById(R.id.btn_signUp);
         mSignIn = (Button) findViewById(R.id.btn_signIn);
+        mFlProgressFrame = (FrameLayout) findViewById(R.id.progressFrame);
         mEmail = (EditText) findViewById(R.id.et_email);
         mPassword = (EditText) findViewById(R.id.et_password);
+        mTvStatus = (TextView) findViewById(R.id.tv_status);
         mTvCurrentMode = (TextView) findViewById(R.id.tv_currentMode);
         mTvForgotPass = (TextView) findViewById(R.id.tv_forgotPass);
         mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE + " MODE");
@@ -130,6 +139,35 @@ public class LoginActivity extends AppCompatActivity {
                 mDoSignIn();
             }
         });
+    }
+
+    static Timer timer;
+    int current_time = 0;
+
+    private void mCountTimeOut() {
+        System.out.println("START TIMER =================>");
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("RUN TIMER =================>");
+                System.out.println("CURRENT TIME : "+current_time);
+
+                if (current_time == TIME_OUT) {
+                    mTvStatus.setText("Can't connect to server, please check internet, stop connect to server...");
+                    timer.cancel();
+                } else if (current_time == 15000) {
+                    mTvStatus.setText("Slow connection! Please wait...");
+
+                } else if (current_time == 5000) {
+                    mTvStatus.setText("Tips: you can login in offline mode without internet connection.");
+                } else if (current_time == 10000) {
+                    mTvStatus.setText("Tips: always turn on Syns data to offline setting to use when offline.");
+                }
+                current_time++;
+            }
+        }, 1000, 1000);
+
     }
 
     private void mGoToActivity(Class c) {
@@ -199,7 +237,7 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
                                     Toast.makeText(LoginActivity.this, "Sign up successed!", Toast.LENGTH_LONG).show();
-                                    mCheckIfNewUser(authResult.getUser().getUid());
+                                    mIsNewUser(authResult.getUser().getUid());
 //                                    mGoToActivity(MainActivity.class);
                                 }
                             });
@@ -268,7 +306,7 @@ public class LoginActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    mCheckIfNewUser(authResult.getUser().getUid());
+                                    mIsNewUser(authResult.getUser().getUid());
                                     Toast.makeText(getApplicationContext(), "Sign in successed!", Toast.LENGTH_LONG).show();
 //                                    mGoToActivity(MainActivity.class);
 
@@ -338,15 +376,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void mShowProgessDialog() { // show progess "please wait" when sign in or sign up
-        if (mProgressBar == null)
-            mProgressBar = (ProgressBar) findViewById(R.id.pb_wait);
-        mProgressBar.setVisibility(View.VISIBLE);
+        mCountTimeOut();
+        mFlProgressFrame.setVisibility(View.VISIBLE);
         mLoginMain.setVisibility(View.INVISIBLE);
     }
 
     private void mDismissProgessDialog() {// close progess "please wait"
-        if (mProgressBar != null)
-            mProgressBar.setVisibility(View.INVISIBLE);
+        timer.cancel();
+        if (mFlProgressFrame != null)
+            mFlProgressFrame.setVisibility(View.INVISIBLE);
         mLoginMain.setVisibility(View.VISIBLE);
 
     }
@@ -416,7 +454,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     };
 
-    private void mCheckIfNewUser(String userId) {
+    private void mIsNewUser(String userId) {
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child(EnumDefine.FIREBASE_CHILD.USERS.toString() + "/" + userId);
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

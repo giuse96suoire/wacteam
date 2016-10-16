@@ -11,7 +11,5 @@ public interface BaseModel {
 
     public void mDelete(Object o);
 
-    public void mReset(Object o);
-
     public Object mFind(String key);
 }

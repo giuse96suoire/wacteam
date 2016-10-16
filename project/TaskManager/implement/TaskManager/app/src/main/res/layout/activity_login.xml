@@ -12,7 +12,8 @@
         android:id="@+id/progressFrame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="0.0dip">
+        android:padding="0.0dip"
+        android:visibility="invisible">
 
         <ProgressBar
             android:id="@+id/pb_wait"
@@ -20,8 +21,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true"
-            android:indeterminateDrawable="@drawable/progress_bar_circular"
-            android:visibility="invisible" />
+            android:indeterminateDrawable="@drawable/progress_bar_circular" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Checking user information..."
+            android:layout_gravity="center"/>
 
     </FrameLayout>
 
@@ -30,6 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center">
+
         <EditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
@@ -124,19 +132,17 @@
             android:textStyle="italic" />
 
 
-
-
         <TextView
             android:id="@+id/tv_currentMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tv_forgotPass"
             android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_forgotPass"
             android:text="Online mode"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"
             android:textColor="@color/cardview_light_background"
-            android:layout_alignTop="@+id/tv_forgotPass"
-            android:layout_alignEnd="@+id/tv_forgotPass" />
+            android:textStyle="bold" />
 
 
     </RelativeLayout>

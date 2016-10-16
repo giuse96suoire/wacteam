@@ -1,25 +1,17 @@
 package com.dev.wacteam.taskmanager.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.manager.StorageManager;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.io.IOException;
 
 public class FirstSetting extends AppCompatActivity {
     ImageView mIvAvatar;
@@ -55,3 +47,4 @@ public class FirstSetting extends AppCompatActivity {
         }
     }
 }
+;

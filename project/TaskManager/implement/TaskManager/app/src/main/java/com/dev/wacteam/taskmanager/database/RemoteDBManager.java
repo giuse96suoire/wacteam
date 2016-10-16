@@ -7,11 +7,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
 /**
  * Created by giuse96suoire on 10/12/2016.
  */
-public class DatabaseManager {
+public class RemoteDBManager {
+
+
+    private static DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
     public static boolean mIsExistChild(String child) {
         DatabaseReference db = FirebaseDatabase.getInstance().getReference().child(child);
         db.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -31,25 +34,13 @@ public class DatabaseManager {
         return false;
     }
 
-//    private Context mContext;
-//
-//    public DatabaseManager(Context context) {
-//        this.mContext = context;
-//    }
-
-    private static DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-
     public static void mWrite(String child, Object value) {
         mDatabase.child(child).setValue(value);
     }
 
-//    public void mDelete(String child) {
-//        mDatabase.child(child).removeValue();
-//        mDatabase.child(child).removeValue(new DatabaseReference.CompletionListener() {
-//            @Override
-//            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-//                Toast.makeText(mContext, "Delete complete", Toast.LENGTH_LONG).show();
-//            }
-//        });
-//    }
+    public static void mRemove(String child) {
+        mDatabase.child(child).removeValue();
+    }
+
+
 }

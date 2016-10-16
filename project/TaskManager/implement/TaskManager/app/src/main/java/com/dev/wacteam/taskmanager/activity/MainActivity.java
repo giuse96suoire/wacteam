@@ -21,7 +21,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dev.wacteam.taskmanager.R;
-import com.dev.wacteam.taskmanager.database.DatabaseManager;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.manager.NotificationsManager;
 import com.dev.wacteam.taskmanager.manager.SettingsManager;

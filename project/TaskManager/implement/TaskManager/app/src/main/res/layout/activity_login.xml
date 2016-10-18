@@ -4,43 +4,53 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_centerInParent="true"
-    android:layout_centerVertical="true"
-    android:background="@drawable/bg_login"
+    android:background="@color/cardview_dark_background"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="80dp">
+    android:paddingRight="16dp">
 
     <FrameLayout
         android:id="@+id/progressFrame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="0.0dip">
+        android:padding="0.0dip"
+        android:visibility="invisible">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <ProgressBar
-            android:id="@+id/pb_wait"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="true"
-            android:indeterminateDrawable="@drawable/progress_bar_circular"
-            android:visibility="invisible"
-            />
+            <ProgressBar
+                android:id="@+id/pb_wait"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/progress_bar_circular" />
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please wait..."
+                android:textColor="@color/cardview_light_background"
+                android:gravity="center"/>
+        </LinearLayout>
 
     </FrameLayout>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
-        android:id="@+id/login_main">
+    <RelativeLayout
+        android:id="@+id/login_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <EditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="150dp"
             android:background="@drawable/boder_edittext"
             android:fontFamily="sans-serif-smallcaps"
             android:hint="Email"
@@ -68,7 +78,7 @@
             android:layout_height="20dp"
             android:layout_alignLeft="@id/et_email"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="160dp"
             android:background="@drawable/mail" />
 
         <ImageView
@@ -84,7 +94,7 @@
             android:id="@+id/btn_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/et_password"
+            android:layout_below="@+id/et_password"
             android:layout_marginTop="10dp">
 
 
@@ -117,7 +127,7 @@
 
         <TextView
             android:id="@+id/tv_forgotPass"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/btn_group"
@@ -128,6 +138,21 @@
             android:textColor="#ffffff"
             android:textSize="18dp"
             android:textStyle="italic" />
+
+
+        <TextView
+            android:id="@+id/tv_currentMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tv_forgotPass"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_forgotPass"
+            android:text="Online mode"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/cardview_light_background"
+            android:textStyle="bold" />
+
+
     </RelativeLayout>
 
 </RelativeLayout>

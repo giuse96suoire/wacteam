@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">Task Manager</string>
     <string name="app_id">1143162455758089</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Home</string>
+    <string name="title_home_fragment">Home</string>
+    <string name="title_profile_fragment">Profile</string>
+    <string name="title_all_project_fragment">Project manager</string>
+    <string name="title_all_today_fragment">Today</string>
+    <string name="title_friend_fragment">Friends</string>
+    <string name="title_setting_fragment">Setting</string>
     <string name="action_settings">Setting</string>
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>

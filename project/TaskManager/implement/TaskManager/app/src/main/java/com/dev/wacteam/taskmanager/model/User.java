@@ -26,6 +26,15 @@ public class User {
     private String providerId;
     private String phoneNumber;
     private String address;
+    private boolean gender;
+
+    public void setGender(boolean gender) { // true is man, false is woman
+        this.gender = gender;
+    }
+
+    public boolean getGender() {
+        return gender;
+    }
 
     public String getAddress() {
         return address;

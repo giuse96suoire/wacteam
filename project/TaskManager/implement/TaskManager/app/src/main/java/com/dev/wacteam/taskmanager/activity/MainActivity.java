@@ -19,12 +19,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.database.RemoteUser;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.manager.NotificationsManager;
 import com.dev.wacteam.taskmanager.manager.SettingsManager;
 import com.dev.wacteam.taskmanager.model.User;
+import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -57,7 +60,8 @@ public class MainActivity extends AppCompatActivity
             if (savedInstanceState != null) {
                 return;
             }
-            ProfileFragment blankFragment1 = new ProfileFragment();
+            HomeFragment blankFragment1 = new HomeFragment();
+
             getSupportFragmentManager().beginTransaction().add(R.id.content_main, blankFragment1).commit();
         }
         init();
@@ -67,11 +71,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             System.out.println("IS OFFLINE MODE");
         }
-        User user = new User();
-        user.setUid("123");
-        user.setDisplayName("haha");
-
-
 
 
 
@@ -80,15 +79,16 @@ public class MainActivity extends AppCompatActivity
 
 
     private void mSwitchToOnlineMode() {
+        System.out.println("SWICH TO ONLINE MODE ========>");
         mAuth = FirebaseAuth.getInstance();
         mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (mAuth.getCurrentUser() == null) {
+                    System.out.println("USER NULL==========================>");
                     mUser = null;
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+                    mGoToActivity(LoginActivity.class);
+                    mAuth.removeAuthStateListener(this);
                 } else {
                     mUser = mAuth.getCurrentUser();
 //                    mUpdateUserUI();
@@ -118,15 +118,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_home);
 
 
     }
 
     private void mUpdateUserUI() {
         mTvUserFullName = (TextView) findViewById(R.id.tv_userFullName);
-        if (mTvUserFullName == null) {
-            System.out.println("=====================> NULL");
-        }
+
         mTvUserEmail = (TextView) findViewById(R.id.tv_userEmail);
 
         if (mUser.getDisplayName() == null) {
@@ -190,7 +189,6 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) { // camera fragment
-            // Handle the camera action
             callFragment(new ProfileFragment());
         } else if (id == R.id.nav_friend) {
             callFragment(new FriendFragment());

@@ -1,5 +1,6 @@
 package com.dev.wacteam.taskmanager.database;
 
+import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.model.User;
 
 /**
@@ -19,25 +20,27 @@ public class RemoteUser extends RemoteDatabase implements BaseModel {
 
     @Override
     public void mCreate(Object o) {
-        this.mWriteIfNotExist(USER_LIST_CHILD, o);
+        this.mWriteIfNotExist(USER_LIST_CHILD + "/" + ((User) o).getUid(), o);
     }
 
     @Override
     public void mUpdate(Object o) {
 
-        this.mWriteIfNotExist(USER_LIST_CHILD, o);
+        this.mWrite(USER_LIST_CHILD, o);
 
     }
 
     @Override
     public void mDelete(Object o) {
-        this.mRemove(((User) o).getUid());
+        this.mRemove(USER_LIST_CHILD + "/" + ((User) o).getUid());
     }
 
     @Override
-    public Object mFind(String key) {
-//        User u = new User();
-        return null;
+    public void mFind(String key, OnGetDataListener listener) {
+        User u = new User();
+        this.mReadDataOnce(USER_LIST_CHILD + "/" + key, listener);
     }
+
+
 }
 

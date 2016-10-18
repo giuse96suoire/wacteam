@@ -19,14 +19,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
-import com.dev.wacteam.taskmanager.database.RemoteUser;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.manager.NotificationsManager;
 import com.dev.wacteam.taskmanager.manager.SettingsManager;
-import com.dev.wacteam.taskmanager.model.User;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -73,8 +70,6 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-
-
     }
 
 
@@ -91,7 +86,7 @@ public class MainActivity extends AppCompatActivity
                     mAuth.removeAuthStateListener(this);
                 } else {
                     mUser = mAuth.getCurrentUser();
-//                    mUpdateUserUI();
+                    mUpdateUserUI();
                 }
             }
         });
@@ -128,18 +123,8 @@ public class MainActivity extends AppCompatActivity
 
         mTvUserEmail = (TextView) findViewById(R.id.tv_userEmail);
 
-        if (mUser.getDisplayName() == null) {
-            mTvUserFullName.setText("Your name here");
-        } else {
-            mTvUserFullName.setText(mUser.getDisplayName());
-        }
-        if (mUser.getEmail() == null) {
-            mTvUserEmail.setText("Your email here");
-
-        } else {
-            mTvUserEmail.setText(mUser.getEmail());
-
-        }
+        mTvUserFullName.setText(CurrentUser.getInstance().getDisplayName() == null ? "Your name" : CurrentUser.getInstance().getDisplayName());
+        mTvUserEmail.setText(CurrentUser.getInstance().getEmail() == null ? "Your email" : CurrentUser.getInstance().getEmail());
 
     }
 

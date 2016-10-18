@@ -163,12 +163,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(DataSnapshot data) {
                 User nUser = data.getValue(User.class);
                 if (nUser == null) {
-                    new RemoteUser().mCreate(user);
                     mGoToActivity(FirstSetting.class);
                 } else {
-                    CurrentUser.getInstance().setInfor(nUser);
+                    CurrentUser.getInstance().setInfo(nUser);
+                    mGoToActivity(MainActivity.class);
                 }
-                mGoToActivity(MainActivity.class);
 
             }
 

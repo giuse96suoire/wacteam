@@ -1,13 +1,180 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="layout.ProfileFragment">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="148dp"
+        android:layout_gravity="top"
+
+        android:gravity="center"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="125dp"
+            android:layout_weight="1.11"
+            android:src="@drawable/com_facebook_profile_picture_blank_square" />
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Full name:"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/label"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_displayName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:hint=""
+                android:textColor="#3378df" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gender:"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/label"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:hint=""
+                android:textColor="#3378df" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Birth date:"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/label"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_dob"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:hint=""
+                android:textColor="#3378df" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address:"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/label"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:hint=""
+                android:textColor="#3378df" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone number:"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/label"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_phoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:hint=""
+                android:textColor="#3378df" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email:"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/label"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:hint=""
+                android:inputType="none"
+                android:textColor="#3378df" />
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Profile Fragment" />
+        android:layout_gravity="bottom"
+        android:layout_weight="0.9"
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <Button
+            android:id="@+id/btn_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="0.50"
+            android:background="@drawable/border_button_profile"
+            android:text="Reset" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="0.50"
+            android:background="@drawable/border_button_profile"
+            android:text="Save"
+            android:textColor="#3378df" />
+
+    </LinearLayout>
+
+</LinearLayout>

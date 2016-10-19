@@ -1,30 +1,37 @@
 package com.dev.wacteam.taskmanager.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.manager.NotificationsManager;
 import com.dev.wacteam.taskmanager.manager.SettingsManager;
-import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -100,8 +107,9 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                mDisplayQuickCreateDialog();
             }
         });
 
@@ -123,8 +131,8 @@ public class MainActivity extends AppCompatActivity
 
         mTvUserEmail = (TextView) findViewById(R.id.tv_userEmail);
 
-        mTvUserFullName.setText(CurrentUser.getInstance().getDisplayName() == null ? "Your name" : CurrentUser.getInstance().getDisplayName());
-        mTvUserEmail.setText(CurrentUser.getInstance().getEmail() == null ? "Your email" : CurrentUser.getInstance().getEmail());
+//        mTvUserFullName.setText(CurrentUser.getInstance().getDisplayName() == null ? "Your name" : CurrentUser.getInstance().getDisplayName());
+//        mTvUserEmail.setText(CurrentUser.getInstance().getEmail() == null ? "Your email" : CurrentUser.getInstance().getEmail());
 
     }
 
@@ -175,16 +183,27 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_profile) { // camera fragment
             callFragment(new ProfileFragment());
+            setTitle(R.string.title_profile_fragment);
         } else if (id == R.id.nav_friend) {
             callFragment(new FriendFragment());
+            setTitle(R.string.title_friend_fragment);
+
         } else if (id == R.id.nav_setting) {
             callFragment(new SettingFragment());
+            setTitle(R.string.title_setting_fragment);
+
         } else if (id == R.id.nav_allProject) {
             callFragment(new ProjectFragment());
+            setTitle(R.string.title_all_project_fragment);
+
         } else if (id == R.id.nav_today) {
             callFragment(new TodayFragment());
+            setTitle(R.string.title_all_today_fragment);
+
         } else if (id == R.id.nav_home) {
             callFragment(new HomeFragment());
+            setTitle(R.string.title_home_fragment);
+
         } else if (id == R.id.nav_signOut) {
             if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) {
                 mAuth.signOut();
@@ -202,6 +221,60 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(getApplicationContext(), c);
         startActivity(intent);
         this.finish();
+
+    }
+
+    private void mDisplayQuickCreateDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+        final View view = inflater.inflate(R.layout.quick_create_project, null);
+        builder.setTitle("What you want to create?")
+                .setView(view)
+                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainActivity.this, "Create", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        Spinner chooseProject = (Spinner) view.findViewById(R.id.sp_chooseProject);
+        EditText projectName = (EditText) view.findViewById(R.id.et_projectName);
+        ImageView project = (ImageView) view.findViewById(R.id.iv_project);
+        ImageView task = (ImageView) view.findViewById(R.id.iv_task);
+        project.setBackgroundColor(Color.rgb(120, 133, 224));
+        String[] data = new String[]{"Project 1", "Project 2", "Project 3"};
+        chooseProject.setAdapter(new ArrayAdapter<String>(MainActivity.this, R.layout.support_simple_spinner_dropdown_item, data));
+        project.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                projectName.setVisibility(View.VISIBLE);
+                chooseProject.setVisibility(View.GONE);
+                project.setBackgroundColor(Color.rgb(120, 133, 224));
+                task.setBackgroundColor(Color.WHITE);
+
+
+            }
+        });
+        task.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseProject.setVisibility(View.VISIBLE);
+                projectName.setVisibility(View.GONE);
+                task.setBackgroundColor(Color.rgb(120, 133, 224));
+                project.setBackgroundColor(Color.WHITE);
+
+            }
+        });
+        dialog.show();
+
 
     }
 

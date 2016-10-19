@@ -9,4 +9,7 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="label">18dp</dimen>
+    <dimen name="marginBottomSettingItem">15dp</dimen>
+    <dimen name="imageSelectPaddingSize">0dp</dimen>
+    <dimen name="imageNoneSelectPaddingSize">30dp</dimen>
 </resources>

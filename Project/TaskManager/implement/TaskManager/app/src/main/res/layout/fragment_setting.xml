@@ -1,13 +1,101 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="layout.SettingFragment">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Setting Fragment" />
+        tools:context="layout.SettingFragment">
 
-</FrameLayout>
+        <!-- TODO: Update blank fragment layout -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_autoSync"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/marginBottomSettingItem"
+                android:text="Auto sync data"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/label"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/tb_autoSync"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/tv_autoSync"
+                android:layout_toEndOf="@+id/tv_autoSync" />
+
+
+            <TextView
+                android:id="@+id/tv_autoFriend"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_autoSync"
+                android:layout_marginBottom="@dimen/marginBottomSettingItem"
+                android:text="Auto accept friend"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/label"
+                android:textStyle="bold" />
+
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/tb_autoFriend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tv_autoSync"
+                android:layout_toEndOf="@+id/tv_autoFriend" />
+
+            <TextView
+                android:id="@+id/tv_autoProject"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_autoFriend"
+                android:layout_marginBottom="@dimen/marginBottomSettingItem"
+                android:text="Auto accept friend"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/label"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/tb_autoProject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tv_autoFriend"
+                android:layout_toEndOf="@+id/tv_autoFriend" />
+
+
+            <TextView
+                android:id="@+id/tv_notification"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_autoProject"
+                android:layout_marginBottom="@dimen/marginBottomSettingItem"
+                android:text="Notification"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/label"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/tb_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tv_autoProject"
+                android:layout_toEndOf="@+id/tv_autoFriend" />
+
+        </RelativeLayout>
+    </FrameLayout>
+</ScrollView>

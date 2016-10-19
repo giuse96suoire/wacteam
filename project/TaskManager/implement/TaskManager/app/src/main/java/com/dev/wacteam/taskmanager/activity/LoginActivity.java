@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Process;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -59,10 +61,10 @@ public class LoginActivity extends AppCompatActivity {
     private TextView mTvAlertInternet;
     private AlertDialog mAlertDialog;
     private TextView mTvCurrentMode;
-    private TextView mTvForgotPass;
+    private Button mBtnForgotPass;
     private FrameLayout mFlProgressFrame;
     private final int TIME_OUT = 2000;
-    private TextView mTvStatus;
+    private TextView mTvStatus, mTvLoginLabel, mTvRegisterLabel;
     static final String ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
     private Timer timer;
     private int current_time = 0;
@@ -91,38 +93,22 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_login);
-        mLoginMain = (RelativeLayout) findViewById(R.id.login_main);
         mSignUp = (Button) findViewById(R.id.btn_signUp);
         mSignIn = (Button) findViewById(R.id.btn_signIn);
-        mFlProgressFrame = (FrameLayout) findViewById(R.id.progressFrame);
         mEmail = (EditText) findViewById(R.id.et_email);
         mPassword = (EditText) findViewById(R.id.et_password);
-        mTvStatus = (TextView) findViewById(R.id.tv_status);
-        mTvCurrentMode = (TextView) findViewById(R.id.tv_currentMode);
-        mTvForgotPass = (TextView) findViewById(R.id.tv_forgotPass);
-        mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE + " MODE");
-        mTvForgotPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mIsValidEmail(mEmail.getText().toString())) {
-                    mResetPassword(mEmail.getText().toString());
-                } else {
-                    Toast.makeText(LoginActivity.this, "Email invalid!", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        mTvCurrentMode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) {
-                    ModeManager.mSwitchMode(EnumDefine.MODE.OFFLINE);
-                    mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE + " MODE");
-                } else {
-                    ModeManager.mSwitchMode(EnumDefine.MODE.ONLINE);
-                    mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE + " MODE");
-                }
-            }
-        });
+//        mBtnForgotPass = (Button) findViewById(R.id.btn_forgotPassword);
+//        mBtnForgotPass.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mIsValidEmail(mEmail.getText().toString())) {
+//                    mResetPassword(mEmail.getText().toString());
+//                } else {
+//                    Toast.makeText(LoginActivity.this, "Email invalid!", Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
+//
         mSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,6 +124,31 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mDoSignIn();
+            }
+        });
+
+        mTvLoginLabel = (TextView) findViewById(R.id.tv_login_label);
+        mTvRegisterLabel = (TextView) findViewById(R.id.tv_register_label);
+        int selectColor = Color.parseColor("#673AB7");
+        int noneSelectColor = Color.parseColor("#9575CD");
+        LinearLayout loginLayout = (LinearLayout) findViewById(R.id.layout_login);
+        LinearLayout registerLayout = (LinearLayout) findViewById(R.id.layout_register);
+        mTvLoginLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTvLoginLabel.setBackgroundColor(selectColor);
+                mTvRegisterLabel.setBackgroundColor(noneSelectColor);
+                loginLayout.setVisibility(View.VISIBLE);
+                registerLayout.setVisibility(View.GONE);
+            }
+        });
+        mTvRegisterLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTvLoginLabel.setBackgroundColor(noneSelectColor);
+                mTvRegisterLabel.setBackgroundColor(selectColor);
+                loginLayout.setVisibility(View.GONE);
+                registerLayout.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -156,14 +167,15 @@ public class LoginActivity extends AppCompatActivity {
         new RemoteUser().mFind(user.getUid(), new OnGetDataListener() {
             @Override
             public void onStart() {
-                mTvStatus.setText("Sync data, please wait...");
+//                mTvStatus.setText("Sync data, please wait...");
             }
 
             @Override
             public void onSuccess(DataSnapshot data) {
                 User nUser = data.getValue(User.class);
                 if (nUser == null) {
-                    mGoToActivity(FirstSetting.class);
+//                    mGoToActivity(FirstSetting.class);
+                    mGoToActivity(MainActivity.class);
                 } else {
                     CurrentUser.getInstance().setInfo(nUser);
                     mGoToActivity(MainActivity.class);
@@ -173,7 +185,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailed(DatabaseError databaseError) {
-                mTvStatus.setText("Connect to server failed! ");
+//                mTvStatus.setText("Connect to server failed! ");
             }
         });
 
@@ -182,18 +194,17 @@ public class LoginActivity extends AppCompatActivity {
     private CountDownTimer mCountDown;
 
     private void mStartCountDown() {
-        Toast.makeText(LoginActivity.this, "COUNT", Toast.LENGTH_LONG).show();
         if (mCountDown == null) {
             mCountDown = new CountDownTimer(EnumDefine.TIME_OUT * 1000, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     int pass_time = (int) (EnumDefine.TIME_OUT - (millisUntilFinished / 1000));
                     if (pass_time == EnumDefine.LOW_CONNECTION) {
-                        mTvStatus.setText("Your network too low, please wait... ");
+                        progressDialog.setTitle("Your network too low, please wait... ");
                     } else if (pass_time == EnumDefine.TRY_RECONNECT) {
-                        mTvStatus.setText("Try to reconnect, please wait... ");
+                        progressDialog.setTitle("Try to reconnect, please wait... ");
                     } else if (pass_time == EnumDefine.DISCONNECT) {
-                        mTvStatus.setText("No internet connection. Please check your connection.");
+                        progressDialog.setTitle("No internet connection. Please check your connection.");
                     }
                 }
 
@@ -327,7 +338,7 @@ public class LoginActivity extends AppCompatActivity {
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    Toast.makeText(getApplicationContext(), "Sign in complete!", Toast.LENGTH_LONG).show();
+//                                    Toast.makeText(getApplicationContext(), "Sign in complete!", Toast.LENGTH_LONG).show();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -425,15 +436,22 @@ public class LoginActivity extends AppCompatActivity {
         return (mIsUserLoginedOnline() || mIsUserLoginedOffline()) ? true : false;
     }
 
+    private ProgressDialog progressDialog;
+
     private void mShowProgessDialog() { // show progess "please wait" when sign in or sign up
         mStartCountDown();
-        mFlProgressFrame.setVisibility(View.VISIBLE);
-        mLoginMain.setVisibility(View.INVISIBLE);
+
+        progressDialog = new ProgressDialog(LoginActivity.this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Authenticating...");
+        progressDialog.show();
     }
 
     private void mDismissProgessDialog() {// close progess "please wait"
-        mFlProgressFrame.setVisibility(View.INVISIBLE);
-        mLoginMain.setVisibility(View.VISIBLE);
+//        mFlProgressFrame.setVisibility(View.INVISIBLE);
+//        mLoginMain.setVisibility(View.VISIBLE);
+        progressDialog.dismiss();
     }
 
     private void mDisplayAlert(boolean isHasConnection) { //display dialog alert that user not connect to network

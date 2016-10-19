@@ -57,25 +57,25 @@ public class FirstSetting extends AppCompatActivity {
     }
 
     private void init() {
-        mIvAvatar = (ImageView) findViewById(R.id.iv_avatar);
-        btnSave = (Button) findViewById(R.id.btn_save);
-        btnReset = (Button) findViewById(R.id.btn_reset);
-        etDisplayName = (EditText) findViewById(R.id.et_displayName);
-        etGender = (EditText) findViewById(R.id.et_gender);
-        etDob = (EditText) findViewById(R.id.et_dob);
-        etAdress = (EditText) findViewById(R.id.et_address);
-        etPhoneNumber = (EditText) findViewById(R.id.et_phoneNumber);
-        etEmail = (EditText) findViewById(R.id.et_email);
+//        mIvAvatar = (ImageView) findViewById(R.id.iv_avatar);
+//        btnSave = (Button) findViewById(R.id.btn_save);
+//        btnReset = (Button) findViewById(R.id.btn_reset);
+//        etDisplayName = (EditText) findViewById(R.id.et_displayName);
+//        etGender = (EditText) findViewById(R.id.et_gender);
+//        etDob = (EditText) findViewById(R.id.et_dob);
+//        etAdress = (EditText) findViewById(R.id.et_address);
+//        etPhoneNumber = (EditText) findViewById(R.id.et_phoneNumber);
+//        etEmail = (EditText) findViewById(R.id.et_email);
     }
 
     private void mSaveInfo() {
-        User user = new User();
-        user.setDisplayName(etDisplayName.getText().toString());
-        user.setAddress(etAdress.getText().toString());
-        user.setPhoneNumber(etPhoneNumber.getText().toString());
-        user.setEmail(etEmail.getText().toString());
-        new RemoteUser().mCreate(user);
-        CurrentUser.getInstance().setInfo(user);
+//        User user = new User();
+//        user.setDisplayName(etDisplayName.getText().toString());
+//        user.setAddress(etAdress.getText().toString());
+//        user.setPhoneNumber(etPhoneNumber.getText().toString());
+//        user.setEmail(etEmail.getText().toString());
+//        new RemoteUser().mCreate(user);
+//        CurrentUser.getInstance().setInfo(user);
 
         Intent intent = new Intent(FirstSetting.this, MainActivity.class);
         startActivity(intent);

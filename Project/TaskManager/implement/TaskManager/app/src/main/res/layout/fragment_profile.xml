@@ -1,177 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:id="@+id/tv_avarta"
+        android:background="@drawable/ic_ava"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="148dp"
-        android:layout_gravity="top"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:weightSum="1">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/border_bottom">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.60"
+            android:text="Username"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:padding="8dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="User"
+            android:layout_weight="0.40"
+            android:textSize="18dp"
+            android:padding="8dp"
+            android:id="@+id/tv_username" />
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/border_bottom">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pasword"
+            android:layout_weight="0.60"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:padding="8dp"
+            android:visibility="visible"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pasword"
+            android:layout_weight="0.40"
+            android:bufferType="editable"
+            android:textSize="18dp"
+            android:padding="8dp"
+            android:id="@+id/tv_password"
+            android:visibility="visible"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_edit_black_24dp"
+            android:id="@+id/iv_edit_pass" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/border_bottom">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:layout_weight="0.60"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:padding="8dp"
+            android:visibility="visible"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:layout_weight="0.40"
+            android:textSize="18dp"
+            android:padding="8dp"
+            android:id="@+id/tv_name"
+            android:visibility="visible"/>
 
         <ImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="match_parent"
-            android:layout_height="125dp"
-            android:layout_weight="1.11"
-            android:src="@drawable/com_facebook_profile_picture_blank_square" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_edit_black_24dp"
+            android:id="@+id/iv_edit_name"/>
     </LinearLayout>
-
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/name_fragment_profile"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/label"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/et_displayName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="1"
-                android:hint=""
-                android:textColor="#3378df" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/gender_fragment_profile"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/label"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/et_gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="1"
-                android:hint=""
-                android:textColor="#3378df" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dob_fragment_profile"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/label"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/et_dob"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="1"
-                android:hint=""
-                android:textColor="#3378df" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/address_fragment_profile"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/label"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/et_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="1"
-                android:hint=""
-                android:textColor="#3378df" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/phoneNumber_fragment_profile"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/label"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/et_phoneNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="1"
-                android:hint=""
-                android:textColor="#3378df" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/email_fragment_profile"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/label"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/et_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="1"
-                android:hint=""
-                android:inputType="none"
-                android:textColor="#3378df" />
-        </TableRow>
-    </TableLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:layout_weight="0.9"
-        android:gravity="bottom"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/border_bottom">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gender"
+            android:layout_weight="0.60"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:padding="8dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gender"
+            android:layout_weight="0.40"
+            android:textSize="18dp"
+            android:padding="8dp"
+            android:id="@+id/tv_gender"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_edit_black_24dp"
+            android:id="@+id/iv_edit_gender"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/border_bottom">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Birthdate"
+            android:layout_weight="0.60"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:padding="8dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Birthdate"
+            android:layout_weight="0.40"
+            android:textSize="18dp"
+            android:padding="8dp"
+            android:id="@+id/tv_birthdate"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_edit_black_24dp"
+            android:id="@+id/iv_edit_birthdate"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_bottom"
         android:orientation="horizontal">
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:layout_weight="0.60"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:padding="8dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:layout_weight="0.40"
+            android:textSize="18dp"
+            android:padding="8dp"
+            android:id="@+id/tv_email"/>
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_bottom"
+        android:orientation="horizontal">
         <Button
-            android:id="@+id/btn_reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
             android:layout_weight="0.50"
             android:background="@drawable/border_button_profile"
-            android:text="@string/reset_fragment_profile" />
+            android:text="Reset" />
 
         <Button
-            android:id="@+id/btn_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:layout_weight="0.50"
             android:background="@drawable/border_button_profile"
-            android:text="@string/save_fragment_profile"
+            android:text="Save"
             android:textColor="#3378df" />
 
     </LinearLayout>

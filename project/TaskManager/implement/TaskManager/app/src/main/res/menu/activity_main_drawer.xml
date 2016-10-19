@@ -5,40 +5,40 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_home"
-            android:title="Home" />
+            android:title="@string/title_home_fragment" />
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_menu_profile"
-            android:title="Profile" />
+            android:title="@string/title_profile_fragment" />
 
         <item
             android:id="@+id/nav_allProject"
             android:icon="@drawable/ic_menu_project"
-            android:title="All Project" />
+            android:title="@string/title_all_project_fragment" />
         <item
             android:id="@+id/nav_today"
             android:icon="@drawable/ic_menu_today"
-            android:title="Today" />
+            android:title="@string/title_all_today_fragment" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/title_communicate_activity_main_drawer">
         <menu>
             <item
                 android:id="@+id/nav_friend"
                 android:icon="@drawable/ic_menu_friend"
-                android:title="Friend" />
+                android:title="@string/title_friend_fragment" />
             <item
                 android:id="@+id/nav_setting"
                 android:icon="@drawable/ic_menu_setting"
-                android:title="Setting" />
+                android:title="@string/title_setting_fragment" />
         </menu>
     </item>
-    <item android:title="System">
+    <item android:title="@string/title_system_activity_main_drawer">
         <menu>
             <item
                 android:id="@+id/nav_signOut"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Sign Out" />
+                android:title="@string/title_signOut" />
 
         </menu>
     </item>

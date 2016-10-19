@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="148dp"
         android:layout_gravity="top"
-
         android:gravity="center"
         android:orientation="vertical"
         android:weightSum="1">
@@ -31,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Full name:"
+                android:text="@string/name_fragment_profile"
                 android:textAlignment="textStart"
                 android:textSize="@dimen/label"
                 android:textStyle="bold" />
@@ -51,7 +50,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gender:"
+                android:text="@string/gender_fragment_profile"
                 android:textAlignment="textStart"
                 android:textSize="@dimen/label"
                 android:textStyle="bold" />
@@ -71,7 +70,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Birth date:"
+                android:text="@string/dob_fragment_profile"
                 android:textAlignment="textStart"
                 android:textSize="@dimen/label"
                 android:textStyle="bold" />
@@ -91,7 +90,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address:"
+                android:text="@string/address_fragment_profile"
                 android:textAlignment="textStart"
                 android:textSize="@dimen/label"
                 android:textStyle="bold" />
@@ -111,7 +110,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Phone number:"
+                android:text="@string/phoneNumber_fragment_profile"
                 android:textAlignment="textStart"
                 android:textSize="@dimen/label"
                 android:textStyle="bold" />
@@ -131,7 +130,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email:"
+                android:text="@string/email_fragment_profile"
                 android:textAlignment="textStart"
                 android:textSize="@dimen/label"
                 android:textStyle="bold" />
@@ -163,7 +162,7 @@
             android:layout_marginRight="8dp"
             android:layout_weight="0.50"
             android:background="@drawable/border_button_profile"
-            android:text="Reset" />
+            android:text="@string/reset_fragment_profile" />
 
         <Button
             android:id="@+id/btn_save"
@@ -172,7 +171,7 @@
             android:layout_marginLeft="8dp"
             android:layout_weight="0.50"
             android:background="@drawable/border_button_profile"
-            android:text="Save"
+            android:text="@string/save_fragment_profile"
             android:textColor="#3378df" />
 
     </LinearLayout>

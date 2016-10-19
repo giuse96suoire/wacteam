@@ -35,6 +35,7 @@ import com.dev.wacteam.taskmanager.manager.SettingsManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import layout.CreateProject;
 import layout.FriendFragment;
 import layout.HomeFragment;
 import layout.ProfileFragment;
@@ -44,6 +45,7 @@ import layout.TodayFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ProfileFragment.OnFragmentInteractionListener,
+        CreateProject.OnFragmentInteractionListener,
         FriendFragment.OnFragmentInteractionListener, SettingFragment.OnFragmentInteractionListener,
         HomeFragment.OnFragmentInteractionListener, ProjectFragment.OnFragmentInteractionListener, TodayFragment.OnFragmentInteractionListener {
     private FirebaseAuth mAuth;
@@ -235,6 +237,8 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(MainActivity.this, "Create", Toast.LENGTH_LONG).show();
+                        callFragment(new CreateProject());
+                        setTitle(R.string.title_create_project_fragment);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

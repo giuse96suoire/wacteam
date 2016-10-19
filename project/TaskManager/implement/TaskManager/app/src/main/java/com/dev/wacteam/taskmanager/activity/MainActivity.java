@@ -37,6 +37,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.zip.Inflater;
 
+import layout.AboutUsFragment;
 import layout.FriendFragment;
 import layout.HomeFragment;
 import layout.ProfileFragment;
@@ -47,7 +48,8 @@ import layout.TodayFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ProfileFragment.OnFragmentInteractionListener,
         FriendFragment.OnFragmentInteractionListener, SettingFragment.OnFragmentInteractionListener,
-        HomeFragment.OnFragmentInteractionListener, ProjectFragment.OnFragmentInteractionListener, TodayFragment.OnFragmentInteractionListener {
+        HomeFragment.OnFragmentInteractionListener, ProjectFragment.OnFragmentInteractionListener,
+        TodayFragment.OnFragmentInteractionListener,AboutUsFragment.OnFragmentInteractionListener {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private TextView mTvUserFullName, mTvUserEmail;
@@ -206,6 +208,9 @@ public class MainActivity extends AppCompatActivity
             callFragment(new HomeFragment());
             setTitle(R.string.title_home_fragment);
 
+        }else if (id == R.id.nav_aboutUs){
+            callFragment(new AboutUsFragment());
+            setTitle(R.string.title_aboutUs_fragment);
         } else if (id == R.id.nav_signOut) {
             if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) {
                 mAuth.signOut();

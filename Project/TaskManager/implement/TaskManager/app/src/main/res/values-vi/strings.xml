@@ -51,6 +51,7 @@
     <string name="userEmail_nav_header_main">android.studio@android.com</string>
     <string name="title_communicate_activity_main_drawer">Tương tác</string>
     <string name="title_system_activity_main_drawer">Hệ thống</string>
+    <string name="title_aboutUs_fragment">Thông tin ứng dụng</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -140,7 +141,14 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won�t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-
+    <string name="aboutUs">
+        "Quản lý công việc\n"
+        "Phiên bản: 1.0\n"
+        "Thiết kế và thực hiện: Wacteam\n"
+        "Ngày hoàn thành: 15/10/2016\n"
+        "Liên hệ chúng tôi: wacteam.com và fb.com/wacteamvn\n"
+        "Hi vọng bạn sẽ thích nó"
+    </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

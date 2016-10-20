@@ -1,5 +1,8 @@
 package com.dev.wacteam.taskmanager.database;
 
+import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
+import com.dev.wacteam.taskmanager.model.User;
+
 /**
  * Created by giuse96suoire on 10/16/2016.
  */
@@ -23,12 +26,10 @@ public class LocalUser implements BaseModel {
     }
 
     @Override
-    public void mReset(Object o) {
+    public void mFind(String key, OnGetDataListener listener) {
 
     }
 
-    @Override
-    public Object mFind(String key) {
-        return null;
-    }
+
+
 }

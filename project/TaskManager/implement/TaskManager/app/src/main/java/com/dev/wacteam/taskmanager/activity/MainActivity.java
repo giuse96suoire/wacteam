@@ -1,33 +1,41 @@
 package com.dev.wacteam.taskmanager.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.manager.NotificationsManager;
 import com.dev.wacteam.taskmanager.manager.SettingsManager;
-import com.dev.wacteam.taskmanager.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import layout.CreateProject;
 import layout.FriendFragment;
 import layout.HomeFragment;
 import layout.ProfileFragment;
@@ -37,6 +45,7 @@ import layout.TodayFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ProfileFragment.OnFragmentInteractionListener,
+        CreateProject.OnFragmentInteractionListener,
         FriendFragment.OnFragmentInteractionListener, SettingFragment.OnFragmentInteractionListener,
         HomeFragment.OnFragmentInteractionListener, ProjectFragment.OnFragmentInteractionListener, TodayFragment.OnFragmentInteractionListener {
     private FirebaseAuth mAuth;
@@ -57,7 +66,8 @@ public class MainActivity extends AppCompatActivity
             if (savedInstanceState != null) {
                 return;
             }
-            ProfileFragment blankFragment1 = new ProfileFragment();
+            HomeFragment blankFragment1 = new HomeFragment();
+
             getSupportFragmentManager().beginTransaction().add(R.id.content_main, blankFragment1).commit();
         }
         init();
@@ -67,31 +77,25 @@ public class MainActivity extends AppCompatActivity
         } else {
             System.out.println("IS OFFLINE MODE");
         }
-        User user = new User();
-        user.setUid("123");
-        user.setDisplayName("haha");
-
-
-
-
 
 
     }
 
 
     private void mSwitchToOnlineMode() {
+        System.out.println("SWICH TO ONLINE MODE ========>");
         mAuth = FirebaseAuth.getInstance();
         mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (mAuth.getCurrentUser() == null) {
+                    System.out.println("USER NULL==========================>");
                     mUser = null;
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+                    mGoToActivity(LoginActivity.class);
+                    mAuth.removeAuthStateListener(this);
                 } else {
                     mUser = mAuth.getCurrentUser();
-//                    mUpdateUserUI();
+                    mUpdateUserUI();
                 }
             }
         });
@@ -105,8 +109,9 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                mDisplayQuickCreateDialog();
             }
         });
 
@@ -118,29 +123,18 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_home);
 
 
     }
 
     private void mUpdateUserUI() {
         mTvUserFullName = (TextView) findViewById(R.id.tv_userFullName);
-        if (mTvUserFullName == null) {
-            System.out.println("=====================> NULL");
-        }
+
         mTvUserEmail = (TextView) findViewById(R.id.tv_userEmail);
 
-        if (mUser.getDisplayName() == null) {
-            mTvUserFullName.setText("Your name here");
-        } else {
-            mTvUserFullName.setText(mUser.getDisplayName());
-        }
-        if (mUser.getEmail() == null) {
-            mTvUserEmail.setText("Your email here");
-
-        } else {
-            mTvUserEmail.setText(mUser.getEmail());
-
-        }
+//        mTvUserFullName.setText(CurrentUser.getInstance().getDisplayName() == null ? "Your name" : CurrentUser.getInstance().getDisplayName());
+//        mTvUserEmail.setText(CurrentUser.getInstance().getEmail() == null ? "Your email" : CurrentUser.getInstance().getEmail());
 
     }
 
@@ -190,18 +184,28 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) { // camera fragment
-            // Handle the camera action
             callFragment(new ProfileFragment());
+            setTitle(R.string.title_profile_fragment);
         } else if (id == R.id.nav_friend) {
             callFragment(new FriendFragment());
+            setTitle(R.string.title_friend_fragment);
+
         } else if (id == R.id.nav_setting) {
             callFragment(new SettingFragment());
+            setTitle(R.string.title_setting_fragment);
+
         } else if (id == R.id.nav_allProject) {
             callFragment(new ProjectFragment());
+            setTitle(R.string.title_all_project_fragment);
+
         } else if (id == R.id.nav_today) {
             callFragment(new TodayFragment());
+            setTitle(R.string.title_all_today_fragment);
+
         } else if (id == R.id.nav_home) {
             callFragment(new HomeFragment());
+            setTitle(R.string.title_home_fragment);
+
         } else if (id == R.id.nav_signOut) {
             if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) {
                 mAuth.signOut();
@@ -219,6 +223,62 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(getApplicationContext(), c);
         startActivity(intent);
         this.finish();
+
+    }
+
+    private void mDisplayQuickCreateDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+        final View view = inflater.inflate(R.layout.quick_create_project, null);
+        builder.setTitle("What you want to create?")
+                .setView(view)
+                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainActivity.this, "Create", Toast.LENGTH_LONG).show();
+                        callFragment(new CreateProject());
+                        setTitle(R.string.title_create_project_fragment);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        Spinner chooseProject = (Spinner) view.findViewById(R.id.sp_chooseProject);
+        EditText projectName = (EditText) view.findViewById(R.id.et_projectName);
+        ImageView project = (ImageView) view.findViewById(R.id.iv_project);
+        ImageView task = (ImageView) view.findViewById(R.id.iv_task);
+        project.setBackgroundColor(Color.rgb(120, 133, 224));
+        String[] data = new String[]{"Project 1", "Project 2", "Project 3"};
+        chooseProject.setAdapter(new ArrayAdapter<String>(MainActivity.this, R.layout.support_simple_spinner_dropdown_item, data));
+        project.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                projectName.setVisibility(View.VISIBLE);
+                chooseProject.setVisibility(View.GONE);
+                project.setBackgroundColor(Color.rgb(120, 133, 224));
+                task.setBackgroundColor(Color.WHITE);
+
+
+            }
+        });
+        task.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseProject.setVisibility(View.VISIBLE);
+                projectName.setVisibility(View.GONE);
+                task.setBackgroundColor(Color.rgb(120, 133, 224));
+                project.setBackgroundColor(Color.WHITE);
+
+            }
+        });
+        dialog.show();
+
 
     }
 

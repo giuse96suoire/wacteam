@@ -1,36 +1,39 @@
 package com.dev.wacteam.taskmanager.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.Spinner;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.database.RemoteUser;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.manager.StorageManager;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.dev.wacteam.taskmanager.model.User;
+import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.io.IOException;
 
 public class FirstSetting extends AppCompatActivity {
     ImageView mIvAvatar;
+    Spinner mSpGender;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReferenceFromUrl("gs://project-1106967331332325764.appspot.com");
+    private Button btnSave, btnReset;
+    private EditText etDisplayName, etGender, etDob, etAdress, etPhoneNumber, etEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first_setting);
-        mIvAvatar = (ImageView) findViewById(R.id.iv_avatar);
+        setContentView(R.layout.fragment_profile);
+        init();
+//        mSpGender = (Spinner) findViewById(R.id.sp_gender);
+        final String[] dataGender = new String[]{"Male", "Female"};
+//        mSpGender.setAdapter(new ArrayAdapter<String>(FirstSetting.this, android.R.layout.simple_expandable_list_item_1, dataGender));
         StorageManager.mDownloadImage(mIvAvatar, "userAvatar/avatar.jpg");
         mIvAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +41,54 @@ public class FirstSetting extends AppCompatActivity {
                 mChooseAvatar();
             }
         });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSaveInfo();
+            }
+        });
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mResetInfo();
+            }
+        });
+    }
+
+    private void init() {
+//        mIvAvatar = (ImageView) findViewById(R.id.iv_avatar);
+//        btnSave = (Button) findViewById(R.id.btn_save);
+//        btnReset = (Button) findViewById(R.id.btn_reset);
+//        etDisplayName = (EditText) findViewById(R.id.et_displayName);
+//        etGender = (EditText) findViewById(R.id.et_gender);
+//        etDob = (EditText) findViewById(R.id.et_dob);
+//        etAdress = (EditText) findViewById(R.id.et_address);
+//        etPhoneNumber = (EditText) findViewById(R.id.et_phoneNumber);
+//        etEmail = (EditText) findViewById(R.id.et_email);
+    }
+
+    private void mSaveInfo() {
+//        User user = new User();
+//        user.setDisplayName(etDisplayName.getText().toString());
+//        user.setAddress(etAdress.getText().toString());
+//        user.setPhoneNumber(etPhoneNumber.getText().toString());
+//        user.setEmail(etEmail.getText().toString());
+//        new RemoteUser().mCreate(user);
+//        CurrentUser.getInstance().setInfo(user);
+
+        Intent intent = new Intent(FirstSetting.this, MainActivity.class);
+        startActivity(intent);
+        this.finish();
+    }
+
+    private void mResetInfo() {
+        etDisplayName.setText("");
+        etGender.setText("");
+        etDob.setText("");
+        etAdress.setText("");
+        etPhoneNumber.setText("");
+        etEmail.setText("");
     }
 
     private void mChooseAvatar() {
@@ -55,3 +106,4 @@ public class FirstSetting extends AppCompatActivity {
         }
     }
 }
+;

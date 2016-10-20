@@ -4,10 +4,90 @@
     android:layout_height="match_parent"
     tools:context="layout.SettingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Setting Fragment" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:background="@drawable/border_bottom">
+
+                <TextView
+                    android:textSize="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sound"
+                    android:padding="10dp"/>
+
+                <Switch
+                    android:paddingLeft="10dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"/>
+
+            </TableRow>
+
+            <TableRow
+                android:background="@drawable/border_bottom">
+
+                <TextView
+                    android:textSize="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notification"
+                    android:padding="10dp"
+                    />
+
+                <Switch
+                    android:paddingLeft="10dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/switch1"/>
+
+            </TableRow>
+
+            <TableRow
+                android:background="@drawable/border_bottom">
+
+                <TextView
+                    android:padding="10dp"
+                    android:textSize="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Auto accept join project"
+                    />
+
+                <Switch
+                    android:paddingLeft="10dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"/>
+
+            </TableRow>
+
+            <TableRow
+                android:background="@drawable/border_bottom">
+
+                <TextView
+                    android:padding="10dp"
+                    android:textSize="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Auto backup data to local"/>
+
+                <Switch
+                    android:paddingLeft="10dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+
+            </TableRow>
+
+
+        </TableLayout>
+
+
+    </LinearLayout>
 
 </FrameLayout>

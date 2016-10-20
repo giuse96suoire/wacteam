@@ -3,7 +3,7 @@ package com.dev.wacteam.taskmanager.model;
 import java.util.ArrayList;
 import java.util.Date;
 
-import io.realm.RealmObject;
+
 
 /**
  * Created by giuse96suoire on 10/12/2016.

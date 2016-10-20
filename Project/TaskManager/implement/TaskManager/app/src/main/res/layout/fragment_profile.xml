@@ -193,7 +193,5 @@
             android:background="@drawable/border_button_profile"
             android:text="Save"
             android:textColor="#3378df" />
-
     </LinearLayout>
-
 </LinearLayout>

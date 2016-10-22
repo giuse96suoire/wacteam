@@ -13,9 +13,9 @@ public class RemoteUser extends RemoteDatabase implements BaseModel {
 
     }
 
-    private static final String USER_CHILD = "users";
-    private static final String USER_LIST_CHILD = USER_CHILD + "/list";
-    private static final String USER_STATISTIC_CHILD = USER_CHILD + "/statistic";
+    public static final String USER_CHILD = "users";
+    public static final String USER_LIST_CHILD = USER_CHILD + "/list";
+    public static final String USER_STATISTIC_CHILD = USER_CHILD + "/statistic";
 
 
     @Override

@@ -40,5 +40,6 @@ dependencies {
     compile 'com.google.firebase:firebase-storage:9.6.1'
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'
+    compile 'com.wdullaer:materialdatetimepicker:2.5.0'
 }
 apply plugin: 'com.google.gms.google-services'

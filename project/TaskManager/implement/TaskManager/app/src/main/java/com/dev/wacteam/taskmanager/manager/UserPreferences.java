@@ -45,11 +45,7 @@ public class UserPreferences {
         user.setUid(sharedPreferences.getString(UID, "false"));
         user.setPhoneNumber(sharedPreferences.getString(PHONE_NUMBER, "false"));
         user.setAddress(sharedPreferences.getString(ADDRESS, "flase"));
-        try {
-            user.setDob(new SimpleDateFormat("dd/MM/yyyy").parse(sharedPreferences.getString(DOB, "02/09/1975")));
-        } catch (ParseException e) {
-            user.setDob(new Date());
-        }
+        user.setDob("");
         if (user.getDisplayName().equals("false") || user.getEmail().equals("false")) {
             return null;
         }
@@ -65,7 +61,7 @@ public class UserPreferences {
         editor.putString(DOB, user.getDob().toString());
         editor.putString(PROVIDER_ID, user.getProviderId());
         editor.putString(UID, user.getUid());
-        editor.putString(PHONE_NUMBER,user.getPhoneNumber());
+        editor.putString(PHONE_NUMBER, user.getPhoneNumber());
         editor.putString(ADDRESS, user.getAddress());
     }
 }

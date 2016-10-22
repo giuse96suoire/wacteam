@@ -16,7 +16,7 @@ public class User {
 
     private String uid;
     private String displayName;
-    private Date dob;
+    private String dob;
     private String email;
     private boolean emailVerified;
     private Uri photoUrl;
@@ -96,7 +96,7 @@ public class User {
         this.displayName = displayName;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 
@@ -116,7 +116,7 @@ public class User {
         return displayName;
     }
 
-    public Date getDob() {
+    public String getDob() {
         return dob;
     }
 

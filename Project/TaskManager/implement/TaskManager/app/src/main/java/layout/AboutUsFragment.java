@@ -5,34 +5,22 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
-import com.dev.wacteam.taskmanager.model.User;
-import com.dev.wacteam.taskmanager.system.CurrentUser;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-
-import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ProfileFragment.OnFragmentInteractionListener} interface
+ * {@link AboutUsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ProfileFragment#newInstance} factory method to
+ * Use the {@link AboutUsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
+public class AboutUsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -44,57 +32,8 @@ public class ProfileFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ProfileFragment() {
+    public AboutUsFragment() {
         // Required empty public constructor
-    }
-
-    private EditText mEtFullName, mEtEmail, mEtAddress, mEtPhoneNumber, mEtDob;
-    private AutoCompleteTextView mAcJob;
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        init();
-        User user = new User();
-        user = CurrentUser.getUserInfo(getContext());
-        mEtEmail.setText(user.getEmail());
-        mEtAddress.setText(user.getAddress());
-        mEtFullName.setText(user.getDisplayName());
-        mEtPhoneNumber.setText(user.getPhoneNumber());
-        mEtDob.setText(user.getDob());
-        String[] job_arr = getResources().getStringArray(R.array.job_array);
-        mAcJob.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, job_arr));
-        Calendar now = Calendar.getInstance();
-        final DatePickerDialog dpd = DatePickerDialog.newInstance(
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-                        mEtDob.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                    }
-                },
-                now.get(Calendar.DAY_OF_MONTH),
-                now.get(Calendar.MONTH),
-                now.get(Calendar.YEAR)
-        );
-        dpd.setYearRange(1940, 2008); //TODO: change time dependent on current time;
-        mEtDob.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
-                }
-            }
-        });
-
-    }
-
-    private void init() {
-        mEtFullName = (EditText) getView().findViewById(R.id.et_fullName);
-        mEtEmail = (EditText) getView().findViewById(R.id.et_email);
-        mEtAddress = (EditText) getView().findViewById(R.id.et_address);
-        mEtPhoneNumber = (EditText) getView().findViewById(R.id.et_phoneNumber);
-        mAcJob = (AutoCompleteTextView) getView().findViewById(R.id.et_job);
-        mEtDob = (EditText) getView().findViewById(R.id.et_dob);
     }
 
     /**
@@ -103,11 +42,11 @@ public class ProfileFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
+     * @return A new instance of fragment AboutUsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
+    public static AboutUsFragment newInstance(String param1, String param2) {
+        AboutUsFragment fragment = new AboutUsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -128,7 +67,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_about_us, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -137,19 +76,17 @@ public class ProfileFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) return;
-        if (activity instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) activity;
+        if (activity instanceof AboutUsFragment.OnFragmentInteractionListener) {
+            mListener = (AboutUsFragment.OnFragmentInteractionListener) activity;
         } else {
             throw new RuntimeException(activity.toString()
                     + " must implement OnFragmentInteractionListener ");
         }
     }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -166,7 +103,6 @@ public class ProfileFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
 
     /**
      * This interface must be implemented by activities that contain this

@@ -5,11 +5,11 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TableLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TableRow
@@ -25,8 +25,8 @@
                 <Switch
                     android:id="@+id/switch_sound"
                     android:paddingLeft="@dimen/project_padding"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
             </TableRow>
 
@@ -43,8 +43,8 @@
 
                 <Switch
                     android:paddingLeft="@dimen/project_padding"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:id="@+id/switch_notification"/>
 
             </TableRow>
@@ -63,8 +63,8 @@
                 <Switch
                     android:id="@+id/switch_auto_accept"
                     android:paddingLeft="@dimen/project_padding"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
             </TableRow>
 
@@ -81,8 +81,8 @@
                 <Switch
                     android:id="@+id/switch_auto_backup"
                     android:paddingLeft="@dimen/project_padding"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
             </TableRow>
 

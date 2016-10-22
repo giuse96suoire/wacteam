@@ -11,4 +11,21 @@
     <dimen name="label">18dp</dimen>
     <dimen name="marginBottomSettingItem">15dp</dimen>
     <dimen name="input_text_size">26dp</dimen>
+    <!-- default screen margins, padding, textsize for the project-->
+    <!--textsize-->
+    <dimen name="projext_text_size_big">30dp</dimen>
+    <dimen name="project_text_size_medium">24dp</dimen>
+    <dimen name="projcet_text_size_small">16dp</dimen>
+    <!--padding,margin-->
+    <dimen name="project_padding">10dp</dimen>
+    <dimen name="task_date_margin">40dp</dimen>
+    <!--icon small-->
+    <dimen name="icon_small_width">30dp</dimen>
+    <dimen name="icon_small_height">30dp</dimen>
+    <!--icon medium-->
+    <dimen name="icon_medium_width">50dp</dimen>
+    <dimen name="icon_medium_height">50dp</dimen>
+    <!--icon big-->
+    <dimen name="icon_big_width">70dp</dimen>
+    <dimen name="icon_big_height">70dp</dimen>
 </resources>

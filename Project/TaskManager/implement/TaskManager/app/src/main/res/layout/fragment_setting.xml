@@ -1,4 +1,4 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,14 +16,15 @@
                 android:background="@drawable/border_bottom">
 
                 <TextView
-                    android:textSize="24dp"
+                    android:textSize="@dimen/project_text_size_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sound"
-                    android:padding="10dp"/>
+                    android:padding="@dimen/project_padding"/>
 
                 <Switch
-                    android:paddingLeft="10dp"
+                    android:id="@+id/switch_sound"
+                    android:paddingLeft="@dimen/project_padding"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"/>
 
@@ -33,18 +34,18 @@
                 android:background="@drawable/border_bottom">
 
                 <TextView
-                    android:textSize="24dp"
+                    android:textSize="@dimen/project_text_size_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Notification"
-                    android:padding="10dp"
+                    android:padding="@dimen/project_padding"
                     />
 
                 <Switch
-                    android:paddingLeft="10dp"
+                    android:paddingLeft="@dimen/project_padding"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:id="@+id/switch1"/>
+                    android:id="@+id/switch_notification"/>
 
             </TableRow>
 
@@ -52,15 +53,16 @@
                 android:background="@drawable/border_bottom">
 
                 <TextView
-                    android:padding="10dp"
-                    android:textSize="24dp"
+                    android:padding="@dimen/project_padding"
+                    android:textSize="@dimen/project_text_size_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Auto accept join project"
                     />
 
                 <Switch
-                    android:paddingLeft="10dp"
+                    android:id="@+id/switch_auto_accept"
+                    android:paddingLeft="@dimen/project_padding"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"/>
 
@@ -70,14 +72,15 @@
                 android:background="@drawable/border_bottom">
 
                 <TextView
-                    android:padding="10dp"
-                    android:textSize="24dp"
+                    android:padding="@dimen/project_padding"
+                    android:textSize="@dimen/project_text_size_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Auto backup data to local"/>
 
                 <Switch
-                    android:paddingLeft="10dp"
+                    android:id="@+id/switch_auto_backup"
+                    android:paddingLeft="@dimen/project_padding"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" />
 

@@ -4,42 +4,11 @@
     android:layout_height="match_parent"
     tools:context="layout.FriendFragment">
 
-    <LinearLayout
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_friends"
+        android:scrollbars="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_bottom">
-
-        <ImageView
-            android:id="@+id/imgv_friend_ava"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/ic_ava"
-            android:layout_alignParentLeft="true"
-            />
-
-        <TextView
-                android:id="@+id/txtv_friend_name"
-                android:textSize="24dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tên Friend "
-                android:padding="10dp"
-                android:layout_toRightOf="@+id/imgv_friend_ava"/>
-
-        <ImageButton
-            android:id="@+id/imgv_friend_remove"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_remove"
-            android:layout_alignParentRight="true"/>
-
-    </RelativeLayout>
-
-    </LinearLayout>
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

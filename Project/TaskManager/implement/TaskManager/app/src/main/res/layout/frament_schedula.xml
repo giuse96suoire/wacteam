@@ -59,33 +59,11 @@
         </RelativeLayout>
 
 
-        <TableLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_schedular"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TableRow
-            android:background="@drawable/border_bottom"
-            android:padding="0dp">
-
-            <TextView
-                android:id="@+id/txtv_schedula_hours1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="hours"
-                android:textSize="24dp"
-                android:background="@drawable/border_right"/>
-
-            <TextView
-                android:id="@+id/txtv_schedula_todo1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="to do"
-                android:textSize="26dp"
-                android:padding="8dp"/>
-
-            </TableRow>
-
-        </TableLayout>
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 

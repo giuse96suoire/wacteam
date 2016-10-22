@@ -53,6 +53,16 @@
     <string name="userEmail_nav_header_main">android.studio@android.com</string>
     <string name="title_communicate_activity_main_drawer">Communicate</string>
     <string name="title_system_activity_main_drawer">System</string>
+    <string name="title_aboutUs_fragment">About us</string>
+    <string name="aboutUs">
+        "Task Manager\n"
+        "Version: 1.0\n"
+        "Create and develop: Wacteam\n"
+        "Created date: 15/10/2016\n"
+        "Contact us: wacteam.com and fb.com/wacteamvn\n"
+        "Hope you enjoy it"
+    </string>
+
     <string name="project_name_label">Project name</string>
     <string name="project_type_label">Type</string>
     <string name="deadline_label">Deadline</string>

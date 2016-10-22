@@ -4,10 +4,68 @@
     android:layout_height="match_parent"
     tools:context="layout.ProjectFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Project Fragment" />
+        android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/txtv_project_name"
+            android:padding="@dimen/project_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ten Project"
+            android:textSize="@dimen/projext_text_size_big"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/tmgbtn_project_type"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/ic_p"
+                android:layout_marginLeft="10dp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp">
+
+                <TextView
+                    android:id="@+id/txtv_project_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="date"
+                    android:textSize="@dimen/project_text_size_medium"/>
+
+                <TextView
+                    android:id="@+id/txtv_project_deadline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="deadline"
+                    android:textSize="@dimen/project_text_size_medium"/>
+
+                <TextView
+                    android:id="@+id/txtv_project_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ten nguoi tham gia"
+                    android:textSize="@dimen/projcet_text_size_small"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_task"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
+
+
+    </LinearLayout>
 </FrameLayout>

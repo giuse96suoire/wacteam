@@ -1,101 +1,95 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="layout.SettingFragment">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
 
-        <!-- TODO: Update blank fragment layout -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:background="@drawable/border_bottom">
+
+                <TextView
+                    android:textSize="@dimen/project_text_size_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sound"
+                    android:padding="@dimen/project_padding"/>
+
+                <Switch
+                    android:id="@+id/switch_sound"
+                    android:paddingLeft="@dimen/project_padding"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"/>
+
+            </TableRow>
+
+            <TableRow
+                android:background="@drawable/border_bottom">
+
+                <TextView
+                    android:textSize="@dimen/project_text_size_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notification"
+                    android:padding="@dimen/project_padding"
+                    />
+
+                <Switch
+                    android:paddingLeft="@dimen/project_padding"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/switch_notification"/>
+
+            </TableRow>
+
+            <TableRow
+                android:background="@drawable/border_bottom">
+
+                <TextView
+                    android:padding="@dimen/project_padding"
+                    android:textSize="@dimen/project_text_size_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Auto accept join project"
+                    />
+
+                <Switch
+                    android:id="@+id/switch_auto_accept"
+                    android:paddingLeft="@dimen/project_padding"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"/>
+
+            </TableRow>
+
+            <TableRow
+                android:background="@drawable/border_bottom">
+
+                <TextView
+                    android:padding="@dimen/project_padding"
+                    android:textSize="@dimen/project_text_size_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Auto backup data to local"/>
+
+                <Switch
+                    android:id="@+id/switch_auto_backup"
+                    android:paddingLeft="@dimen/project_padding"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+
+            </TableRow>
 
 
-            <TextView
-                android:id="@+id/tv_autoSync"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/marginBottomSettingItem"
-                android:text="Auto sync data"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/label"
-                android:textStyle="bold" />
-
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/tb_autoSync"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/tv_autoSync"
-                android:layout_toEndOf="@+id/tv_autoSync" />
+        </TableLayout>
 
 
-            <TextView
-                android:id="@+id/tv_autoFriend"
+    </LinearLayout>
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_autoSync"
-                android:layout_marginBottom="@dimen/marginBottomSettingItem"
-                android:text="Auto accept friend"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/label"
-                android:textStyle="bold" />
-
-
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/tb_autoFriend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/tv_autoSync"
-                android:layout_toEndOf="@+id/tv_autoFriend" />
-
-            <TextView
-                android:id="@+id/tv_autoProject"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_autoFriend"
-                android:layout_marginBottom="@dimen/marginBottomSettingItem"
-                android:text="Auto accept friend"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/label"
-                android:textStyle="bold" />
-
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/tb_autoProject"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/tv_autoFriend"
-                android:layout_toEndOf="@+id/tv_autoFriend" />
-
-
-            <TextView
-                android:id="@+id/tv_notification"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_autoProject"
-                android:layout_marginBottom="@dimen/marginBottomSettingItem"
-                android:text="Notification"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/label"
-                android:textStyle="bold" />
-
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/tb_notification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/tv_autoProject"
-                android:layout_toEndOf="@+id/tv_autoFriend" />
-
-        </RelativeLayout>
-    </FrameLayout>
-</ScrollView>
+</FrameLayout>

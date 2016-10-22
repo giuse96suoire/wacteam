@@ -1,20 +1,22 @@
 package com.dev.wacteam.taskmanager.activity;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Process;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -29,7 +31,6 @@ import com.dev.wacteam.taskmanager.database.RemoteUser;
 import com.dev.wacteam.taskmanager.dialog.DialogAlert;
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
-import com.dev.wacteam.taskmanager.manager.ModeManager;
 import com.dev.wacteam.taskmanager.manager.NetworkManager;
 import com.dev.wacteam.taskmanager.manager.SettingsManager;
 import com.dev.wacteam.taskmanager.model.User;
@@ -40,20 +41,24 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
+import java.util.ArrayList;
 import java.util.Timer;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
     private CallbackManager mCallbackManager;
     private LoginButton mLoginButton;
     private FirebaseAuth mAuth;
     private Button mSignUp, mSignIn;
-    private EditText mEmail;
+    private AutoCompleteTextView mEmail;
     private EditText mPassword;
     private ProgressDialog mDialog;
     private ProgressBar mProgressBar;
@@ -73,30 +78,49 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         IntentFilter filter = new IntentFilter(ACTION);
-        this.registerReceiver(mReceiver, filter);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        this.unregisterReceiver(mReceiver);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        if (mIsUserLoginedOnline()) { // if user is login in online mode
-            mGoToActivity(MainActivity.class); // go to main activity
-        } else if (mIsUserLoginedOffline()) {
-            // check if user is login in offline mode
+        if (CurrentUser.isLogined(getApplicationContext())) {
+            mGoToActivity(MainActivity.class);
         }
+        mAuth = FirebaseAuth.getInstance();
 
         setContentView(R.layout.activity_login);
-        mSignUp = (Button) findViewById(R.id.btn_signUp);
-        mSignIn = (Button) findViewById(R.id.btn_signIn);
-        mEmail = (EditText) findViewById(R.id.et_email);
-        mPassword = (EditText) findViewById(R.id.et_password);
+
+        mSignUp = (Button)
+
+                findViewById(R.id.btn_signUp);
+
+        mSignIn = (Button)
+
+                findViewById(R.id.btn_signIn);
+
+        mEmail = (AutoCompleteTextView)
+
+                findViewById(R.id.et_email);
+
+        mPassword = (EditText)
+
+                findViewById(R.id.et_password);
+
+        ArrayList<String> mail = mGetSystemEmail();
+        mEmail.setAdapter(
+                new ArrayAdapter<String>(
+
+                        getBaseContext(),
+
+                        android.R.layout.simple_list_item_1, mail
+//                        new String[]{"Giuse96suoire@gmail.com","abc@gmail.com"}
+                )
+        );
 //        mBtnForgotPass = (Button) findViewById(R.id.btn_forgotPassword);
 //        mBtnForgotPass.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -109,53 +133,89 @@ public class LoginActivity extends AppCompatActivity {
 //            }
 //        });
 //
-        mSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!mIsUserLogined()) {
-                    mDoSignUp();
-                } else {
-                    Toast.makeText(LoginActivity.this, "You're logined", Toast.LENGTH_LONG).show();
+        mSignUp.setOnClickListener(new View.OnClickListener()
 
-                }
-            }
-        });
-        mSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDoSignIn();
-            }
-        });
+                                   {
+                                       @Override
+                                       public void onClick(View v) {
+                                           if (!mIsUserLogined()) {
+                                               mDoSignUp();
+                                           } else {
+                                               Toast.makeText(LoginActivity.this, "You're logined", Toast.LENGTH_LONG).show();
 
-        mTvLoginLabel = (TextView) findViewById(R.id.tv_login_label);
-        mTvRegisterLabel = (TextView) findViewById(R.id.tv_register_label);
+                                           }
+                                       }
+                                   }
+
+        );
+        mSignIn.setOnClickListener(new View.OnClickListener()
+
+                                   {
+                                       @Override
+                                       public void onClick(View v) {
+                                           mDoSignIn();
+                                       }
+                                   }
+
+        );
+
+        mTvLoginLabel = (TextView)
+
+                findViewById(R.id.tv_login_label);
+
+        mTvRegisterLabel = (TextView)
+
+                findViewById(R.id.tv_register_label);
+
         int selectColor = Color.parseColor("#673AB7");
         int noneSelectColor = Color.parseColor("#9575CD");
         LinearLayout loginLayout = (LinearLayout) findViewById(R.id.layout_login);
         LinearLayout registerLayout = (LinearLayout) findViewById(R.id.layout_register);
-        mTvLoginLabel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTvLoginLabel.setBackgroundColor(selectColor);
-                mTvRegisterLabel.setBackgroundColor(noneSelectColor);
-                loginLayout.setVisibility(View.VISIBLE);
-                registerLayout.setVisibility(View.GONE);
-            }
-        });
-        mTvRegisterLabel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTvLoginLabel.setBackgroundColor(noneSelectColor);
-                mTvRegisterLabel.setBackgroundColor(selectColor);
-                loginLayout.setVisibility(View.GONE);
-                registerLayout.setVisibility(View.VISIBLE);
-            }
-        });
+        mTvLoginLabel.setOnClickListener(new View.OnClickListener()
+
+                                         {
+                                             @Override
+                                             public void onClick(View v) {
+                                                 mTvLoginLabel.setBackgroundColor(selectColor);
+                                                 mTvRegisterLabel.setBackgroundColor(noneSelectColor);
+                                                 loginLayout.setVisibility(View.VISIBLE);
+                                                 registerLayout.setVisibility(View.GONE);
+                                             }
+                                         }
+
+        );
+        mTvRegisterLabel.setOnClickListener(new View.OnClickListener()
+
+                                            {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    mTvLoginLabel.setBackgroundColor(noneSelectColor);
+                                                    mTvRegisterLabel.setBackgroundColor(selectColor);
+                                                    loginLayout.setVisibility(View.GONE);
+                                                    registerLayout.setVisibility(View.VISIBLE);
+                                                }
+                                            }
+
+        );
     }
 
+    private ArrayList<String> mGetSystemEmail() {
+        System.out.println("GET EMAIL =============>");
+        ArrayList<String> email = new ArrayList<>();
+        Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
+        Account[] accounts = AccountManager.get(getApplicationContext()).getAccounts();
+        for (Account account : accounts) {
+            if (emailPattern.matcher(account.name).matches()) {
+                email.add(account.name);
+                System.out.println(account.name + "Email==============>");
+            }
+        }
+        return email;
+    }
 
     private void mGoToActivity(Class c) {
         mStopCountDown();
+        mDismissProgessDialog();
         System.out.println("GO TO MAIN ===================>");
         Intent intent = new Intent(getApplicationContext(), c);
         startActivity(intent);
@@ -167,17 +227,15 @@ public class LoginActivity extends AppCompatActivity {
         new RemoteUser().mFind(user.getUid(), new OnGetDataListener() {
             @Override
             public void onStart() {
-//                mTvStatus.setText("Sync data, please wait...");
             }
 
             @Override
             public void onSuccess(DataSnapshot data) {
                 User nUser = data.getValue(User.class);
                 if (nUser == null) {
-//                    mGoToActivity(FirstSetting.class);
+                    CurrentUser.setUserInfoToServer();
                     mGoToActivity(MainActivity.class);
                 } else {
-                    CurrentUser.getInstance().setInfo(nUser);
                     mGoToActivity(MainActivity.class);
                 }
 
@@ -185,7 +243,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailed(DatabaseError databaseError) {
-//                mTvStatus.setText("Connect to server failed! ");
+                mGoToActivity(MainActivity.class);
             }
         });
 
@@ -200,11 +258,11 @@ public class LoginActivity extends AppCompatActivity {
                 public void onTick(long millisUntilFinished) {
                     int pass_time = (int) (EnumDefine.TIME_OUT - (millisUntilFinished / 1000));
                     if (pass_time == EnumDefine.LOW_CONNECTION) {
-                        progressDialog.setTitle("Your network too low, please wait... ");
+                        mProgressDialog.setTitle("Your network too low, please wait... ");
                     } else if (pass_time == EnumDefine.TRY_RECONNECT) {
-                        progressDialog.setTitle("Try to reconnect, please wait... ");
+                        mProgressDialog.setTitle("Try to reconnect, please wait... ");
                     } else if (pass_time == EnumDefine.DISCONNECT) {
-                        progressDialog.setTitle("No internet connection. Please check your connection.");
+                        mProgressDialog.setTitle("No internet connection. Please check your connection.");
                     }
                 }
 
@@ -227,37 +285,9 @@ public class LoginActivity extends AppCompatActivity {
     private void mResetPassword(String email) {
         if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString()) && NetworkManager.mIsConnectToNetwork(LoginActivity.this)) {
             mAuth.sendPasswordResetEmail(email);
-            new AlertDialog.Builder(LoginActivity.this)
-                    .setTitle("Successed")
-                    .setMessage("An email have been sent to your email to reset password! Please check your inbox.")
-                    .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ModeManager.mSwitchMode(EnumDefine.MODE.ONLINE); // set current mode to OFFLINE
-                            mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE + " MODE");
-
-                        }
-                    })
-                    .show();
+            mDisplayNoConnectionAlert();
         } else {
-            new AlertDialog.Builder(LoginActivity.this)
-                    .setTitle("Error")
-                    .setMessage("Can't reset password in Offline mode.")
-                    .setPositiveButton("Online mode", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ModeManager.mSwitchMode(EnumDefine.MODE.ONLINE); // set current mode to OFFLINE
-                            mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE + " MODE");
 
-                        }
-                    })
-                    .setNegativeButton("Offline mode", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    }).setCancelable(false)
-                    .show();
         }
     }
 
@@ -284,12 +314,16 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
                                     Toast.makeText(LoginActivity.this, "Sign up successed!", Toast.LENGTH_LONG).show();
-//                                    mIsNewUser(authResult.getUser().getUid());
-                                    mGoToActivity(MainActivity.class);
+                                    User user = new User();
+                                    user.setDisplayName(authResult.getUser().getDisplayName());
+                                    user.setEmail(authResult.getUser().getEmail());
+                                    CurrentUser.setLogined(true, getApplicationContext());
+                                    mCheckInforInServer(user);
+//                                    mGoToActivity(MainActivity.class);
                                 }
                             });
                 } else {
-                    mDisplayAlert(false);
+                    mDisplayNoConnectionAlert();
                 }
             } else { //offline mode -> check user in local storage
                 if (mIsValidEmail(mEmail.getText().toString())) { //TODO: check if email is valid format
@@ -330,8 +364,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void mDoSignIn() {
         if (mIsValidForm()) {
-            if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) { // if current mode is ONLINE -> check user in firebase
-                if (NetworkManager.mIsConnectToNetwork(LoginActivity.this)) {
+//            if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) { // if current mode is ONLINE -> check user in firebase
+//                if (NetworkManager.mIsConnectToNetwork(LoginActivity.this)) {
                     mShowProgessDialog();
                     mAuth.signInWithEmailAndPassword(mEmail.getText().toString(), mPassword.getText().toString())
 
@@ -345,9 +379,17 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Toast.makeText(getApplicationContext(), "Sign in failed!", Toast.LENGTH_LONG).show();
-                                    String error_code = ((FirebaseAuthException) e).getErrorCode();
-                                    mDismissProgessDialog();
-                                    DialogAlert.mShow(LoginActivity.this, mGetErrorMessage(error_code));
+                                    String error_code;
+                                    try {
+                                        error_code = ((FirebaseAuthException) e).getErrorCode();
+                                        mDismissProgessDialog();
+                                        DialogAlert.mShow(LoginActivity.this, mGetErrorMessage(error_code));
+                                    } catch (Exception ex) {
+                                        error_code = ((FirebaseNetworkException) e).getMessage();
+                                        mDismissProgessDialog();
+                                        DialogAlert.mShow(LoginActivity.this, error_code);
+
+                                    }
 
                                 }
                             })
@@ -356,33 +398,37 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onSuccess(AuthResult authResult) {
 //                                    mIsNewUser(authResult.getUser().getUid());
                                     Toast.makeText(getApplicationContext(), "Sign in successed!", Toast.LENGTH_LONG).show();
+//                                    User user = new User();
+//                                    user.setDisplayName(authResult.getUser().getDisplayName());
+//                                    user.setUid(authResult.getUser().getUid());
+//                                    user.setPhotoUrl(authResult.getUser().getPhotoUrl());
+//                                    user.setProviderId(authResult.getUser().getProviderId());
                                     User user = new User();
                                     user.setDisplayName(authResult.getUser().getDisplayName());
-                                    user.setUid(authResult.getUser().getUid());
-                                    user.setPhotoUrl(authResult.getUser().getPhotoUrl());
-                                    user.setProviderId(authResult.getUser().getProviderId());
+                                    user.setEmail(authResult.getUser().getEmail());
+                                    CurrentUser.setLogined(true, getApplicationContext());
+                                    CurrentUser.setInfo(user,getApplicationContext());
                                     mCheckInforInServer(user);
-
                                 }
                             });
                 } else {
-                    mDisplayAlert(false);
+                    mDisplayNoConnectionAlert();
                 }
 
 
-            } else { //offline mode -> check user in local storage
-                if (mEmail.getText().toString().equals("admin")) { //TODO: get "admin" from sqlite
-                    if (mPassword.getText().toString().equals("admin")) { //TODO: get "password" from sqlite
-                        mGoToActivity(MainActivity.class);
-                    } else {
-                        DialogAlert.mShow(LoginActivity.this, mGetErrorMessage("ERROR_WRONG_PASSWORD"));
-                    }
-                } else {
-                    DialogAlert.mShow(LoginActivity.this, mGetErrorMessage("ERROR_INVALID_EMAIL"));
-                }
-            }
+//            } else { //offline mode -> check user in local storage
+//                if (mEmail.getText().toString().equals("admin")) { //TODO: get "admin" from sqlite
+//                    if (mPassword.getText().toString().equals("admin")) { //TODO: get "password" from sqlite
+//                        mGoToActivity(MainActivity.class);
+//                    } else {
+//                        DialogAlert.mShow(LoginActivity.this, mGetErrorMessage("ERROR_WRONG_PASSWORD"));
+//                    }
+//                } else {
+//                    DialogAlert.mShow(LoginActivity.this, mGetErrorMessage("ERROR_INVALID_EMAIL"));
+//                }
+//            }
 
-        }
+//        }
     }
 
     private String mGetErrorMessage(String errorCode) {//get error message when sign in or sign up
@@ -436,87 +482,42 @@ public class LoginActivity extends AppCompatActivity {
         return (mIsUserLoginedOnline() || mIsUserLoginedOffline()) ? true : false;
     }
 
-    private ProgressDialog progressDialog;
+    private ProgressDialog mProgressDialog;
 
     private void mShowProgessDialog() { // show progess "please wait" when sign in or sign up
         mStartCountDown();
 
-        progressDialog = new ProgressDialog(LoginActivity.this,
+        mProgressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Authenticating...");
-        progressDialog.show();
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setMessage("Authenticating...");
+        mProgressDialog.show();
     }
 
     private void mDismissProgessDialog() {// close progess "please wait"
-//        mFlProgressFrame.setVisibility(View.INVISIBLE);
-//        mLoginMain.setVisibility(View.VISIBLE);
-        progressDialog.dismiss();
+        if (mProgressBar != null)
+            mProgressDialog.dismiss();
     }
 
-    private void mDisplayAlert(boolean isHasConnection) { //display dialog alert that user not connect to network
+    private void mDisplayNoConnectionAlert() { //display dialog alert that user not connect to network
         if (mAlertDialog != null && mAlertDialog.isShowing()) {
             mAlertDialog.dismiss();
         }
-        if (isHasConnection) {
-            mAlertDialog = new AlertDialog.Builder(this)
-                    .setTitle("You have connect to network")
-                    .setMessage("Connected! Do you want switch to Online mode?")
-                    .setPositiveButton("Online mode", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ModeManager.mSwitchMode(EnumDefine.MODE.ONLINE); // set current mode to OFFLINE
-                            mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE + " MODE");
 
-                        }
-                    })
-                    .setNegativeButton("Offline mode", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    }).setCancelable(false)
-                    .show();
-        } else {
-            mAlertDialog = new AlertDialog.Builder(this)
-                    .setTitle("No network connection")
-                    .setMessage("Please connect to internet or switch to offline mode.")
-                    .setPositiveButton("Offline mode", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ModeManager.mSwitchMode(EnumDefine.MODE.OFFLINE); // set current mode to OFFLINE
-                            mTvCurrentMode.setText(SettingsManager.INSTANCE.MODE + " MODE");
-                        }
-                    })
-                    .setNegativeButton("Close app", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            android.os.Process.killProcess(Process.myPid());
-                            System.exit(1);
-                        }
-                    }).setCancelable(false)
-                    .show();
-        }
-
-    }
-
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (ACTION.equals(action)) {
-                if (!NetworkManager.mIsConnectToNetwork(context) && SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) {
-                    mDisplayAlert(false);
-                } else {
-                    if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.OFFLINE.toString()) && NetworkManager.mIsConnectToNetwork(context)) {
-                        mDisplayAlert(true);
-                    } else {
+        mAlertDialog = new AlertDialog.Builder(this)
+                .setTitle("No network connection")
+                .setMessage("Please check your internet connection")
+                .setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
                     }
-                }
-            }
-        }
-    };
+                })
+                .setCancelable(true)
+                .show();
+
+
+    }
 
 
 }

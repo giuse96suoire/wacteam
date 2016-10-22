@@ -29,11 +29,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.manager.NotificationsManager;
 import com.dev.wacteam.taskmanager.manager.SettingsManager;
+import com.dev.wacteam.taskmanager.model.User;
+import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
 
 import layout.CreateProject;
 import layout.FriendFragment;
@@ -55,51 +61,89 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        NotificationsManager.mNotify(this);
+//        NotificationsManager.mNotify(this); //notify example
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!CurrentUser.isLogined(getApplicationContext())) {
+            mGoToActivity(LoginActivity.class);
+        }
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true   ); //set firebase can write data in offline
+//        CurrentUser.getUserInfo(new OnGetDataListener() {
+//            @Override
+//            public void onStart() {
+//                //do nothing
+//            }
+//
+//            @Override
+//            public void onSuccess(DataSnapshot data) {
+//                if (data != null) {
+//                    System.out.println("DATA NOT NULL IN MAIN");
+//
+//                    User user = data.getValue(User.class);
+////                    if (user == null || user.getUid() == null || user.getDisplayName() == null || user.getEmail() == null) {
+////                        System.out.println("USER NULL IN MAIN");
+////
+////                        mGoToActivity(LoginActivity.class);
+////                    } else {
+//////                        mTvUserFullName.setText(user.getDisplayName());
+//////                        mTvUserEmail.setText(user.getEmail());
+////                        Toast.makeText(getApplicationContext(), "Logined", Toast.LENGTH_LONG).show();
+////                        //TODO: update some UI
+////                    }
+//                } else {
+//                    System.out.println("DATA NULL IN MAIN");
+//                    mGoToActivity(LoginActivity.class);
+//                }
+//            }
+
+//            @Override
+//            public void onFailed(DatabaseError databaseError) {
+//                mGoToActivity(LoginActivity.class);
+//
+//            }
+//        });
         setContentView(R.layout.activity_main);
         if (findViewById(R.id.content_main) != null) {
             if (savedInstanceState != null) {
                 return;
             }
             HomeFragment blankFragment1 = new HomeFragment();
-
             getSupportFragmentManager().beginTransaction().add(R.id.content_main, blankFragment1).commit();
         }
         init();
-        if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) {
-            mSwitchToOnlineMode();
-            System.out.println("IS ONLINE MODE");
-        } else {
-            System.out.println("IS OFFLINE MODE");
-        }
+
+//        mUpdateUserUI();
+//        if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) {
+//        mSetAuthListener();
+//            System.out.println("IS ONLINE MODE");
+//        } else {
+//            System.out.println("IS OFFLINE MODE");
+//        }
 
 
     }
 
 
-    private void mSwitchToOnlineMode() {
-        System.out.println("SWICH TO ONLINE MODE ========>");
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (mAuth.getCurrentUser() == null) {
-                    System.out.println("USER NULL==========================>");
-                    mUser = null;
-                    mGoToActivity(LoginActivity.class);
-                    mAuth.removeAuthStateListener(this);
-                } else {
-                    mUser = mAuth.getCurrentUser();
-                    mUpdateUserUI();
-                }
-            }
-        });
-    }
+//    private void mSetAuthListener() {
+//        mAuth = FirebaseAuth.getInstance();
+//        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                if (mAuth.getCurrentUser() == null) {
+//                    System.out.println("USER NULL==========================>");
+//                    mUser = null;
+//                    mGoToActivity(LoginActivity.class);
+//                    mAuth.removeAuthStateListener(this);
+//                } else {
+//                    mUser = mAuth.getCurrentUser();
+//                    mUpdateUserUI();
+//                }
+//            }
+//        });
+//    }
 
     private void init() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -124,17 +168,45 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_home);
-
-
+        View header  = navigationView.getHeaderView(0);
+        mTvUserFullName = (TextView) header.findViewById(R.id.tv_userFullName);
+        mTvUserEmail = (TextView) header.findViewById(R.id.tv_userEmail);
+        User user = CurrentUser.getUserInfo(getApplicationContext());
+        mTvUserEmail.setText(user.getEmail());
+        mTvUserFullName.setText(user.getDisplayName());
     }
 
     private void mUpdateUserUI() {
-        mTvUserFullName = (TextView) findViewById(R.id.tv_userFullName);
+        Toast.makeText(getApplicationContext(), CurrentUser.getInstance().getDisplayName(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), CurrentUser.getInstance().getEmail(), Toast.LENGTH_LONG).show();
+//        CurrentUser.getUserInfo(new OnGetDataListener() {
+//            @Override
+//            public void onStart() {
+//                //do nothing
+//            }
+//
+//            @Override
+//            public void onSuccess(DataSnapshot data) {
+//                if (data != null) {
+//                    User user = data.getValue(User.class);
+//                    if (user == null || user.getUid() == null || user.getDisplayName() == null || user.getEmail() == null) {
+//                        mGoToActivity(LoginActivity.class);
+//                    } else {
+//        mTvUserFullName.setText(CurrentUser.getInstance().getDisplayName() == null ? "your name" : CurrentUser.getInstance().getDisplayName());
+//        mTvUserEmail.setText(CurrentUser.getInstance().getEmail() == null ? "youremail@mail.com" : CurrentUser.getInstance().getEmail());
+        //TODO: update some UI
+//                    }
+//                } else {
+//                    mGoToActivity(LoginActivity.class);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailed(DatabaseError databaseError) {
+//                mGoToActivity(LoginActivity.class);
+//            }
+//        });
 
-        mTvUserEmail = (TextView) findViewById(R.id.tv_userEmail);
-
-//        mTvUserFullName.setText(CurrentUser.getInstance().getDisplayName() == null ? "Your name" : CurrentUser.getInstance().getDisplayName());
-//        mTvUserEmail.setText(CurrentUser.getInstance().getEmail() == null ? "Your email" : CurrentUser.getInstance().getEmail());
 
     }
 
@@ -208,7 +280,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_signOut) {
             if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) {
-                mAuth.signOut();
+                FirebaseAuth.getInstance().signOut();
+                CurrentUser.setLogined(false, getApplicationContext());
+                mGoToActivity(LoginActivity.class);
+
             } else {
                 mGoToActivity(LoginActivity.class);
             }
@@ -263,7 +338,6 @@ public class MainActivity extends AppCompatActivity
                 chooseProject.setVisibility(View.GONE);
                 project.setBackgroundColor(Color.rgb(120, 133, 224));
                 task.setBackgroundColor(Color.WHITE);
-
 
             }
         });

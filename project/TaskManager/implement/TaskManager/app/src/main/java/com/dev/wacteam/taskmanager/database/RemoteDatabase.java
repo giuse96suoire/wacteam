@@ -16,7 +16,7 @@ public class RemoteDatabase {
     private DatabaseReference mDatabase;
 
     public RemoteDatabase() {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = com.dev.wacteam.taskmanager.database.FirebaseDatabase.getInstance().getReference();
     }
 
     public void mReadDataOnce(String child, OnGetDataListener listener) {

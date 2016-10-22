@@ -3,7 +3,6 @@ package com.dev.wacteam.taskmanager.model;
 import android.net.Uri;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by giuse96suoire on 10/12/2016.

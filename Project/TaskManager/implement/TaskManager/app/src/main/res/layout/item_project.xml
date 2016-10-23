@@ -1,49 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/border_bottom">
-
-        <ImageView
-            android:id="@+id/imgv_item_project_type"
-            android:layout_width="@dimen/icon_medium_width"
-            android:layout_height="@dimen/icon_medium_height"
-            android:background="@drawable/ic_t"
-            android:layout_alignParentLeft="true"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toRightOf="@+id/imgv_item_project_type">
-
-            <TextView
-                android:id="@+id/txtv_item_project_name"
-                android:textSize="@dimen/project_text_size_medium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tên Project "
-                android:paddingLeft="@dimen/project_padding"/>
-
-            <TextView
-                android:id="@+id/txtv_item_project_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/project_padding"
-                android:textStyle="italic"
-                android:text="date"
-                android:textSize="@dimen/projcet_text_size_small"/>
-
-
-        </LinearLayout>
-
-
-        <ImageView
-            android:id="@+id/imgv_item_project_notifi"
-            android:layout_width="@dimen/icon_small_width"
-            android:layout_height="@dimen/icon_small_height"
-            android:background="@drawable/ic_notification"
-            android:layout_alignParentRight="true"/>
-
-</RelativeLayout>
-
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:gravity="start"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    android:background="#000000"
+    android:text="Project1's Name"
+    android:textSize="24dp"
+    android:textColor="#ffffff"
+    android:id="@+id/tv_item_project"/>

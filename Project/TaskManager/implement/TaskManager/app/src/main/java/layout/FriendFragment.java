@@ -123,7 +123,7 @@ public class FriendFragment extends Fragment {
             @Override
             public void onSuccess(DataSnapshot data) {
                 User user = data.getValue(User.class);
- 
+
                 for (int i = 0; i < mListFriend.size(); i++) {
                     if (!(mListFriend.get(i).getEmail().contains(emailOrName)) && !(mListFriend.get(i).getDisplayName().contains(emailOrName))) {
                         mListFriend.remove(i);

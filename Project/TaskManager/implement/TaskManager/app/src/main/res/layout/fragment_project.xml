@@ -7,58 +7,129 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/project_padding">
 
-        <TextView
-            android:id="@+id/txtv_project_name"
-            android:padding="@dimen/project_padding"
+        <LinearLayout
+            android:layout_marginTop="@dimen/project_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ten Project"
-            android:textSize="@dimen/projext_text_size_big"/>
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/project_padding"
+                >
+
+                <ImageButton
+                    android:id="@+id/ib_project_type"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/ic_p"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/project_margin">
+
+
+
+                <EditText
+                    android:id="@+id/tv_project_name"
+                    android:padding="@dimen/project_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Task manager"
+                    android:textSize="@dimen/project_text_size_big"
+                    android:enabled="false"/>
+
+
+
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/tmgbtn_project_type"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/ic_p"
-                android:layout_marginLeft="10dp"/>
+            <TextView
 
-            <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp">
+                android:text="Start:"
+                android:textSize="@dimen/project_text_size_small"/>
 
-                <TextView
-                    android:id="@+id/txtv_project_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="date"
-                    android:textSize="@dimen/project_text_size_medium"/>
-
-                <TextView
-                    android:id="@+id/txtv_project_deadline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="deadline"
-                    android:textSize="@dimen/project_text_size_medium"/>
-
-                <TextView
-                    android:id="@+id/txtv_project_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ten nguoi tham gia"
-                    android:textSize="@dimen/projcet_text_size_small"/>
-
-            </LinearLayout>
+            <EditText
+                android:id="@+id/et_project_date"
+                android:paddingLeft="@dimen/project_padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="12/9/2016"
+                android:textSize="@dimen/project_text_size_medium"/>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="deadline:"
+                android:textSize="@dimen/project_text_size_small"/>
+
+            <EditText
+                android:id="@+id/et_project_deadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/project_padding"
+                android:enabled="false"
+                android:text="12/9/2016"
+                android:textSize="@dimen/project_text_size_medium"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Member:"
+                android:textSize="@dimen/project_text_size_small"/>
+
+            <EditText
+                android:id="@+id/et_project_user"
+                android:paddingLeft="@dimen/project_padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="anh,ngoc,huynh"
+                android:textSize="@dimen/project_text_size_medium"/>
+
+        </LinearLayout>
+
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_task"

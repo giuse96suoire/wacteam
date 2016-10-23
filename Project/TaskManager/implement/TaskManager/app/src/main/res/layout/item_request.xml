@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_bottom">
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/tv_request_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="project thỏ bảy màu"
+            android:textSize="@dimen/project_text_size_medium"
+            android:textColor="#353535" />
+
+        <TextView
+            android:id="@+id/tv_request_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/project_text_size_small"
+            android:text="tham gia vào project với mình nhé. ký tên: Anh Nguyễn ahihihi đồ ngốc!"
+            android:maxHeight="@dimen/max_height"
+            android:textColor="#757575" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_request_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="10/23/2016"
+            android:textSize="@dimen/project_text_size_small"
+            android:textAlignment="textEnd"
+            android:textColor="#535353"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/project_margin">
+
+            <ImageButton
+                android:id="@+id/btn_request_accept"
+                android:layout_width="@dimen/icon_small_width"
+                android:layout_height="@dimen/icon_small_height"
+                android:background="@drawable/ic_request_accept"
+                android:layout_marginRight="@dimen/padding_large"
+                android:layout_gravity="center"/>
+
+            <ImageButton
+                android:id="@+id/btn_request_cancel"
+                android:layout_width="@dimen/small_width"
+                android:layout_height="@dimen/small_width"
+                android:background="@drawable/ic_request_cancel"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

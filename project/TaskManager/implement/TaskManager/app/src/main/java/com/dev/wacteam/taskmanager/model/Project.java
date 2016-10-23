@@ -7,12 +7,12 @@ import java.util.Date;
 /**
  * Created by giuse96suoire on 10/12/2016.
  */
-public class Project{
+public class Project {
     private String mProjectId;
     private String mTitle;
     private String mDescription;
     private User mLeader;
-    private ArrayList<User> mMembers;
+    private ArrayList<String> mMembers;
     private ArrayList<Task> mTasks;
     private Date mDeadline;
 
@@ -32,7 +32,7 @@ public class Project{
         this.mLeader = mLeader;
     }
 
-    public void setmMembers(ArrayList<User> mMembers) {
+    public void setmMembers(ArrayList<String> mMembers) {
         this.mMembers = mMembers;
     }
 
@@ -61,7 +61,7 @@ public class Project{
         return mLeader;
     }
 
-    public ArrayList<User> getmMembers() {
+    public ArrayList<String> getmMembers() {
         return mMembers;
     }
 

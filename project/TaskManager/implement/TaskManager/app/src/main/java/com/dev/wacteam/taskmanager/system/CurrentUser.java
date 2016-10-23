@@ -2,16 +2,20 @@ package com.dev.wacteam.taskmanager.system;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.database.RemoteUser;
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
+import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 /**
  * Created by huynh.mh on 10/18/2016.
@@ -29,6 +33,7 @@ public class CurrentUser extends User {
     private static final String DOB = "dob";
     private static final String GENDER = "gender";
     private static final String PROVIDER_ID = "provider_id";
+    private static final String LIST_PROJECT_REFERENCE = "projects/list";
 //    public static boolean isLogined = false;
 
     public static CurrentUser getInstance() {
@@ -39,6 +44,7 @@ public class CurrentUser extends User {
         SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getResources().getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(UID, user.getUid());
         editor.putString(DISPLAY_NAME, user.getDisplayName());
         editor.putString(EMAIL, user.getEmail());
         editor.commit();
@@ -78,11 +84,45 @@ public class CurrentUser extends User {
         isNotNull = false;
     }
 
-    public static void setUserInfoToServer() {
+    public static void createProject(Project project, Context context) {
+        DatabaseReference db = FirebaseDatabase.getInstance()
+                .getReference(LIST_PROJECT_REFERENCE).push();
+        db.setValue(project);
+    }
+
+    public static void getAllProject(OnGetDataListener listener, Context context) {
+        listener.onStart();
+        DatabaseReference db = FirebaseDatabase.getInstance()
+                .getReference(LIST_PROJECT_REFERENCE);
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    Project project = data.getValue(Project.class);
+                    Toast.makeText(context,project.getmTitle() + "in current user",Toast.LENGTH_SHORT).show();
+
+                    ArrayList<String> listMember = project.getmMembers();
+                    for (String s : listMember) {
+                        if (s.equals(CurrentUser.getInstance().getUserInfo(context).getUid())) {
+                            listener.onSuccess(data);
+                        }
+                    }
+                }
+                listener.onSuccess(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailed(databaseError);
+            }
+        });
+    }
+
+    public static void setUserInfoToServer(Context context) {
         User u = new User();
         u.setEmail(CurrentUser.getInstance().getEmail());
         u.setDisplayName(CurrentUser.getInstance().getDisplayName());
-        CurrentUser.getInstance().getReference().setValue(u);
+        CurrentUser.getInstance().getReference(context).setValue(u);
     }
 
     private static final String IS_LOGINED = "is_logined";
@@ -117,11 +157,12 @@ public class CurrentUser extends User {
         User user = new User();
         SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getResources().getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        user.setUid(sharedPref.getString(UID, context.getResources().getString(R.string.default_uid)));
         user.setDisplayName(sharedPref.getString(DISPLAY_NAME, context.getResources().getString(R.string.default_full_name)));
-        user.setEmail(sharedPref.getString(EMAIL,  context.getResources().getString(R.string.default_email)));
-        user.setPhoneNumber(sharedPref.getString(PHONE_NUMBER,  context.getResources().getString(R.string.default_phone_number)));
-        user.setAddress(sharedPref.getString(ADDRESS,  context.getResources().getString(R.string.default_address)));
-        user.setDob(sharedPref.getString(DOB,  context.getResources().getString(R.string.default_dob)));
+        user.setEmail(sharedPref.getString(EMAIL, context.getResources().getString(R.string.default_email)));
+        user.setPhoneNumber(sharedPref.getString(PHONE_NUMBER, context.getResources().getString(R.string.default_phone_number)));
+        user.setAddress(sharedPref.getString(ADDRESS, context.getResources().getString(R.string.default_address)));
+        user.setDob(sharedPref.getString(DOB, context.getResources().getString(R.string.default_dob)));
 //        user.setDisplayName(sharedPref.getString(DISPLAY_NAME, "Your name"));
 //        user.setDisplayName(sharedPref.getString(DISPLAY_NAME, "Your name"));
 //        user.setDisplayName(sharedPref.getString(DISPLAY_NAME, "Your name"));
@@ -130,16 +171,17 @@ public class CurrentUser extends User {
         return user;
     }
 
-    public static DatabaseReference getReference() {
+    public static DatabaseReference getReference(Context context) {
         return FirebaseDatabase.getInstance()
-                .getReference(RemoteUser.USER_LIST_CHILD + "/" + CurrentUser.getInstance().getUid());
+                .getReference(RemoteUser.USER_LIST_CHILD + "/" + CurrentUser.getInstance().getUserInfo(context).getUid());
     }
 
-    public static void keepSync(boolean isKeep) { // keep local copy data
+
+    public static void keepSync(boolean isKeep, Context context) { // keep local copy data
         if (isKeep) {
-            CurrentUser.getInstance().getReference().keepSynced(true);
+            CurrentUser.getInstance().getReference(context).keepSynced(true);
         } else {
-            CurrentUser.getInstance().getReference().keepSynced(false);
+            CurrentUser.getInstance().getReference(context).keepSynced(false);
         }
     }
 

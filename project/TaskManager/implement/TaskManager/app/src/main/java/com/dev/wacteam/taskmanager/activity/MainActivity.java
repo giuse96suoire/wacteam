@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -29,20 +28,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
-import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
-import com.dev.wacteam.taskmanager.manager.NotificationsManager;
 import com.dev.wacteam.taskmanager.manager.SettingsManager;
 import com.dev.wacteam.taskmanager.model.User;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
 
-import layout.CreateProject;
 import layout.AboutUsFragment;
+import layout.CreateProject;
 import layout.FriendFragment;
 import layout.HomeFragment;
 import layout.ProfileFragment;
@@ -55,7 +49,7 @@ public class MainActivity extends AppCompatActivity
         CreateProject.OnFragmentInteractionListener,
         FriendFragment.OnFragmentInteractionListener, SettingFragment.OnFragmentInteractionListener,
         HomeFragment.OnFragmentInteractionListener, ProjectFragment.OnFragmentInteractionListener,
-        TodayFragment.OnFragmentInteractionListener,AboutUsFragment.OnFragmentInteractionListener {
+        TodayFragment.OnFragmentInteractionListener, AboutUsFragment.OnFragmentInteractionListener {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private TextView mTvUserFullName, mTvUserEmail;
@@ -170,7 +164,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_home);
-        View header  = navigationView.getHeaderView(0);
+        View header = navigationView.getHeaderView(0);
         mTvUserFullName = (TextView) header.findViewById(R.id.tv_userFullName);
         mTvUserEmail = (TextView) header.findViewById(R.id.tv_userEmail);
         User user = CurrentUser.getUserInfo(getApplicationContext());
@@ -280,7 +274,7 @@ public class MainActivity extends AppCompatActivity
             callFragment(new HomeFragment());
             setTitle(R.string.title_home_fragment);
 
-        }else if (id == R.id.nav_aboutUs){
+        } else if (id == R.id.nav_aboutUs) {
             callFragment(new AboutUsFragment());
             setTitle(R.string.title_aboutUs_fragment);
         } else if (id == R.id.nav_signOut) {
@@ -317,7 +311,12 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(MainActivity.this, "Create", Toast.LENGTH_LONG).show();
-                        callFragment(new CreateProject());
+                        Bundle args = new Bundle();
+                        EditText project_name = (EditText) view.findViewById(R.id.et_projectName);
+                        args.putString("project_name", project_name.getText().toString());
+                        CreateProject createProjectFragment = new CreateProject();
+                        createProjectFragment.setArguments(args);
+                        callFragment(createProjectFragment);
                         setTitle(R.string.title_create_project_fragment);
                     }
                 })

@@ -2,11 +2,13 @@ package layout;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -84,7 +86,7 @@ public class FriendFragment extends Fragment {
 //                Toast.makeText(getContext(), s.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-        mFriendAdapter = new FriendAdapter(getContext(), mListFriend);
+        mFriendAdapter = new FriendAdapter(getContext(), getActivity(), mListFriend);
         mRvListFriend.setAdapter(mFriendAdapter);
         //TODO: get list friend from current user
         mGetAllFriend();
@@ -111,6 +113,23 @@ public class FriendFragment extends Fragment {
 
             }
         }, getContext());
+    }
+
+    private void mShowFriendInfo() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        final View view = inflater.inflate(R.layout.friend_dialog, null);
+        builder.setView(view)
+                .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
 
     private void mSearchFriend(String emailOrName) {

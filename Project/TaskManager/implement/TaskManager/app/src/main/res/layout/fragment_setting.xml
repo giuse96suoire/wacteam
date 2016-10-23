@@ -23,6 +23,7 @@
                     android:padding="@dimen/project_padding"/>
 
                 <Switch
+                    android:layout_gravity="right"
                     android:id="@+id/switch_sound"
                     android:paddingLeft="@dimen/project_padding"
                     android:layout_width="match_parent"
@@ -42,6 +43,7 @@
                     />
 
                 <Switch
+                    android:layout_gravity="right"
                     android:paddingLeft="@dimen/project_padding"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

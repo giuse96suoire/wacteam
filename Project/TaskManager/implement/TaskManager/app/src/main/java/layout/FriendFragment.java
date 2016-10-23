@@ -5,12 +5,26 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.adapter.FriendAdapter;
+import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
+import com.dev.wacteam.taskmanager.model.User;
+import com.dev.wacteam.taskmanager.system.CurrentUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +48,100 @@ public class FriendFragment extends Fragment {
 
     public FriendFragment() {
         // Required empty public constructor
+    }
+
+    private RecyclerView mRvListFriend;
+    private ArrayList<User> mListFriend;
+    private FriendAdapter mFriendAdapter;
+    private EditText mEtSearchFriend;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mRvListFriend = (RecyclerView) getView().findViewById(R.id.rv_friends);
+        mRvListFriend.setHasFixedSize(true);
+        mRvListFriend.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mListFriend = new ArrayList<>();
+        mEtSearchFriend = (EditText) getView().findViewById(R.id.et_searchFriend);
+        mEtSearchFriend.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() == 0) {
+                    mGetAllFriend();
+                } else {
+                    mSearchFriend(s.toString());
+                }
+//                Toast.makeText(getContext(), s.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        mFriendAdapter = new FriendAdapter(getContext(), mListFriend);
+        mRvListFriend.setAdapter(mFriendAdapter);
+        //TODO: get list friend from current user
+        mGetAllFriend();
+    }
+
+    private void mGetAllFriend() {
+        CurrentUser.getAllFriend(new OnGetDataListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot data) {
+                User user = data.getValue(User.class);
+                if (!mListFriend.contains(user)) {
+                    mListFriend.add(user);
+                    mFriendAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailed(DatabaseError databaseError) {
+
+            }
+        }, getContext());
+    }
+
+    private void mSearchFriend(String emailOrName) {
+        CurrentUser.searchFriend(emailOrName, new OnGetDataListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot data) {
+                User user = data.getValue(User.class);
+ 
+                for (int i = 0; i < mListFriend.size(); i++) {
+                    if (!(mListFriend.get(i).getEmail().contains(emailOrName)) && !(mListFriend.get(i).getDisplayName().contains(emailOrName))) {
+                        mListFriend.remove(i);
+                    }
+                }
+                if (!mListFriend.contains(user)) {
+                    mListFriend.add(user);
+                    mFriendAdapter.notifyDataSetChanged();
+                }
+
+
+            }
+
+            @Override
+            public void onFailed(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     /**
@@ -76,6 +184,7 @@ public class FriendFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -87,6 +196,7 @@ public class FriendFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener ");
         }
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

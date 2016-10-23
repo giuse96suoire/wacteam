@@ -34,6 +34,7 @@ public class CurrentUser extends User {
     private static final String GENDER = "gender";
     private static final String PROVIDER_ID = "provider_id";
     private static final String LIST_PROJECT_REFERENCE = "projects/list";
+    private static final String LIST_FRIEND_REFERENCE = "friends";
 //    public static boolean isLogined = false;
 
     public static CurrentUser getInstance() {
@@ -90,6 +91,39 @@ public class CurrentUser extends User {
         db.setValue(project);
     }
 
+    public static void searchFriend(String emailOrName, OnGetDataListener listener) {
+        listener.onStart();
+        DatabaseReference db = FirebaseDatabase.getInstance()
+                .getReference(RemoteUser.USER_LIST_CHILD);
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+
+                    User u = data.getValue(User.class);
+                    if (u.getEmail() != null) {
+                        System.out.println("Emai  " + u.getEmail());
+                        System.out.println("name  " + u.getDisplayName());
+
+                        if (u.getEmail().contains(emailOrName) || u.getDisplayName().contains(emailOrName)) {
+                            listener.onSuccess(data);
+                        }
+                    } else {
+                        System.out.println("Emai null " + u.getEmail());
+                        System.out.println("name  " + u.getDisplayName());
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailed(databaseError);
+            }
+        });
+    }
+
     public static void getAllProject(OnGetDataListener listener, Context context) {
         listener.onStart();
         DatabaseReference db = FirebaseDatabase.getInstance()
@@ -99,7 +133,7 @@ public class CurrentUser extends User {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Project project = data.getValue(Project.class);
-                    Toast.makeText(context,project.getmTitle() + "in current user",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, project.getmTitle() + "in current user", Toast.LENGTH_SHORT).show();
 
                     ArrayList<String> listMember = project.getmMembers();
                     for (String s : listMember) {
@@ -108,7 +142,26 @@ public class CurrentUser extends User {
                         }
                     }
                 }
-                listener.onSuccess(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onFailed(databaseError);
+            }
+        });
+    }
+
+    public static void getAllFriend(OnGetDataListener listener, Context context) {
+        listener.onStart();
+        DatabaseReference db = FirebaseDatabase.getInstance()
+                .getReference(RemoteUser.USER_LIST_CHILD + "/" + CurrentUser.getInstance().getUserInfo(context).getUid() + "/" + LIST_FRIEND_REFERENCE);
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    User u = data.getValue(User.class);
+                    listener.onSuccess(data);
+                }
             }
 
             @Override
@@ -119,9 +172,7 @@ public class CurrentUser extends User {
     }
 
     public static void setUserInfoToServer(Context context) {
-        User u = new User();
-        u.setEmail(CurrentUser.getInstance().getEmail());
-        u.setDisplayName(CurrentUser.getInstance().getDisplayName());
+        User u = CurrentUser.getUserInfo(context);
         CurrentUser.getInstance().getReference(context).setValue(u);
     }
 
@@ -173,7 +224,7 @@ public class CurrentUser extends User {
 
     public static DatabaseReference getReference(Context context) {
         return FirebaseDatabase.getInstance()
-                .getReference(RemoteUser.USER_LIST_CHILD + "/" + CurrentUser.getInstance().getUserInfo(context).getUid());
+                .getReference(RemoteUser.USER_LIST_CHILD + "/" + CurrentUser.getInstance().getUserInfo(context).getUid() );
     }
 
 

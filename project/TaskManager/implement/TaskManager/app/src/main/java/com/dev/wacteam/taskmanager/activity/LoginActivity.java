@@ -316,6 +316,7 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onSuccess(AuthResult authResult) {
                                     Toast.makeText(LoginActivity.this, "Sign up successed!", Toast.LENGTH_LONG).show();
                                     User user = new User();
+                                    user.setUid(authResult.getUser().getUid());
                                     user.setDisplayName(authResult.getUser().getDisplayName());
                                     user.setEmail(authResult.getUser().getEmail());
                                     mCheckInforInServer(user);

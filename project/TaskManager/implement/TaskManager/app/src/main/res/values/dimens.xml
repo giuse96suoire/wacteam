@@ -17,12 +17,12 @@
     <dimen name="project_text_size_medium">24dp</dimen>
     <dimen name="project_text_size_small">16dp</dimen>
     <!--padding,margin-->
-    <dimen name="max_height">40</dimen>
+    <dimen name="max_height">40dp</dimen>
     <dimen name="project_padding">8dp</dimen>
     <dimen name="padding_large">16dp</dimen>
     <dimen name="project_margin_top">32dp</dimen>
     <dimen name="project_margin">24dp</dimen>
-    <dimen name="task_date_margin">48p</dimen>
+    <dimen name="task_date_margin">48dp</dimen>
     <!--icon small-->
     <dimen name="small_width">24dp</dimen>
     <dimen name="icon_small_width">32dp</dimen>

@@ -45,7 +45,6 @@ import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
@@ -224,6 +223,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void mCheckInforInServer(User user) {
+        CurrentUser.setLogined(true, getApplicationContext());
+        CurrentUser.setInfo(user, getApplicationContext());
         new RemoteUser().mFind(user.getUid(), new OnGetDataListener() {
             @Override
             public void onStart() {
@@ -233,7 +234,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(DataSnapshot data) {
                 User nUser = data.getValue(User.class);
                 if (nUser == null) {
-                    CurrentUser.setUserInfoToServer();
+                    CurrentUser.setUserInfoToServer(getApplicationContext());
                     mGoToActivity(MainActivity.class);
                 } else {
                     mGoToActivity(MainActivity.class);
@@ -315,11 +316,10 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onSuccess(AuthResult authResult) {
                                     Toast.makeText(LoginActivity.this, "Sign up successed!", Toast.LENGTH_LONG).show();
                                     User user = new User();
+                                    user.setUid(authResult.getUser().getUid());
                                     user.setDisplayName(authResult.getUser().getDisplayName());
                                     user.setEmail(authResult.getUser().getEmail());
-                                    CurrentUser.setLogined(true, getApplicationContext());
                                     mCheckInforInServer(user);
-//                                    mGoToActivity(MainActivity.class);
                                 }
                             });
                 } else {
@@ -366,54 +366,54 @@ public class LoginActivity extends AppCompatActivity {
         if (mIsValidForm()) {
 //            if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) { // if current mode is ONLINE -> check user in firebase
 //                if (NetworkManager.mIsConnectToNetwork(LoginActivity.this)) {
-                    mShowProgessDialog();
-                    mAuth.signInWithEmailAndPassword(mEmail.getText().toString(), mPassword.getText().toString())
+            mShowProgessDialog();
+            mAuth.signInWithEmailAndPassword(mEmail.getText().toString(), mPassword.getText().toString())
 
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
 //                                    Toast.makeText(getApplicationContext(), "Sign in complete!", Toast.LENGTH_LONG).show();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(getApplicationContext(), "Sign in failed!", Toast.LENGTH_LONG).show();
-                                    String error_code;
-                                    try {
-                                        error_code = ((FirebaseAuthException) e).getErrorCode();
-                                        mDismissProgessDialog();
-                                        DialogAlert.mShow(LoginActivity.this, mGetErrorMessage(error_code));
-                                    } catch (Exception ex) {
-                                        error_code = ((FirebaseNetworkException) e).getMessage();
-                                        mDismissProgessDialog();
-                                        DialogAlert.mShow(LoginActivity.this, error_code);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Sign in failed!", Toast.LENGTH_LONG).show();
+                            String error_code;
+                            try {
+                                error_code = ((FirebaseAuthException) e).getErrorCode();
+                                mDismissProgessDialog();
+                                DialogAlert.mShow(LoginActivity.this, mGetErrorMessage(error_code));
+                            } catch (Exception ex) {
+                                error_code = ((FirebaseNetworkException) e).getMessage();
+                                mDismissProgessDialog();
+                                DialogAlert.mShow(LoginActivity.this, error_code);
 
-                                    }
+                            }
 
-                                }
-                            })
-                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                @Override
-                                public void onSuccess(AuthResult authResult) {
+                        }
+                    })
+                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
 //                                    mIsNewUser(authResult.getUser().getUid());
-                                    Toast.makeText(getApplicationContext(), "Sign in successed!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Sign in successed!", Toast.LENGTH_LONG).show();
 //                                    User user = new User();
 //                                    user.setDisplayName(authResult.getUser().getDisplayName());
 //                                    user.setUid(authResult.getUser().getUid());
 //                                    user.setPhotoUrl(authResult.getUser().getPhotoUrl());
 //                                    user.setProviderId(authResult.getUser().getProviderId());
-                                    User user = new User();
-                                    user.setDisplayName(authResult.getUser().getDisplayName());
-                                    user.setEmail(authResult.getUser().getEmail());
-                                    CurrentUser.setLogined(true, getApplicationContext());
-                                    CurrentUser.setInfo(user,getApplicationContext());
-                                    mCheckInforInServer(user);
-                                }
-                            });
-                } else {
-                    mDisplayNoConnectionAlert();
-                }
+                            User user = new User();
+                            user.setUid(authResult.getUser().getUid());
+                            user.setDisplayName(authResult.getUser().getDisplayName());
+                            user.setEmail(authResult.getUser().getEmail());
+
+                            mCheckInforInServer(user);
+                        }
+                    });
+        } else {
+            mDisplayNoConnectionAlert();
+        }
 
 
 //            } else { //offline mode -> check user in local storage

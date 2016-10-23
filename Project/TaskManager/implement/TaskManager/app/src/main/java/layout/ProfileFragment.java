@@ -8,21 +8,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.dialog.DialogDateTimePicker;
 import com.dev.wacteam.taskmanager.model.User;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-
-import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,25 +60,16 @@ public class ProfileFragment extends Fragment {
         mEtDob.setText(user.getDob());
         String[] job_arr = getResources().getStringArray(R.array.job_array);
         mAcJob.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, job_arr));
-        Calendar now = Calendar.getInstance();
-        final DatePickerDialog dpd = DatePickerDialog.newInstance(
-                new DatePickerDialog.OnDateSetListener() {
+
+        mEtDob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogDateTimePicker.showDatePicker(1950, 2008, getActivity(), new DialogDateTimePicker.OnGetDateTimeListener() {
                     @Override
-                    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                    public void onChange(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                         mEtDob.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                     }
-                },
-                now.get(Calendar.DAY_OF_MONTH),
-                now.get(Calendar.MONTH),
-                now.get(Calendar.YEAR)
-        );
-        dpd.setYearRange(1940, 2008); //TODO: change time dependent on current time;
-        mEtDob.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
-                }
+                });
             }
         });
 

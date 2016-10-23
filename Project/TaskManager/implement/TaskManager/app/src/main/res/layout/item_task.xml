@@ -17,6 +17,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:text="date"
-        android:textSize="@dimen/projcet_text_size_small"
+        android:textSize="@dimen/project_text_size_small"
         />
 </RelativeLayout>

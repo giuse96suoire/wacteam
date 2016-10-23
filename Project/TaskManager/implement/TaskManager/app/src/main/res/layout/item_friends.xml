@@ -5,28 +5,27 @@
     android:background="@drawable/border_bottom">
 
     <ImageView
-        android:id="@+id/imgv_friend_ava"
+        android:id="@+id/iv_friend_ava"
         android:layout_width="@dimen/icon_medium_width"
         android:layout_height="@dimen/icon_medium_height"
         android:background="@drawable/ic_ava"
-        android:layout_alignParentLeft="true"
-        />
+        android:layout_alignParentLeft="true"/>
 
     <TextView
-        android:id="@+id/txtv_friend_name"
+        android:id="@+id/tv_friend_name"
         android:textSize="@dimen/project_text_size_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tên Friend "
+        android:text="anh kute vo doi "
         android:padding="@dimen/project_padding"
-        android:layout_toRightOf="@+id/imgv_friend_ava"/>
+        android:layout_toRightOf="@+id/iv_friend_ava"/>
 
-    <ImageButton
-        android:id="@+id/imgv_friend_remove"
-        android:layout_width="@dimen/icon_small_width"
-        android:layout_height="@dimen/icon_small_height"
-        android:background="@drawable/ic_remove"
-        android:layout_marginTop="@dimen/project_padding"
-        android:layout_alignParentRight="true"/>
+    <ImageView
+		android:id="@+id/tv_friend_more"
+		android:layout_width="@dimen/icon_small_width"
+		android:layout_height="@dimen/icon_small_height"
+		android:layout_alignParentRight="true"
+		android:layout_centerVertical="true"
+		android:background="@drawable/ic_more_friend"/>
 
 </RelativeLayout>

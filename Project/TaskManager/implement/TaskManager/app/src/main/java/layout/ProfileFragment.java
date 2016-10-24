@@ -2,6 +2,7 @@ package layout;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,10 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.activity.MainActivity;
 import com.dev.wacteam.taskmanager.dialog.DialogDateTimePicker;
+import com.dev.wacteam.taskmanager.dialog.YesNoDialog;
 import com.dev.wacteam.taskmanager.model.User;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -46,6 +51,7 @@ public class ProfileFragment extends Fragment {
 
     private EditText mEtFullName, mEtEmail, mEtAddress, mEtPhoneNumber, mEtDob;
     private AutoCompleteTextView mAcJob;
+    private Button mBtnSave;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -70,6 +76,33 @@ public class ProfileFragment extends Fragment {
                         mEtDob.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                     }
                 });
+            }
+        });
+
+        mBtnSave = (Button) getView().findViewById(R.id.btn_saveInfo);
+        mBtnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                YesNoDialog.mShow(getContext(), "Update your infomation?", new YesNoDialog.OnClickListener() {
+                    @Override
+                    public void onYes(DialogInterface dialog, int which) {
+                        User user = new User();
+                        user.setEmail(mEtEmail.getText().toString());
+                        user.setUid(CurrentUser.getUserInfo(getContext()).getUid());
+                        user.setDisplayName(mEtFullName.getText().toString());
+                        user.setAddress(mEtAddress.getText().toString());
+                        user.setPhoneNumber(mEtPhoneNumber.getText().toString());
+                        user.setDob(mEtDob.getText().toString());
+                        mUpdateInfo(user);
+                        ((MainActivity)getActivity()).mUpdateUserUI(user);
+                    }
+
+                    @Override
+                    public void onNo(DialogInterface dialog, int which) {
+                        //do nothing
+                    }
+                });
+
             }
         });
 
@@ -168,5 +201,10 @@ public class ProfileFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void mUpdateInfo(User u) {
+        CurrentUser.setInfo(u, getContext());
+        CurrentUser.setUserInfoToServer(getContext());
     }
 }

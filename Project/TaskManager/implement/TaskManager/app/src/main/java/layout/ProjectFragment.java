@@ -5,12 +5,23 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
+import com.dev.wacteam.taskmanager.model.Project;
+import com.dev.wacteam.taskmanager.system.CurrentUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,6 +87,7 @@ public class ProjectFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -87,6 +99,42 @@ public class ProjectFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener ");
         }
     }
+
+    private ListView mLvListProject;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ArrayList<String> listProject = new ArrayList<>();
+        listProject.add("No thing to display");
+        mLvListProject = (ListView) getView().findViewById(R.id.lv_listProject);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_checked, listProject);
+
+        mLvListProject.setAdapter(adapter);
+        CurrentUser.getAllProject(new OnGetDataListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot data) {
+                Project project = data.getValue(Project.class);
+//                System.out.println(project.getmTitle()+" ==============>");
+                if (project.getmTitle() != null) {
+                    listProject.add(project.getmTitle());
+                    adapter.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onFailed(DatabaseError databaseError) {
+
+            }
+        }, getContext());
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ten task"
-        android:textSize="@dimen/projext_text_size_big"
+        android:textSize="@dimen/project_text_size_big"
         android:padding="@dimen/project_padding"
         android:enabled="false"
         />
@@ -49,14 +49,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/task_date_margin"
             android:text="Begin:"
-            android:textSize="@dimen/projcet_text_size_small"/>
+            android:textSize="@dimen/project_text_size_small"/>
 
         <EditText
             android:id="@+id/etxt_task_date_begin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="day/month/year"
-            android:textSize="@dimen/projcet_text_size_small"
+            android:textSize="@dimen/project_text_size_small"
             android:paddingLeft="@dimen/project_padding"
             android:textStyle="italic"
             android:enabled="false"/>
@@ -72,14 +72,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/task_date_margin"
             android:text="Finish:"
-            android:textSize="@dimen/projcet_text_size_small"/>
+            android:textSize="@dimen/project_text_size_small"/>
 
         <EditText
             android:id="@+id/etxt_task_date_finish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="day/month/year"
-            android:textSize="@dimen/projcet_text_size_small"
+            android:textSize="@dimen/project_text_size_small"
             android:paddingLeft="@dimen/project_padding"
             android:textStyle="italic"
             android:enabled="false"/>

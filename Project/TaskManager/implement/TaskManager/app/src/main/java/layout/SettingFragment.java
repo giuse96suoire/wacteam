@@ -5,12 +5,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.manager.SettingManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +65,57 @@ public class SettingFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+    private Switch mSwitchSound, mSwitchNotification, mSwitchAutoAcceptFriend, mSwitchAutoAcceptProject, mSwicthAutoBackup;
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mSwitchSound = (Switch) getView().findViewById(R.id.switch_sound);
+        mSwitchNotification = (Switch) getView().findViewById(R.id.switch_notification);
+        mSwitchAutoAcceptProject = (Switch) getView().findViewById(R.id.switch_auto_accept_project);
+        mSwitchAutoAcceptFriend = (Switch) getView().findViewById(R.id.switch_auto_accept_friend);
+        mSwicthAutoBackup = (Switch) getView().findViewById(R.id.switch_auto_backup);
+
+        mSwitchSound.setChecked(SettingManager.isSound(getContext()));
+        mSwitchNotification.setChecked(SettingManager.isNotify(getContext()));
+        mSwitchAutoAcceptProject.setChecked(SettingManager.isAutoAcceptProject(getContext()));
+        mSwitchAutoAcceptFriend.setChecked(SettingManager.isAutoAcceptFriend(getContext()));
+        mSwicthAutoBackup.setChecked(SettingManager.isAutoBackup(getContext()));
+
+        mSwitchSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SettingManager.setIsSound(getContext(),isChecked);
+            }
+        });
+
+        mSwitchNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SettingManager.setIsNotify(getContext(),isChecked);
+            }
+        });
+
+        mSwitchAutoAcceptProject.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SettingManager.setIsAutoAcceptProject(getContext(),isChecked);
+            }
+        });
+
+        mSwitchAutoAcceptFriend.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SettingManager.setIsAutoAcceptFriend(getContext(),isChecked);
+            }
+        });
+
+        mSwicthAutoBackup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SettingManager.setIsAutoBackup(getContext(),isChecked);
+            }
+        });
     }
 
     @Override

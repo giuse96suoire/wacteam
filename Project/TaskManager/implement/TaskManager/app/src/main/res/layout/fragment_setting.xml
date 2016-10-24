@@ -68,13 +68,32 @@
 
                 <Switch
 
-                    android:id="@+id/switch_auto_accept"
+                    android:id="@+id/switch_auto_accept_project"
                     android:paddingLeft="@dimen/project_padding"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
 
             </TableRow>
+            <TableRow
+                android:background="@drawable/border_bottom">
 
+                <TextView
+                    android:layout_weight="1"
+                    android:padding="@dimen/project_padding"
+                    android:textSize="@dimen/project_text_size_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Auto accept friend"
+                    />
+
+                <Switch
+
+                    android:id="@+id/switch_auto_accept_friend"
+                    android:paddingLeft="@dimen/project_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </TableRow>
             <TableRow
                 android:background="@drawable/border_bottom">
 

@@ -28,8 +28,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
-import com.dev.wacteam.taskmanager.manager.EnumDefine;
-import com.dev.wacteam.taskmanager.manager.SettingsManager;
 import com.dev.wacteam.taskmanager.model.User;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.auth.FirebaseAuth;
@@ -111,35 +109,12 @@ public class MainActivity extends AppCompatActivity
         }
         init();
 
-//        mUpdateUserUI();
-//        if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) {
-//        mSetAuthListener();
-//            System.out.println("IS ONLINE MODE");
-//        } else {
-//            System.out.println("IS OFFLINE MODE");
-//        }
+
 
 
     }
 
 
-//    private void mSetAuthListener() {
-//        mAuth = FirebaseAuth.getInstance();
-//        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                if (mAuth.getCurrentUser() == null) {
-//                    System.out.println("USER NULL==========================>");
-//                    mUser = null;
-//                    mGoToActivity(LoginActivity.class);
-//                    mAuth.removeAuthStateListener(this);
-//                } else {
-//                    mUser = mAuth.getCurrentUser();
-//                    mUpdateUserUI();
-//                }
-//            }
-//        });
-//    }
 
     private void init() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -182,7 +157,7 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+//            super.onBackPressed();
         }
     }
 
@@ -248,14 +223,10 @@ public class MainActivity extends AppCompatActivity
             callFragment(new AboutUsFragment());
             setTitle(R.string.title_aboutUs_fragment);
         } else if (id == R.id.nav_signOut) {
-            if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) {
                 FirebaseAuth.getInstance().signOut();
                 CurrentUser.setLogined(false, getApplicationContext());
                 mGoToActivity(LoginActivity.class);
 
-            } else {
-                mGoToActivity(LoginActivity.class);
-            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.dialog.YesNoDialog;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 
@@ -45,7 +46,7 @@ public class CreateProject extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    private EditText mEtProjectName;
+    private EditText mEtProjectName, mEtProjectDescription;
     private Spinner mSpProjectType, mSpProjectLeader;
     private ListView mLvProjectMember;
     private TextView mTvProjectDeadline, mTvProjectCreateAt, mTvMember;
@@ -69,18 +70,38 @@ public class CreateProject extends Fragment {
         mBtnSaveProject = (Button) getView().findViewById(R.id.btn_save);
         mBtnResetProject = (Button) getView().findViewById(R.id.btn_reset);
         mTvMember = (TextView) getView().findViewById(R.id.tv_member);
-
+        mEtProjectDescription = (EditText) getView().findViewById(R.id.et_project_description);
         mBtnSaveProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCreateProject();
+                YesNoDialog.mShow(getContext(), "Are you sure to create this project?", new YesNoDialog.OnClickListener() {
+                    @Override
+                    public void onYes(DialogInterface dialog, int which) {
+                        mCreateProject();
+                    }
+
+                    @Override
+                    public void onNo(DialogInterface dialog, int which) {
+
+                    }
+                });
             }
         });
 
         mBtnResetProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResetProjectForm();
+                YesNoDialog.mShow(getContext(), "Are you sure to reset project? All input will be removed!", new YesNoDialog.OnClickListener() {
+                    @Override
+                    public void onYes(DialogInterface dialog, int which) {
+                        mResetProjectForm();
+                    }
+
+                    @Override
+                    public void onNo(DialogInterface dialog, int which) {
+
+                    }
+                });
             }
         });
 
@@ -159,11 +180,14 @@ public class CreateProject extends Fragment {
 
     private void mResetProjectForm() {
         mEtProjectName.setText("");
+        mEtProjectDescription.setText("");
+
+
     }
 
     private void mCreateProject() {
         Project project = new Project();
-        project.setmTitle(mEtProjectName.getText().toString());
+        project.setmTitle((mEtProjectName.getText().toString().length() == 0) ? "My project" : mEtProjectName.getText().toString());
         ArrayList<String> members = new ArrayList<>();
         members.add(CurrentUser.getInstance().getUserInfo(getContext()).getUid());
         project.setmMembers(members);

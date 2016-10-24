@@ -165,8 +165,7 @@ public class CreateProject extends Fragment {
         Project project = new Project();
         project.setmTitle(mEtProjectName.getText().toString());
         ArrayList<String> members = new ArrayList<>();
-        members.add("HB4fvEg7VLM3e7bcm9SXG1g3UGQ2");
-        members.add("niuMhQDGQAgdi12hgjrQvuJe2PA2");
+        members.add(CurrentUser.getInstance().getUserInfo(getContext()).getUid());
         project.setmMembers(members);
         CurrentUser.createProject(project, getContext());
     }

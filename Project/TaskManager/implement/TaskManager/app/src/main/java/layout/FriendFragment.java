@@ -1,6 +1,7 @@
 package layout;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
@@ -78,12 +79,11 @@ public class FriendFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().length() == 0) {
+                if (s.toString().length() == 0 || s == null) {
                     mGetAllFriend();
                 } else {
                     mSearchFriend(s.toString());
                 }
-//                Toast.makeText(getContext(), s.toString(), Toast.LENGTH_SHORT).show();
             }
         });
         mFriendAdapter = new FriendAdapter(getContext(), getActivity(), mListFriend);
@@ -92,19 +92,31 @@ public class FriendFragment extends Fragment {
         mGetAllFriend();
     }
 
+    ProgressDialog mProgressDialog;
+
     private void mGetAllFriend() {
         CurrentUser.getAllFriend(new OnGetDataListener() {
             @Override
             public void onStart() {
-
+                mProgressDialog = new ProgressDialog(getActivity(),
+                        R.style.AppTheme_Dark_Dialog);
+                mProgressDialog.setIndeterminate(true);
+                mProgressDialog.setMessage("Get your friends...");
+                mProgressDialog.show();
             }
 
             @Override
             public void onSuccess(DataSnapshot data) {
-                User user = data.getValue(User.class);
-                if (!mListFriend.contains(user)) {
-                    mListFriend.add(user);
+                mListFriend.clear();
+                if (data.getChildrenCount() == 0) {
+                    mProgressDialog.dismiss();
+                } else {
+                    for (DataSnapshot value : data.getChildren()) {
+                        User user = value.getValue(User.class);
+                        mListFriend.add(user);
+                    }
                     mFriendAdapter.notifyDataSetChanged();
+                    mProgressDialog.dismiss();
                 }
             }
 
@@ -115,22 +127,6 @@ public class FriendFragment extends Fragment {
         }, getContext());
     }
 
-    private void mShowFriendInfo() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.friend_dialog, null);
-        builder.setView(view)
-                .setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-    }
 
     private void mSearchFriend(String emailOrName) {
         CurrentUser.searchFriend(emailOrName, new OnGetDataListener() {
@@ -141,14 +137,22 @@ public class FriendFragment extends Fragment {
 
             @Override
             public void onSuccess(DataSnapshot data) {
+                boolean isExist = false;
                 User user = data.getValue(User.class);
-
                 for (int i = 0; i < mListFriend.size(); i++) {
                     if (!(mListFriend.get(i).getEmail().contains(emailOrName)) && !(mListFriend.get(i).getDisplayName().contains(emailOrName))) {
                         mListFriend.remove(i);
+//                        mFriendAdapter.notifyDataSetChanged();
+                    }
+//                    System.out.println(mListFriend.get(i).getEmail() +"email ==========>");
+
+                }
+                for (int i = 0; i < mListFriend.size(); i++) {
+                    if ((mListFriend.get(i).getEmail().equals(user.getEmail()))) {
+                        isExist = true;
                     }
                 }
-                if (!mListFriend.contains(user)) {
+                if (!isExist) {
                     mListFriend.add(user);
                     mFriendAdapter.notifyDataSetChanged();
                 }

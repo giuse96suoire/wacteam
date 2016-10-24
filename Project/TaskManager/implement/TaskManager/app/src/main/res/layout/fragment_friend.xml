@@ -6,13 +6,22 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:paddingRight="@dimen/padding_fragment"
+        android:paddingLeft="@dimen/padding_fragment"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="top"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_search"/>
         <EditText
+            android:textSize="@dimen/project_text_size_medium"
             android:id="@+id/et_searchFriend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Search" />
+            android:hint="Search by name or email" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

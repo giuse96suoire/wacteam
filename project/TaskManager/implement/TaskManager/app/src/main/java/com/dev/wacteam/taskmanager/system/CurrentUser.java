@@ -91,6 +91,22 @@ public class CurrentUser extends User {
         db.setValue(project);
     }
 
+    public static void addFriend(User u, Context context) {
+        DatabaseReference db = CurrentUser.getReference(context).child(LIST_FRIEND_REFERENCE);
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               long id = dataSnapshot.getChildrenCount();
+                db.child(id+"").setValue(u.getUid());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public static void searchFriend(String emailOrName, OnGetDataListener listener) {
         listener.onStart();
         DatabaseReference db = FirebaseDatabase.getInstance()
@@ -102,18 +118,10 @@ public class CurrentUser extends User {
 
                     User u = data.getValue(User.class);
                     if (u.getEmail() != null) {
-                        System.out.println("Emai  " + u.getEmail());
-                        System.out.println("name  " + u.getDisplayName());
-
-                        if (u.getEmail().contains(emailOrName) || u.getDisplayName().contains(emailOrName)) {
+                        if (u.getEmail().toLowerCase().contains(emailOrName.toLowerCase()) || u.getDisplayName().toLowerCase().contains(emailOrName.toLowerCase())) {
                             listener.onSuccess(data);
                         }
-                    } else {
-                        System.out.println("Emai null " + u.getEmail());
-                        System.out.println("name  " + u.getDisplayName());
-
                     }
-
                 }
             }
 
@@ -153,15 +161,14 @@ public class CurrentUser extends User {
 
     public static void getAllFriend(OnGetDataListener listener, Context context) {
         listener.onStart();
-        DatabaseReference db = FirebaseDatabase.getInstance()
-                .getReference(RemoteUser.USER_LIST_CHILD + "/" + CurrentUser.getInstance().getUserInfo(context).getUid() + "/" + LIST_FRIEND_REFERENCE);
+        DatabaseReference db = CurrentUser.getReference(context).child(LIST_FRIEND_REFERENCE);
+
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    User u = data.getValue(User.class);
-                    listener.onSuccess(data);
-                }
+
+                listener.onSuccess(dataSnapshot);
+
             }
 
             @Override
@@ -224,7 +231,7 @@ public class CurrentUser extends User {
 
     public static DatabaseReference getReference(Context context) {
         return FirebaseDatabase.getInstance()
-                .getReference(RemoteUser.USER_LIST_CHILD + "/" + CurrentUser.getInstance().getUserInfo(context).getUid() );
+                .getReference(RemoteUser.USER_LIST_CHILD + "/" + CurrentUser.getInstance().getUserInfo(context).getUid());
     }
 
 

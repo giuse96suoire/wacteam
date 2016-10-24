@@ -1,6 +1,7 @@
 package com.dev.wacteam.taskmanager.adapter;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dev.wacteam.taskmanager.R;
@@ -77,29 +79,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         TextView email = holder.tv_friendEmail;
         email.setText(u.getEmail());
         name.setText(u.getDisplayName());
-
         ImageView more = holder.iv_addFriend;
-        more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mShowFriendInfo(u);
-            }
-        });
 
-    }
-
-    boolean isFound = false;
-
-    private void mShowFriendInfo(User u) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        LayoutInflater inflater = mActivity.getLayoutInflater();
-        final View view = inflater.inflate(R.layout.friend_dialog, null);
-        TextView name = (TextView) view.findViewById(R.id.friendName);
-        TextView email = (TextView) view.findViewById(R.id.friendEmail);
-        name.setText(u.getDisplayName());
-        email.setText(u.getEmail());
-//         boolean isFound = false;
         CurrentUser.getAllFriend(new OnGetDataListener() {
             @Override
             public void onStart() {
@@ -108,9 +89,20 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
             @Override
             public void onSuccess(DataSnapshot data) {
-                if (data.getValue(User.class).getUid() == u.getUid()) {
-                    isFound = true;
+                for (DataSnapshot value : data.getChildren()) {
+                    User user = value.getValue(User.class);
+                    if (user.getUid().equals(u.getUid())) {
+                        isFound = true;
+                    }
+
+                    if (isFound) {
+                        more.setImageResource(R.drawable.ic_finish_task);
+                        isFound = false;
+                    } else {
+                        more.setImageResource(R.drawable.ic_add);
+                    }
                 }
+
             }
 
             @Override
@@ -118,36 +110,97 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
             }
         }, mContext);
-        if (isFound) {
-            builder.setNegativeButton("Remove Friend", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mShowFriendInfo(u, more);
+            }
+        });
+
+    }
+
+    boolean isFound = false;
+    ProgressDialog mProgressDialog;
+
+    private void mShowFriendInfo(User u, ImageView icon) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        LayoutInflater inflater = mActivity.getLayoutInflater();
+        final View view = inflater.inflate(R.layout.friend_dialog, null);
+        TextView name = (TextView) view.findViewById(R.id.friendName);
+        TextView email = (TextView) view.findViewById(R.id.friendEmail);
+        name.setText(u.getDisplayName());
+        email.setText(u.getEmail());
+        CurrentUser.getAllFriend(new OnGetDataListener() {
+            @Override
+            public void onStart() {
+                mProgressDialog = new ProgressDialog(mActivity,
+                        R.style.AppTheme_Dark_Dialog);
+                mProgressDialog.setIndeterminate(true);
+                mProgressDialog.setMessage("Get info...");
+                mProgressDialog.show();
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot data) {
+                for (DataSnapshot value : data.getChildren()) {
+                    User user = value.getValue(User.class);
+                    if (user.getUid().equals(u.getUid())) {
+                        isFound = true;
+                    }
+                }
+
+
+                if (isFound) {
+                    builder.setNegativeButton("Remove Friend", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    isFound = false;
+                } else {
+                    builder.setNegativeButton("Add Friend", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                }
+                builder.setView(view)
+                        .setNeutralButton("Chat", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setPositiveButton("Add to project", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+
+                if (mProgressDialog != null) {
+                    mProgressDialog.dismiss();
 
                 }
-            });
-        } else {
-            builder.setNegativeButton("Add Friend", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
-                }
-            });
-        }
-        builder.setView(view)
-                .setNeutralButton("Chat", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+            }
 
-                    }
-                })
-                .setPositiveButton("Add to project", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+            @Override
+            public void onFailed(DatabaseError databaseError) {
 
-                    }
-                });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+            }
+        }, mContext);
+
+
+    }
+
+    private void mCheckFriendIsAdded(ImageView icon) {
 
     }
 

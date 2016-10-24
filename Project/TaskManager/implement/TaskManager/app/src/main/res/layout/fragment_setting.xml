@@ -16,6 +16,7 @@
                 android:background="@drawable/border_bottom">
 
                 <TextView
+                    android:layout_weight="1"
                     android:textSize="@dimen/project_text_size_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -23,6 +24,7 @@
                     android:padding="@dimen/project_padding"/>
 
                 <Switch
+                    android:layout_marginEnd="0dp"
                     android:layout_gravity="right"
                     android:id="@+id/switch_sound"
                     android:paddingLeft="@dimen/project_padding"
@@ -35,6 +37,7 @@
                 android:background="@drawable/border_bottom">
 
                 <TextView
+                    android:layout_weight="1"
                     android:textSize="@dimen/project_text_size_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -55,6 +58,7 @@
                 android:background="@drawable/border_bottom">
 
                 <TextView
+                    android:layout_weight="1"
                     android:padding="@dimen/project_padding"
                     android:textSize="@dimen/project_text_size_medium"
                     android:layout_width="wrap_content"
@@ -63,6 +67,7 @@
                     />
 
                 <Switch
+
                     android:id="@+id/switch_auto_accept"
                     android:paddingLeft="@dimen/project_padding"
                     android:layout_width="match_parent"
@@ -74,6 +79,7 @@
                 android:background="@drawable/border_bottom">
 
                 <TextView
+                    android:layout_weight="1"
                     android:padding="@dimen/project_padding"
                     android:textSize="@dimen/project_text_size_medium"
                     android:layout_width="wrap_content"

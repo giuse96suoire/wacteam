@@ -2,172 +2,144 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/padding_fragment">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_fullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:padding="@dimen/padding_fragment"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="@dimen/project_name_large" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/padding_fragment"
+            android:paddingLeft="@dimen/padding_fragment">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_dialog_email" />
+
+            <TextView
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:text="tramanh@abc.com"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="@dimen/project_text_size_medium" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:padding="@dimen/padding_fragment">
 
         <LinearLayout
+            android:paddingBottom="8dp"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:orientation="horizontal">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/layout_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_date_range_black_24dp" />
 
-                <EditText
-                    android:id="@+id/et_fullName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/name_fragment_profile"
-                    android:inputType="textEmailAddress"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="8dp"
-                    android:paddingTop="10dp"
-                    android:textColorHint="#5b90a8" />
-            </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/et_dob"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:focusable="false"
+                android:inputType="date"
+                android:text="29/06/1996"
+
+                android:textSize="@dimen/project_text_size_medium" />
+
+
         </LinearLayout>
 
         <LinearLayout
+            android:paddingBottom="8dp"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:orientation="horizontal">
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_location_on_black_24dp" />
 
-                <EditText
-                    android:id="@+id/et_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:hint="@string/email_fragment_profile"
-                    android:inputType="textPersonName"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="8dp"
-                    android:paddingTop="10dp"
-                    android:textColorHint="#5b90a8" />
-            </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/et_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+
+                android:text="4/3 Đồ Sơn Tân Bình HCM"
+                android:textSize="@dimen/project_text_size_medium" />
         </LinearLayout>
 
         <LinearLayout
+            android:paddingBottom="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:orientation="horizontal">
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_perm_phone_msg_black_24dp" />
 
-                <EditText
-                    android:id="@+id/et_dob"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:hint="@string/dob_fragment_profile"
-                    android:inputType="date"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="8dp"
-                    android:paddingTop="10dp"
-                    android:textColorHint="#5b90a8" />
-            </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/et_phoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:inputType="phone"
+                android:text="0988247131"
+                android:textSize="@dimen/project_text_size_medium" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:orientation="horizontal">
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/et_phoneNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/phoneNumber_fragment_profile"
-                    android:inputType="textPhonetic"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="8dp"
-                    android:paddingTop="10dp"
-                    android:textColorHint="#5b90a8" />
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:orientation="horizontal">
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/et_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/address_fragment_profile"
-                    android:inputType="textPersonName"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="8dp"
-                    android:paddingTop="10dp"
-                    android:textColorHint="#5b90a8" />
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:orientation="horizontal">
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <AutoCompleteTextView
-                    android:id="@+id/et_job"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/job_fragment_profile"
-                    android:inputType="textPersonName"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="8dp"
-                    android:paddingTop="10dp"
-                    android:textColorHint="#5b90a8" />
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
 
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_fragment">
 
         <Button
             android:id="@+id/btn_resetInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.50"
+            android:layout_marginRight="@dimen/padding_fragment"
             android:background="@drawable/border_button_profile"
-            android:text="Reset" />
+            android:text="Reset input" />
 
         <Button
             android:id="@+id/btn_saveInfo"
@@ -175,9 +147,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.50"
             android:background="@drawable/border_button_profile"
-            android:text="Save"
+            android:text="Update profile"
             android:textColor="#3378df" />
 
     </LinearLayout>
-
 </LinearLayout>

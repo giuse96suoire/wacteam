@@ -9,23 +9,25 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
-import com.dev.wacteam.taskmanager.activity.MainActivity;
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.activity.MainActivity;
 
 /**
  * Created by giuse96suoire on 10/12/2016.
  */
 public class NotificationsManager {
 
-    public static void mNotify(Context mContext) {
+    public static void mNotify(Context mContext, String title, String content) {
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(mContext)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!")
-                        .setSound(alarmSound)
+                        .setContentTitle(title)
+                        .setContentText(content)
                         .setAutoCancel(true);
+        if (SettingManager.isSound(mContext)) {
+            mBuilder.setSound(alarmSound);
+        }
         // Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(mContext, MainActivity.class);
 

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/header_menu_background"
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp"
@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/userFullName_nav_header_main"
+        android:textSize="@dimen/project_text_size_medium"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView

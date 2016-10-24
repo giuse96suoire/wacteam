@@ -47,23 +47,12 @@ public class CurrentUser extends User {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(UID, user.getUid());
         editor.putString(DISPLAY_NAME, user.getDisplayName());
+        editor.putString(DOB, user.getDob());
+        editor.putString(ADDRESS, user.getAddress());
+        editor.putString(PHONE_NUMBER, user.getPhoneNumber());
         editor.putString(EMAIL, user.getEmail());
         editor.commit();
-//        CurrentUser.getInstance().setEmail(user.getEmail());
-//        CurrentUser.getInstance().setDisplayName(user.getDisplayName());
-//        CurrentUser.getInstance().setEmailVerified(user.isEmailVerified());
-//        CurrentUser.getInstance().setProviderId(user.getProviderId());
-//        CurrentUser.getInstance().setUid(user.getUid());
-//        CurrentUser.getInstance().setPhotoUrl(user.getPhotoUrl());
-//        CurrentUser.getInstance().setDob(user.getDob());
-//        CurrentUser.getInstance().setAddress(user.getAddress());
-//        CurrentUser.getInstance().setListFriend(user.getListFriend());
-//        CurrentUser.getInstance().setSetting(user.getSetting());
-//        CurrentUser.getInstance().setListProject(user.getListProject());
-//        CurrentUser.getInstance().setPhoneNumber(user.getPhoneNumber());
-//        CurrentUser.getInstance().setGender(user.getGender());
-//        isNotNull = true;
-
+        Toast.makeText(context, "Update your profile successed!", Toast.LENGTH_LONG).show();
     }
 
     private void writeToLocal() {
@@ -96,8 +85,8 @@ public class CurrentUser extends User {
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-               long id = dataSnapshot.getChildrenCount();
-                db.child(id+"").setValue(u.getUid());
+                long id = dataSnapshot.getChildrenCount();
+                db.child(id + "").setValue(u.getUid());
             }
 
             @Override
@@ -221,11 +210,13 @@ public class CurrentUser extends User {
         user.setPhoneNumber(sharedPref.getString(PHONE_NUMBER, context.getResources().getString(R.string.default_phone_number)));
         user.setAddress(sharedPref.getString(ADDRESS, context.getResources().getString(R.string.default_address)));
         user.setDob(sharedPref.getString(DOB, context.getResources().getString(R.string.default_dob)));
+
 //        user.setDisplayName(sharedPref.getString(DISPLAY_NAME, "Your name"));
 //        user.setDisplayName(sharedPref.getString(DISPLAY_NAME, "Your name"));
 //        user.setDisplayName(sharedPref.getString(DISPLAY_NAME, "Your name"));
 //        user.setDisplayName(sharedPref.getString(DISPLAY_NAME, "Your name"));
 //        user.setDisplayName(sharedPref.getString(DISPLAY_NAME, "Your name"));
+
         return user;
     }
 

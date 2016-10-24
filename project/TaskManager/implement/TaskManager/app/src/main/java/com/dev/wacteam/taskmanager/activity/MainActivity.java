@@ -168,42 +168,12 @@ public class MainActivity extends AppCompatActivity
         mTvUserFullName = (TextView) header.findViewById(R.id.tv_userFullName);
         mTvUserEmail = (TextView) header.findViewById(R.id.tv_userEmail);
         User user = CurrentUser.getUserInfo(getApplicationContext());
-        mTvUserEmail.setText(user.getEmail());
-        mTvUserFullName.setText(user.getDisplayName());
+        mUpdateUserUI(user);
     }
 
-    private void mUpdateUserUI() {
-        Toast.makeText(getApplicationContext(), CurrentUser.getInstance().getDisplayName(), Toast.LENGTH_LONG).show();
-        Toast.makeText(getApplicationContext(), CurrentUser.getInstance().getEmail(), Toast.LENGTH_LONG).show();
-//        CurrentUser.getUserInfo(new OnGetDataListener() {
-//            @Override
-//            public void onStart() {
-//                //do nothing
-//            }
-//
-//            @Override
-//            public void onSuccess(DataSnapshot data) {
-//                if (data != null) {
-//                    User user = data.getValue(User.class);
-//                    if (user == null || user.getUid() == null || user.getDisplayName() == null || user.getEmail() == null) {
-//                        mGoToActivity(LoginActivity.class);
-//                    } else {
-//        mTvUserFullName.setText(CurrentUser.getInstance().getDisplayName() == null ? "your name" : CurrentUser.getInstance().getDisplayName());
-//        mTvUserEmail.setText(CurrentUser.getInstance().getEmail() == null ? "youremail@mail.com" : CurrentUser.getInstance().getEmail());
-        //TODO: update some UI
-//                    }
-//                } else {
-//                    mGoToActivity(LoginActivity.class);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailed(DatabaseError databaseError) {
-//                mGoToActivity(LoginActivity.class);
-//            }
-//        });
-
-
+    public void mUpdateUserUI(User user) {
+        mTvUserEmail.setText(user.getEmail());
+        mTvUserFullName.setText(user.getDisplayName());
     }
 
     @Override

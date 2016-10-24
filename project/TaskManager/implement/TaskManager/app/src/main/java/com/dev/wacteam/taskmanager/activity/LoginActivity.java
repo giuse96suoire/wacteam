@@ -47,6 +47,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -224,29 +227,27 @@ public class LoginActivity extends AppCompatActivity {
 
     private void mCheckInforInServer(User user) {
         CurrentUser.setLogined(true, getApplicationContext());
-        CurrentUser.setInfo(user, getApplicationContext());
-        new RemoteUser().mFind(user.getUid(), new OnGetDataListener() {
-            @Override
-            public void onStart() {
-            }
+         FirebaseDatabase.getInstance()
+                .getReference("users/list/"+user.getUid())
+         .addListenerForSingleValueEvent(new ValueEventListener() {
+             @Override
+             public void onDataChange(DataSnapshot dataSnapshot) {
+                User nUser = dataSnapshot.getValue(User.class);
+                 if (nUser == null) {
+                     CurrentUser.setUserInfoToServer(getApplicationContext());
+                     CurrentUser.setInfo(user, getApplicationContext());
+                     mGoToActivity(MainActivity.class);
+                 } else {
+                     CurrentUser.setInfo(nUser, getApplicationContext());
+                     mGoToActivity(MainActivity.class);
+                 }
+             }
 
-            @Override
-            public void onSuccess(DataSnapshot data) {
-                User nUser = data.getValue(User.class);
-                if (nUser == null) {
-                    CurrentUser.setUserInfoToServer(getApplicationContext());
-                    mGoToActivity(MainActivity.class);
-                } else {
-                    mGoToActivity(MainActivity.class);
-                }
+             @Override
+             public void onCancelled(DatabaseError databaseError) {
 
-            }
-
-            @Override
-            public void onFailed(DatabaseError databaseError) {
-                mGoToActivity(MainActivity.class);
-            }
-        });
+             }
+         });
 
     }
 
@@ -297,7 +298,7 @@ public class LoginActivity extends AppCompatActivity {
             if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) { // if current mode is ONLINE -> check user in firebase
                 if (NetworkManager.mIsConnectToNetwork(LoginActivity.this)) {
                     mShowProgessDialog();
-                    mAuth.createUserWithEmailAndPassword(mEmail.getText().toString(), mPassword.getText().toString())
+                    mAuth.createUserWithEmailAndPassword(mEmail.getText().toString().trim(), mPassword.getText().toString().trim())
                             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -351,11 +352,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean mIsValidForm() { //check if email and password is oke
-        if (TextUtils.isEmpty(mEmail.getText().toString())) {
+        if (TextUtils.isEmpty(mEmail.getText().toString().trim())) {
             mEmail.setError("PLease input your email!");
             return false;
         }
-        if (TextUtils.isEmpty(mPassword.getText().toString())) {
+        if (TextUtils.isEmpty(mPassword.getText().toString().trim())) {
             mPassword.setError("PLease input your password!");
             return false;
         }
@@ -367,7 +368,7 @@ public class LoginActivity extends AppCompatActivity {
 //            if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) { // if current mode is ONLINE -> check user in firebase
 //                if (NetworkManager.mIsConnectToNetwork(LoginActivity.this)) {
             mShowProgessDialog();
-            mAuth.signInWithEmailAndPassword(mEmail.getText().toString(), mPassword.getText().toString())
+            mAuth.signInWithEmailAndPassword(mEmail.getText().toString().trim(), mPassword.getText().toString().trim())
 
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override

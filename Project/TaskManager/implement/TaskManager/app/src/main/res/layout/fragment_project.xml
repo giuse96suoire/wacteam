@@ -4,17 +4,11 @@
     android:layout_height="match_parent"
     tools:context="layout.ProjectFragment">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_project"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true">
 
-        <ListView
-            android:id="@+id/lv_listProject"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </ListView>
-
-    </LinearLayout>
+    </android.support.v7.widget.RecyclerView>
 </FrameLayout>

@@ -6,10 +6,6 @@ import android.net.Uri;
 
 import com.dev.wacteam.taskmanager.model.User;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * Created by giuse96suoire on 10/15/2016.
  */

@@ -7,14 +7,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.adapter.ProjectAdapter;
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
@@ -100,39 +102,43 @@ public class ProjectFragment extends Fragment {
         }
     }
 
-    private ListView mLvListProject;
+    private RecyclerView mLvListProject;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ArrayList<String> listProject = new ArrayList<>();
-        listProject.add("No thing to display");
-        mLvListProject = (ListView) getView().findViewById(R.id.lv_listProject);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_checked, listProject);
-
+        ArrayList<Project> listProject = new ArrayList<>();
+        Project project = new Project();
+        project.setmComplete(69.9);
+        project.setmDeadline("12/11/2016");
+        project.setmCreateDate("12/10/2016");
+        project.setmTitle("Task Manager");
+        listProject.add(project);
+        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
+        listProject.add(project);
+        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
+        listProject.add(project);
+        project.setmTitle("Prepare for microsoft - Wacteam");
+        listProject.add(project);
+        project.setmTitle("Prepare for FPT FU SANG TAO 2016 - Wacteam");
+        listProject.add(project);
+        project.setmTitle("Prepare 2016 - Wacteam");
+        listProject.add(project);
+        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
+        listProject.add(project);
+        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
+        listProject.add(project);
+        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
+        listProject.add(project);
+        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
+        listProject.add(project);
+        ProjectAdapter adapter = new ProjectAdapter(getContext(), getActivity(), listProject);
+//        listProject.add("No thing to display");
+        mLvListProject = (RecyclerView) getView().findViewById(R.id.rv_project);
+        mLvListProject.setHasFixedSize(true);
+        mLvListProject.setLayoutManager(new LinearLayoutManager(getActivity()));
         mLvListProject.setAdapter(adapter);
-        CurrentUser.getAllProject(new OnGetDataListener() {
-            @Override
-            public void onStart() {
 
-            }
-
-            @Override
-            public void onSuccess(DataSnapshot data) {
-                Project project = data.getValue(Project.class);
-//                System.out.println(project.getmTitle()+" ==============>");
-                if (project.getmTitle() != null) {
-                    listProject.add(project.getmTitle());
-                    adapter.notifyDataSetChanged();
-                }
-
-            }
-
-            @Override
-            public void onFailed(DatabaseError databaseError) {
-
-            }
-        }, getContext());
     }
 
     @Override

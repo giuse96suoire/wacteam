@@ -1,5 +1,6 @@
 package com.dev.wacteam.taskmanager.activity;
 
+import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.AlertDialog;
@@ -7,10 +8,12 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -27,12 +30,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
-import com.dev.wacteam.taskmanager.database.RemoteUser;
 import com.dev.wacteam.taskmanager.dialog.DialogAlert;
-import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.manager.NetworkManager;
-import com.dev.wacteam.taskmanager.manager.SettingsManager;
+import com.dev.wacteam.taskmanager.model.Setting;
 import com.dev.wacteam.taskmanager.model.User;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.facebook.CallbackManager;
@@ -47,7 +48,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -202,17 +202,28 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private ArrayList<String> mGetSystemEmail() {
-        System.out.println("GET EMAIL =============>");
         ArrayList<String> email = new ArrayList<>();
-        Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
-        Account[] accounts = AccountManager.get(getApplicationContext()).getAccounts();
-        for (Account account : accounts) {
-            if (emailPattern.matcher(account.name).matches()) {
-                email.add(account.name);
-                System.out.println(account.name + "Email==============>");
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            System.out.println("GET EMAIL =============>");
+            Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
+            Account[] accounts = AccountManager.get(getApplicationContext()).getAccounts();
+            for (Account account : accounts) {
+                if (emailPattern.matcher(account.name).matches()) {
+                    email.add(account.name);
+                    System.out.println(account.name + "Email==============>");
+                }
             }
         }
         return email;
+
     }
 
     private void mGoToActivity(Class c) {
@@ -226,28 +237,36 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void mCheckInforInServer(User user) {
+        System.out.println("check user in server");
         CurrentUser.setLogined(true, getApplicationContext());
-         FirebaseDatabase.getInstance()
-                .getReference("users/list/"+user.getUid())
-         .addListenerForSingleValueEvent(new ValueEventListener() {
-             @Override
-             public void onDataChange(DataSnapshot dataSnapshot) {
-                User nUser = dataSnapshot.getValue(User.class);
-                 if (nUser == null) {
-                     CurrentUser.setUserInfoToServer(getApplicationContext());
-                     CurrentUser.setInfo(user, getApplicationContext());
-                     mGoToActivity(MainActivity.class);
-                 } else {
-                     CurrentUser.setInfo(nUser, getApplicationContext());
-                     mGoToActivity(MainActivity.class);
-                 }
-             }
+        FirebaseDatabase.getInstance()
+                .getReference("users/list/" + user.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User nUser = dataSnapshot.getValue(User.class);
+                        if (nUser == null) {
+                            Setting setting = new Setting();
+                            setting.setmAutoAcceptFriend(false);
+                            setting.setmAutoAcceptProject(false);
+                            setting.setmAutoBackupData(true);
+                            setting.setmNotification(true);
+                            setting.setmSound(true);
+                            user.setSetting(setting);
+                            CurrentUser.setInfo(user, getApplicationContext());
+                            CurrentUser.setUserInfoToServer(getApplicationContext());
+                            mGoToActivity(MainActivity.class);
+                        } else {
+                            CurrentUser.setInfo(nUser, getApplicationContext());
+                            mGoToActivity(MainActivity.class);
+                        }
+                    }
 
-             @Override
-             public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-             }
-         });
+                    }
+                });
 
     }
 
@@ -285,7 +304,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void mResetPassword(String email) {
-        if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString()) && NetworkManager.mIsConnectToNetwork(LoginActivity.this)) {
+        if (NetworkManager.mIsConnectToNetwork(LoginActivity.this)) {
             mAuth.sendPasswordResetEmail(email);
             mDisplayNoConnectionAlert();
         } else {
@@ -295,48 +314,37 @@ public class LoginActivity extends AppCompatActivity {
 
     private void mDoSignUp() {
         if (mIsValidForm()) {
-            if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) { // if current mode is ONLINE -> check user in firebase
-                if (NetworkManager.mIsConnectToNetwork(LoginActivity.this)) {
-                    mShowProgessDialog();
-                    mAuth.createUserWithEmailAndPassword(mEmail.getText().toString().trim(), mPassword.getText().toString().trim())
-                            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                }
-                            })
-                            .addOnFailureListener(this, new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    String error_code = ((FirebaseAuthException) e).getErrorCode();
-                                    DialogAlert.mShow(LoginActivity.this, mGetErrorMessage(error_code));
-                                    mDismissProgessDialog();
-                                }
-                            })
-                            .addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
-                                @Override
-                                public void onSuccess(AuthResult authResult) {
-                                    Toast.makeText(LoginActivity.this, "Sign up successed!", Toast.LENGTH_LONG).show();
-                                    User user = new User();
-                                    user.setUid(authResult.getUser().getUid());
-                                    user.setDisplayName(authResult.getUser().getDisplayName());
-                                    user.setEmail(authResult.getUser().getEmail());
-                                    mCheckInforInServer(user);
-                                }
-                            });
-                } else {
-                    mDisplayNoConnectionAlert();
-                }
-            } else { //offline mode -> check user in local storage
-                if (mIsValidEmail(mEmail.getText().toString())) { //TODO: check if email is valid format
-                    if (mIsValidPassword(mPassword.getText().toString())) { //TODO: check if password is valid
-                        mGoToActivity(MainActivity.class);
-                    } else {
-                        DialogAlert.mShow(LoginActivity.this, mGetErrorMessage("ERROR_WRONG_PASSWORD"));
-                    }
-                } else {
-                    DialogAlert.mShow(LoginActivity.this, mGetErrorMessage("ERROR_INVALID_EMAIL"));
-                }
+            if (NetworkManager.mIsConnectToNetwork(LoginActivity.this)) {
+                mShowProgessDialog();
+                mAuth.createUserWithEmailAndPassword(mEmail.getText().toString().trim(), mPassword.getText().toString().trim())
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                            }
+                        })
+                        .addOnFailureListener(this, new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                String error_code = ((FirebaseAuthException) e).getErrorCode();
+                                DialogAlert.mShow(LoginActivity.this, mGetErrorMessage(error_code));
+                                mDismissProgessDialog();
+                            }
+                        })
+                        .addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
+                            @Override
+                            public void onSuccess(AuthResult authResult) {
+                                Toast.makeText(LoginActivity.this, "Sign up successed!", Toast.LENGTH_LONG).show();
+                                User user = new User();
+                                user.setUid(authResult.getUser().getUid());
+                                user.setDisplayName(authResult.getUser().getDisplayName());
+                                user.setEmail(authResult.getUser().getEmail());
+                                mCheckInforInServer(user);
+                            }
+                        });
+            } else {
+                mDisplayNoConnectionAlert();
             }
+
         }
     }
 
@@ -365,8 +373,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void mDoSignIn() {
         if (mIsValidForm()) {
-//            if (SettingsManager.INSTANCE.MODE.equals(EnumDefine.MODE.ONLINE.toString())) { // if current mode is ONLINE -> check user in firebase
-//                if (NetworkManager.mIsConnectToNetwork(LoginActivity.this)) {
             mShowProgessDialog();
             mAuth.signInWithEmailAndPassword(mEmail.getText().toString().trim(), mPassword.getText().toString().trim())
 
@@ -408,6 +414,7 @@ public class LoginActivity extends AppCompatActivity {
                             user.setUid(authResult.getUser().getUid());
                             user.setDisplayName(authResult.getUser().getDisplayName());
                             user.setEmail(authResult.getUser().getEmail());
+                            System.out.println("set user value");
 
                             mCheckInforInServer(user);
                         }

@@ -129,7 +129,7 @@ public class FriendFragment extends Fragment {
 
 
     private void mSearchFriend(String emailOrName) {
-        CurrentUser.searchFriend(emailOrName, new OnGetDataListener() {
+        CurrentUser.searchFriend(getContext(),emailOrName, new OnGetDataListener() {
             @Override
             public void onStart() {
 

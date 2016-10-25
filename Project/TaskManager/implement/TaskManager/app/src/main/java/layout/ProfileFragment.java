@@ -15,7 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.activity.MainActivity;
@@ -49,7 +49,8 @@ public class ProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private EditText mEtFullName, mEtEmail, mEtAddress, mEtPhoneNumber, mEtDob;
+    private EditText mEtFullName, mEtAddress, mEtPhoneNumber, mEtDob;
+    private TextView mEtEmail;
     private AutoCompleteTextView mAcJob;
     private Button mBtnSave;
 
@@ -65,7 +66,7 @@ public class ProfileFragment extends Fragment {
         mEtPhoneNumber.setText(user.getPhoneNumber());
         mEtDob.setText(user.getDob());
         String[] job_arr = getResources().getStringArray(R.array.job_array);
-        mAcJob.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, job_arr));
+//        mAcJob.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, job_arr));
 
         mEtDob.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +95,7 @@ public class ProfileFragment extends Fragment {
                         user.setPhoneNumber(mEtPhoneNumber.getText().toString());
                         user.setDob(mEtDob.getText().toString());
                         mUpdateInfo(user);
-                        ((MainActivity)getActivity()).mUpdateUserUI(user);
+                        ((MainActivity) getActivity()).mUpdateUserUI(user);
                     }
 
                     @Override
@@ -110,10 +111,10 @@ public class ProfileFragment extends Fragment {
 
     private void init() {
         mEtFullName = (EditText) getView().findViewById(R.id.et_fullName);
-        mEtEmail = (EditText) getView().findViewById(R.id.et_email);
+        mEtEmail = (TextView) getView().findViewById(R.id.et_email);
         mEtAddress = (EditText) getView().findViewById(R.id.et_address);
         mEtPhoneNumber = (EditText) getView().findViewById(R.id.et_phoneNumber);
-        mAcJob = (AutoCompleteTextView) getView().findViewById(R.id.et_job);
+//        mAcJob = (AutoCompleteTextView) getView().findViewById(R.id.et_job);
         mEtDob = (EditText) getView().findViewById(R.id.et_dob);
     }
 

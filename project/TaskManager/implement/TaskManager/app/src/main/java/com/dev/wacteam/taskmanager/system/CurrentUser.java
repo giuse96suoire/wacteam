@@ -7,7 +7,9 @@ import android.widget.Toast;
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.database.RemoteUser;
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
+import com.dev.wacteam.taskmanager.manager.SettingManager;
 import com.dev.wacteam.taskmanager.model.Project;
+import com.dev.wacteam.taskmanager.model.Setting;
 import com.dev.wacteam.taskmanager.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,6 +54,16 @@ public class CurrentUser extends User {
         editor.putString(PHONE_NUMBER, user.getPhoneNumber());
         editor.putString(EMAIL, user.getEmail());
         editor.commit();
+        if (user.getSetting() != null) {
+            SettingManager.setIsAutoBackup(context, user.getSetting().ismAutoBackupData());
+            SettingManager.setIsAutoAcceptProject(context, user.getSetting().ismAutoAcceptFriend());
+            SettingManager.setIsNotify(context, user.getSetting().ismNotification());
+            SettingManager.setIsSound(context, user.getSetting().ismSound());
+            SettingManager.setIsAutoAcceptFriend(context, user.getSetting().ismAutoAcceptFriend());
+        } else {
+
+        }
+
         Toast.makeText(context, "Update your profile successed!", Toast.LENGTH_LONG).show();
     }
 
@@ -96,7 +108,7 @@ public class CurrentUser extends User {
         });
     }
 
-    public static void searchFriend(String emailOrName, OnGetDataListener listener) {
+    public static void searchFriend(Context context, String emailOrName, OnGetDataListener listener) {
         listener.onStart();
         DatabaseReference db = FirebaseDatabase.getInstance()
                 .getReference(RemoteUser.USER_LIST_CHILD);
@@ -107,7 +119,8 @@ public class CurrentUser extends User {
 
                     User u = data.getValue(User.class);
                     if (u.getEmail() != null) {
-                        if (u.getEmail().toLowerCase().contains(emailOrName.toLowerCase()) || u.getDisplayName().toLowerCase().contains(emailOrName.toLowerCase())) {
+                        if (u.getEmail().toLowerCase().contains(emailOrName.toLowerCase()) || u.getDisplayName().toLowerCase().contains(emailOrName.toLowerCase())
+                                && !u.getEmail().equals(CurrentUser.getUserInfo(context).getEmail())) {
                             listener.onSuccess(data);
                         }
                     }
@@ -169,6 +182,7 @@ public class CurrentUser extends User {
 
     public static void setUserInfoToServer(Context context) {
         User u = CurrentUser.getUserInfo(context);
+
         CurrentUser.getInstance().getReference(context).setValue(u);
     }
 
@@ -190,17 +204,6 @@ public class CurrentUser extends User {
     }
 
     public static User getUserInfo(Context context) {
-//        CurrentUser.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                listener.onSuccess(dataSnapshot);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                listener.onFailed(databaseError);
-//            }
-//        });
         User user = new User();
         SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getResources().getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -210,13 +213,13 @@ public class CurrentUser extends User {
         user.setPhoneNumber(sharedPref.getString(PHONE_NUMBER, context.getResources().getString(R.string.default_phone_number)));
         user.setAddress(sharedPref.getString(ADDRESS, context.getResources().getString(R.string.default_address)));
         user.setDob(sharedPref.getString(DOB, context.getResources().getString(R.string.default_dob)));
-
-//        user.setDisplayName(sharedPref.getString(DISPLAY_NAME, "Your name"));
-//        user.setDisplayName(sharedPref.getString(DISPLAY_NAME, "Your name"));
-//        user.setDisplayName(sharedPref.getString(DISPLAY_NAME, "Your name"));
-//        user.setDisplayName(sharedPref.getString(DISPLAY_NAME, "Your name"));
-//        user.setDisplayName(sharedPref.getString(DISPLAY_NAME, "Your name"));
-
+        Setting setting = new Setting();
+        setting.setmAutoBackupData(SettingManager.isAutoBackup(context));
+        setting.setmSound(SettingManager.isSound(context));
+        setting.setmAutoAcceptFriend(SettingManager.isAutoAcceptFriend(context));
+        setting.setmNotification(SettingManager.isNotify(context));
+        setting.setmAutoAcceptProject(SettingManager.isAutoAcceptProject(context));
+        user.setSetting(setting);
         return user;
     }
 

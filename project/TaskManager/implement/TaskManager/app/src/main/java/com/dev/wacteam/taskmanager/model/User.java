@@ -27,7 +27,6 @@ public class User {
     private String phoneNumber;
     private String address;
     private boolean gender;
-
     public void setGender(boolean gender) { // true is man, false is woman
         this.gender = gender;
     }

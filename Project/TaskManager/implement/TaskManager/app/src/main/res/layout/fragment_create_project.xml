@@ -30,7 +30,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#00000000"
-                        android:text="Task manager"
                         android:hint="@string/project_name_label"
                         android:maxLength="30"
                         android:textColor="@color/cardview_light_background"

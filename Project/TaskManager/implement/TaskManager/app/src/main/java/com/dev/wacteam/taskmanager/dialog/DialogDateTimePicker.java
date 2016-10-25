@@ -2,6 +2,7 @@ package com.dev.wacteam.taskmanager.dialog;
 
 import android.app.Activity;
 
+import com.dev.wacteam.taskmanager.R;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
@@ -25,7 +26,7 @@ public class DialogDateTimePicker {
                 now.get(Calendar.YEAR)
         );
         dpd.setYearRange(startYear, endYear);
-        dpd.show(activity.getFragmentManager(), "Datepickerdialog");
+        dpd.show(activity.getFragmentManager(), activity.getString(R.string.date_picker_dialog));
     }
 
     public static void showTimePicker(int startYear, int endYear, Activity activity, OnGetDateTimeListener listener) {

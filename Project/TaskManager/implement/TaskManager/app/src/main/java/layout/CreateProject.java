@@ -91,7 +91,7 @@ public class CreateProject extends Fragment {
         mBtnResetProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YesNoDialog.mShow(getContext(), "Are you sure to reset project? All input will be removed!", new YesNoDialog.OnClickListener() {
+                YesNoDialog.mShow(getContext(), getString(R.string.confirm_reset_project), new YesNoDialog.OnClickListener() {
                     @Override
                     public void onYes(DialogInterface dialog, int which) {
                         mResetProjectForm();
@@ -106,7 +106,7 @@ public class CreateProject extends Fragment {
         });
 
         mList_member = new ArrayList<>();
-        mList_member.add("+ Add more");
+        mList_member.add(getString(R.string.add_more));
         mTvMember.setText(getResources().getString(R.string.member_label) + " (" + (mList_member.size() - 1) + ")");
         mMemberAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, mList_member);
         mLvProjectMember.setAdapter(mMemberAdapter);
@@ -138,9 +138,9 @@ public class CreateProject extends Fragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.list_friend_dialog, null);
 
-        builder.setTitle("Choose members")
+        builder.setTitle(R.string.choose_member)
                 .setView(view)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.add_member, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mMemberAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, mList_member);
@@ -148,7 +148,7 @@ public class CreateProject extends Fragment {
 
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel_add_member, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -167,10 +167,10 @@ public class CreateProject extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String value = lv_friend.getItemAtPosition(position).toString();
                 if (view.isSelected()) {
-                    Toast.makeText(getContext(), "Remove " + value, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), getString(R.string.Remove_member) + value, Toast.LENGTH_LONG).show();
                     mList_member.remove(value);
                 } else {
-                    Toast.makeText(getContext(), "Add " + value, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), getString(R.string.add_member) + value, Toast.LENGTH_LONG).show();
                     mList_member.add(value);
                 }
             }
@@ -187,7 +187,7 @@ public class CreateProject extends Fragment {
 
     private void mCreateProject() {
         Project project = new Project();
-        project.setmTitle((mEtProjectName.getText().toString().length() == 0) ? "My project" : mEtProjectName.getText().toString());
+        project.setmTitle((mEtProjectName.getText().toString().length() == 0) ? getString(R.string.Create_project) : mEtProjectName.getText().toString());
         ArrayList<String> members = new ArrayList<>();
         members.add(CurrentUser.getInstance().getUserInfo(getContext()).getUid());
         project.setmMembers(members);

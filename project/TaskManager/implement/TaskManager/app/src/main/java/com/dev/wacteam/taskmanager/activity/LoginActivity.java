@@ -143,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                                            if (!mIsUserLogined()) {
                                                mDoSignUp();
                                            } else {
-                                               Toast.makeText(LoginActivity.this, "You're logined", Toast.LENGTH_LONG).show();
+                                               Toast.makeText(LoginActivity.this, R.string.already_login, Toast.LENGTH_LONG).show();
 
                                            }
                                        }
@@ -212,13 +212,13 @@ public class LoginActivity extends AppCompatActivity {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            System.out.println("GET EMAIL =============>");
+            System.out.println(getString(R.string.get_mail));
             Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
             Account[] accounts = AccountManager.get(getApplicationContext()).getAccounts();
             for (Account account : accounts) {
                 if (emailPattern.matcher(account.name).matches()) {
                     email.add(account.name);
-                    System.out.println(account.name + "Email==============>");
+                    System.out.println(account.name + getString(R.string.Email));
                 }
             }
         }
@@ -229,7 +229,7 @@ public class LoginActivity extends AppCompatActivity {
     private void mGoToActivity(Class c) {
         mStopCountDown();
         mDismissProgessDialog();
-        System.out.println("GO TO MAIN ===================>");
+        System.out.println(getString(R.string.go_to_main));
         Intent intent = new Intent(getApplicationContext(), c);
         startActivity(intent);
         this.finish();
@@ -237,7 +237,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void mCheckInforInServer(User user) {
-        System.out.println("check user in server");
+        System.out.println(getString(R.string.check_user_in_server));
         CurrentUser.setLogined(true, getApplicationContext());
         FirebaseDatabase.getInstance()
                 .getReference("users/list/" + user.getUid())
@@ -279,17 +279,17 @@ public class LoginActivity extends AppCompatActivity {
                 public void onTick(long millisUntilFinished) {
                     int pass_time = (int) (EnumDefine.TIME_OUT - (millisUntilFinished / 1000));
                     if (pass_time == EnumDefine.LOW_CONNECTION) {
-                        mProgressDialog.setTitle("Your network too low, please wait... ");
+                        mProgressDialog.setTitle(getString(R.string.low_connection));
                     } else if (pass_time == EnumDefine.TRY_RECONNECT) {
-                        mProgressDialog.setTitle("Try to reconnect, please wait... ");
+                        mProgressDialog.setTitle(getString(R.string.try_reconnect));
                     } else if (pass_time == EnumDefine.DISCONNECT) {
-                        mProgressDialog.setTitle("No internet connection. Please check your connection.");
+                        mProgressDialog.setTitle(getString(R.string.disconnect));
                     }
                 }
 
                 @Override
                 public void onFinish() {
-                    Toast.makeText(LoginActivity.this, "FNISH", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, R.string.finish, Toast.LENGTH_LONG).show();
                     mDismissProgessDialog();
                 }
             };
@@ -333,7 +333,7 @@ public class LoginActivity extends AppCompatActivity {
                         .addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
-                                Toast.makeText(LoginActivity.this, "Sign up successed!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginActivity.this, R.string.sign_up_success, Toast.LENGTH_LONG).show();
                                 User user = new User();
                                 user.setUid(authResult.getUser().getUid());
                                 user.setDisplayName(authResult.getUser().getDisplayName());
@@ -361,11 +361,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean mIsValidForm() { //check if email and password is oke
         if (TextUtils.isEmpty(mEmail.getText().toString().trim())) {
-            mEmail.setError("PLease input your email!");
+            mEmail.setError(getString(R.string.error_valid_login_email));
             return false;
         }
         if (TextUtils.isEmpty(mPassword.getText().toString().trim())) {
-            mPassword.setError("PLease input your password!");
+            mPassword.setError(getString(R.string.err_valid_login_password));
             return false;
         }
         return true;
@@ -385,7 +385,7 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(), "Sign in failed!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), R.string.sign_in_failed, Toast.LENGTH_LONG).show();
                             String error_code;
                             try {
                                 error_code = ((FirebaseAuthException) e).getErrorCode();
@@ -404,7 +404,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(AuthResult authResult) {
 //                                    mIsNewUser(authResult.getUser().getUid());
-                            Toast.makeText(getApplicationContext(), "Sign in successed!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), R.string.sign_in_success, Toast.LENGTH_LONG).show();
 //                                    User user = new User();
 //                                    user.setDisplayName(authResult.getUser().getDisplayName());
 //                                    user.setUid(authResult.getUser().getUid());
@@ -498,7 +498,7 @@ public class LoginActivity extends AppCompatActivity {
         mProgressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage("Authenticating...");
+        mProgressDialog.setMessage(getString(R.string.Authenticating));
         mProgressDialog.show();
     }
 
@@ -513,9 +513,9 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         mAlertDialog = new AlertDialog.Builder(this)
-                .setTitle("No network connection")
-                .setMessage("Please check your internet connection")
-                .setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.no_network_connection)
+                .setMessage(R.string.check_internect_connection)
+                .setPositiveButton(R.string.Dismiss, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

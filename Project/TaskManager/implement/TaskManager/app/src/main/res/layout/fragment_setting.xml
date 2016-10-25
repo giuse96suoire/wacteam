@@ -19,7 +19,7 @@
                     android:textSize="@dimen/project_text_size_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sound"
+                    android:text="@string/sound_setting"
                     android:padding="@dimen/project_padding"/>
 
                 <Switch
@@ -40,7 +40,7 @@
                     android:textSize="@dimen/project_text_size_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Notification"
+                    android:text="@string/notification_setting"
                     android:padding="@dimen/project_padding"
                     />
 
@@ -62,7 +62,7 @@
                     android:textSize="@dimen/project_text_size_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Auto accept join project"
+                    android:text="@string/auto_accept_join_project_setting"
                     />
 
                 <Switch
@@ -82,7 +82,7 @@
                     android:textSize="@dimen/project_text_size_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Auto accept friend"
+                    android:text="@string/auto_accept_friend_setting"
                     />
 
                 <Switch
@@ -102,7 +102,7 @@
                     android:textSize="@dimen/project_text_size_medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Auto backup data to local"/>
+                    android:text="@string/auto_backup_data_to_local_setting"/>
 
                 <Switch
                     android:id="@+id/switch_auto_backup"

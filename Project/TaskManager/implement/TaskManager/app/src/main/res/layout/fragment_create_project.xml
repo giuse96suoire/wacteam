@@ -49,7 +49,7 @@
                         android:hint="@string/project_description"
                         android:inputType="textMultiLine"
                         android:maxLength="200"
-                        android:text="This is descript tion for project! Create by wac team! :D This is descript tion for project! Create by wac team! :D This is descript tion for project! Create by wac team! :D"
+                        android:text="This is description for project! Create by wac team! :D This is description for project! Create by wac team! :D This is descript tion for project! Create by wac team! :D"
                         android:textColor="@color/cardview_light_background"
                         android:textColorHint="@color/cardview_light_background" />
                 </android.support.design.widget.TextInputLayout>

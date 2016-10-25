@@ -9,7 +9,7 @@
             android:id="@+id/txtv_schedula_hours1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="hours"
+            android:text="@string/hours_item_schedule"
             android:textStyle="bold"
             android:textSize="@dimen/project_text_size_medium"
             android:background="@drawable/border_right"/>
@@ -18,7 +18,7 @@
             android:id="@+id/txtv_schedula_todo1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="to do"
+            android:text="@string/to_do_item_schedule"
             android:textSize="@dimen/project_text_size_medium"
             android:padding="@dimen/project_padding"/>
 

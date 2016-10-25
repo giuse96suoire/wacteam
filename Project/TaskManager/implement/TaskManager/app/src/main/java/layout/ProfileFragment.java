@@ -83,7 +83,7 @@ public class ProfileFragment extends Fragment {
         mBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YesNoDialog.mShow(getContext(), "Update your infomation?", new YesNoDialog.OnClickListener() {
+                YesNoDialog.mShow(getContext(), getString(R.string.dialog_update_information), new YesNoDialog.OnClickListener() {
                     @Override
                     public void onYes(DialogInterface dialog, int which) {
                         User user = new User();

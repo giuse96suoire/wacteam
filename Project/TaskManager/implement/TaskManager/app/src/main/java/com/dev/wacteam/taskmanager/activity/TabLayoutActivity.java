@@ -21,8 +21,6 @@ public class TabLayoutActivity extends AppCompatActivity {
             "Đang làm",
             "Hoàn thành",
             "Hủy" ,
-
-
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {

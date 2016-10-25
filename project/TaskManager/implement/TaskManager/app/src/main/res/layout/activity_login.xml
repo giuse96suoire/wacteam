@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:text="TASK MANAGER"
+                android:text="@string/task_manager"
                 android:textColor="#ffffff"
                 android:textSize="24dp"
                 android:textStyle="bold" />
@@ -61,7 +61,7 @@
             android:gravity="center"
 
             android:paddingTop="10dp"
-            android:text="Save your time, save your life"
+            android:text="@string/save_your_time_save_your_life"
             android:textColor="#ffffff" />
 
         <TextView
@@ -72,7 +72,7 @@
             android:background="#7A87E5"
             android:gravity="center"
             android:paddingBottom="10dp"
-            android:text="EVERYTHING IS SIMPE"
+            android:text="@string/everything_is_simple"
             android:textColor="#ffffff"
             android:textSize="24dp" />
     </LinearLayout>
@@ -104,7 +104,7 @@
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="LOGIN"
+                android:text="@string/login"
                 android:textColor="#ffffff"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -117,7 +117,7 @@
                 android:background="#9575CD"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="REGISTER"
+                android:text="@string/register"
                 android:textColor="#ffffff"
                 android:textSize="20dp"
                 android:textStyle="bold" />

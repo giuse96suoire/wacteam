@@ -99,7 +99,7 @@ public class FriendFragment extends Fragment {
                 mProgressDialog = new ProgressDialog(getActivity(),
                         R.style.AppTheme_Dark_Dialog);
                 mProgressDialog.setIndeterminate(true);
-                mProgressDialog.setMessage("Get your friends...");
+                mProgressDialog.setMessage(getString(R.string.dialog_get_friend));
                 mProgressDialog.show();
             }
 

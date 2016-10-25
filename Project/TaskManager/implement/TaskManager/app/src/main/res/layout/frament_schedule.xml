@@ -29,14 +29,14 @@
                     android:textSize="24dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Weekdays"
+                    android:text="@string/weekdays_schedule"
                     android:paddingLeft="25dp"/>
 
                 <TextView
                     android:id="@+id/txtv_schedula_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="day/month/years"
+                    android:text="@string/day_month_years_schedule"
                     android:textSize="18dp"
                     android:paddingLeft="18dp"/>
 

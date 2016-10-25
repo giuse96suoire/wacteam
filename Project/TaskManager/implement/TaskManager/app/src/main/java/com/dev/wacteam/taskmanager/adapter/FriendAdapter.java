@@ -137,7 +137,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 mProgressDialog = new ProgressDialog(mActivity,
                         R.style.AppTheme_Dark_Dialog);
                 mProgressDialog.setIndeterminate(true);
-                mProgressDialog.setMessage("Get info...");
+                mProgressDialog.setMessage(mContext.getString(R.string.get_info_friend));
                 mProgressDialog.show();
             }
 
@@ -152,7 +152,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
 
                 if (isFound) {
-                    builder.setNegativeButton("Remove Friend", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(R.string.remove_friend, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
@@ -160,7 +160,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                     });
                     isFound = false;
                 } else {
-                    builder.setNegativeButton("Add Friend", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(R.string.add_friend, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
@@ -168,13 +168,13 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                     });
                 }
                 builder.setView(view)
-                        .setNeutralButton("Chat", new DialogInterface.OnClickListener() {
+                        .setNeutralButton(R.string.chat_to_friend, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
                             }
                         })
-                        .setPositiveButton("Add to project", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.add_to_project, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 

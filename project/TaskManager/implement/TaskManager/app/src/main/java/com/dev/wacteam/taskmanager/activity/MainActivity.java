@@ -246,25 +246,25 @@ public class MainActivity extends AppCompatActivity
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = MainActivity.this.getLayoutInflater();
         final View view = inflater.inflate(R.layout.quick_create_project, null);
-        builder.setTitle("What you want to create?")
+        builder.setTitle(R.string.ask_user_create)
                 .setView(view)
-                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.create_project, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(MainActivity.this, "Create", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, R.string.create_project, Toast.LENGTH_LONG).show();
                         Bundle args = new Bundle();
                         EditText project_name = (EditText) view.findViewById(R.id.et_projectName);
-                        args.putString("project_name", project_name.getText().toString());
+                        args.putString(getString(R.string.project_name_label), project_name.getText().toString());
                         CreateProject createProjectFragment = new CreateProject();
                         createProjectFragment.setArguments(args);
                         callFragment(createProjectFragment);
                         setTitle(R.string.title_create_project_fragment);
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel_create_project, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(MainActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, R.string.cancel_create_project, Toast.LENGTH_LONG).show();
 
                     }
                 });

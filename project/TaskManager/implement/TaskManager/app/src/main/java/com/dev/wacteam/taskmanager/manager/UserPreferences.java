@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 
+import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.model.User;
 
 import java.text.ParseException;
@@ -37,16 +38,16 @@ public class UserPreferences {
 
     public User mGetLocalUser() {
         User user = new User();
-        user.setDisplayName(sharedPreferences.getString(DISPLAY_NAME, "false"));
-        user.setEmail(sharedPreferences.getString(EMAIL, "false"));
-        user.setEmailVerified(Boolean.parseBoolean(sharedPreferences.getString(EMAIL_VERIFIED, "false")));
-        user.setPhotoUrl(Uri.parse(sharedPreferences.getString(PHOTO_URL, "false")));
-        user.setProviderId(sharedPreferences.getString(PROVIDER_ID, "false"));
-        user.setUid(sharedPreferences.getString(UID, "false"));
-        user.setPhoneNumber(sharedPreferences.getString(PHONE_NUMBER, "false"));
-        user.setAddress(sharedPreferences.getString(ADDRESS, "flase"));
+        user.setDisplayName(sharedPreferences.getString(DISPLAY_NAME, context.getString(R.string.false_set_user)));
+        user.setEmail(sharedPreferences.getString(EMAIL, context.getString(R.string.false_set_user)));
+        user.setEmailVerified(Boolean.parseBoolean(sharedPreferences.getString(EMAIL_VERIFIED, context.getString(R.string.false_set_user))));
+        user.setPhotoUrl(Uri.parse(sharedPreferences.getString(PHOTO_URL, context.getString(R.string.false_set_user))));
+        user.setProviderId(sharedPreferences.getString(PROVIDER_ID, context.getString(R.string.false_set_user)));
+        user.setUid(sharedPreferences.getString(UID, context.getString(R.string.false_set_user)));
+        user.setPhoneNumber(sharedPreferences.getString(PHONE_NUMBER, context.getString(R.string.false_set_user)));
+        user.setAddress(sharedPreferences.getString(ADDRESS, context.getString(R.string.false_set_user)));
         user.setDob("");
-        if (user.getDisplayName().equals("false") || user.getEmail().equals("false")) {
+        if (user.getDisplayName().equals(context.getString(R.string.false_set_user)) || user.getEmail().equals(context.getString(R.string.false_set_user))) {
             return null;
         }
         return user;

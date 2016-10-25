@@ -106,7 +106,7 @@ public class ProjectFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ArrayList<String> listProject = new ArrayList<>();
-        listProject.add("No thing to display");
+        listProject.add(getString(R.string.nothing_to_display));
         mLvListProject = (ListView) getView().findViewById(R.id.lv_listProject);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_checked, listProject);
 

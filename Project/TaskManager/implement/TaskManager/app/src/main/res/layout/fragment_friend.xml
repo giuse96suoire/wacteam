@@ -21,7 +21,7 @@
             android:id="@+id/et_searchFriend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Search by name or email" />
+            android:hint="@string/search_by_name_or_email" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

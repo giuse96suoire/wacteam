@@ -4,21 +4,23 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import com.dev.wacteam.taskmanager.R;
+
 /**
  * Created by huynh.mh on 10/24/2016.
  */
 public class YesNoDialog {
     public static void mShow(Context context, String message, OnClickListener listener) {
         new AlertDialog.Builder(context)
-                .setTitle("Confirm")
+                .setTitle(R.string.confirm_dialog)
                 .setMessage(message)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.yes_dialog, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         listener.onYes(dialog, which);
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no_dialog, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         listener.onNo(dialog, which);

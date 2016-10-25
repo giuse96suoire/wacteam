@@ -141,10 +141,10 @@ public class CurrentUser extends User {
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Project project = data.getValue(Project.class);
                     Toast.makeText(context, project.getmTitle() + context.getString(R.string.in_current_user), Toast.LENGTH_SHORT).show();
-
                     ArrayList<String> listMember = project.getmMembers();
                     for (String s : listMember) {
                         if (s.equals(CurrentUser.getInstance().getUserInfo(context).getUid())) {

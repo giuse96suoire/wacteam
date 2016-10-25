@@ -12,8 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.adapter.ProjectAdapter;
@@ -103,42 +101,68 @@ public class ProjectFragment extends Fragment {
     }
 
     private RecyclerView mLvListProject;
+    private ProjectAdapter mAdapter;
+    private ArrayList<Project> mListProject;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ArrayList<Project> listProject = new ArrayList<>();
-        Project project = new Project();
-        project.setmComplete(69.9);
-        project.setmDeadline("12/11/2016");
-        project.setmCreateDate("12/10/2016");
-        project.setmTitle("Task Manager");
-        listProject.add(project);
-        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
-        listProject.add(project);
-        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
-        listProject.add(project);
-        project.setmTitle("Prepare for microsoft - Wacteam");
-        listProject.add(project);
-        project.setmTitle("Prepare for FPT FU SANG TAO 2016 - Wacteam");
-        listProject.add(project);
-        project.setmTitle("Prepare 2016 - Wacteam");
-        listProject.add(project);
-        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
-        listProject.add(project);
-        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
-        listProject.add(project);
-        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
-        listProject.add(project);
-        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
-        listProject.add(project);
-        ProjectAdapter adapter = new ProjectAdapter(getContext(), getActivity(), listProject);
-//        listProject.add("No thing to display");
+        mListProject = new ArrayList<>();
+//        Project project = new Project();
+//        project.setmComplete(69.9);
+//        project.setmDeadline("12/11/2016");
+//        project.setmCreateDate("12/10/2016");
+//        project.setmTitle("Task Manager");
+//        listProject.add(project);
+//        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
+//        listProject.add(project);
+//        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
+//        listProject.add(project);
+//        project.setmTitle("Prepare for microsoft - Wacteam");
+//        listProject.add(project);
+//        project.setmTitle("Prepare for FPT FU SANG TAO 2016 - Wacteam");
+//        listProject.add(project);
+//        project.setmTitle("Prepare 2016 - Wacteam");
+//        listProject.add(project);
+//        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
+//        listProject.add(project);
+//        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
+//        listProject.add(project);
+//        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
+//        listProject.add(project);
+//        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
+//        listProject.add(project);
+
+        mAdapter = new ProjectAdapter(getContext(), getActivity(), mListProject);
         mLvListProject = (RecyclerView) getView().findViewById(R.id.rv_project);
         mLvListProject.setHasFixedSize(true);
         mLvListProject.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mLvListProject.setAdapter(adapter);
+        mLvListProject.setAdapter(mAdapter);
 
+
+    }
+
+    private void mGetAllProject() {
+        CurrentUser.getAllProject(new OnGetDataListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot data) {
+                System.out.println("GET PROJECT IN PF");
+                Project p = data.getValue(Project.class);
+                mListProject.add(p);
+                mAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onFailed(DatabaseError databaseError) {
+
+            }
+        }, getContext());
     }
 
     @Override

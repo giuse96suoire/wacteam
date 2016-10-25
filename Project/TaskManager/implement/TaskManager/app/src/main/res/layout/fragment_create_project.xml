@@ -114,6 +114,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="@string/deadline_label"
                     android:textAlignment="textStart"
                     android:textSize="@dimen/label"
@@ -130,6 +131,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="@string/create_time_label"
                     android:textAlignment="textStart"
                     android:textSize="@dimen/label"

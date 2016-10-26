@@ -161,7 +161,6 @@
     <string name="project_type_label">Loại</string>
     <string name="task_list_label">Danh sách công việc cần làm</string>
     <string name="title_create_project_fragment">Tạo dự án</string>
-    <string name="preference_file_key">người dùng hiện tại</string>
     <string name="login_licence">Bằng cách đăng nhập, bạn đồng ý với đội của chúng tôi Dịch vụ và Chính sách bảo mật</string>
     <string name="default_uid">id người dùng</string>
     <string name="Authenticating">Đang xác thực...</string>

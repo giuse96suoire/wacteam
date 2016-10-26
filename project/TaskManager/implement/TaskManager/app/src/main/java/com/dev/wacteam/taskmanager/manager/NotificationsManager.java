@@ -11,13 +11,14 @@ import android.support.v4.app.TaskStackBuilder;
 
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.activity.MainActivity;
+import com.dev.wacteam.taskmanager.model.Project;
 
 /**
  * Created by giuse96suoire on 10/12/2016.
  */
 public class NotificationsManager {
 
-    public static void mNotify(Context mContext, String title, String content) {
+    private static void mNotify(Context mContext, String title, String content) {
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(mContext)
@@ -48,5 +49,19 @@ public class NotificationsManager {
                 (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
         mNotificationManager.notify(1, mBuilder.build());
+    }
+
+    public static void notifyProjectChange(Project oldProject, Project newProject, Context mContext) {
+        String message = "";
+        if (newProject.getmComplete() != oldProject.getmComplete()) {
+            message += " Complete " + oldProject.getmComplete() + "% -> " + newProject.getmComplete() + "% \n";
+        }
+        if (!newProject.getmDeadline().equals(oldProject.getmDeadline())) {
+            message += " Deadline " + oldProject.getmDeadline() + " -> " + newProject.getmDeadline() + " \n";
+        }
+        if (!newProject.getmTitle().equals(oldProject.getmComplete())) {
+            message += " Title " + oldProject.getmTitle() + " -> " + newProject.getmTitle() + " \n";
+        }
+        mNotify(mContext, newProject.getmTitle() + " - PROJECT HAS MANY CHANGE ", message);
     }
 }

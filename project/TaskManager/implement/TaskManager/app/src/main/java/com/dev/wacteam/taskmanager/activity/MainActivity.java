@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity
                         Toast.makeText(MainActivity.this, R.string.create_project, Toast.LENGTH_LONG).show();
                         Bundle args = new Bundle();
                         EditText project_name = (EditText) view.findViewById(R.id.et_projectName);
-                        args.putString(getString(R.string.project_name_label), project_name.getText().toString());
+                        args.putString("project_name", project_name.getText().toString());
                         CreateProject createProjectFragment = new CreateProject();
                         createProjectFragment.setArguments(args);
                         callFragment(createProjectFragment);

@@ -6,11 +6,13 @@ import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.database.RemoteUser;
+import com.dev.wacteam.taskmanager.listener.OnChildEventListener;
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.manager.SettingManager;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.model.Setting;
 import com.dev.wacteam.taskmanager.model.User;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,7 +39,10 @@ public class CurrentUser extends User {
     private static final String PROVIDER_ID = "provider_id";
     private static final String LIST_PROJECT_REFERENCE = "projects/list";
     private static final String LIST_FRIEND_REFERENCE = "friends";
-//    public static boolean isLogined = false;
+
+    //    public static boolean isLogined = false;
+    private CurrentUser() {
+    }
 
     public static CurrentUser getInstance() {
         return ourInstance;
@@ -89,6 +94,7 @@ public class CurrentUser extends User {
     public static void createProject(Project project, Context context) {
         DatabaseReference db = FirebaseDatabase.getInstance()
                 .getReference(LIST_PROJECT_REFERENCE).push();
+        project.setmProjectId(db.getKey());
         db.setValue(project);
     }
 
@@ -145,12 +151,12 @@ public class CurrentUser extends User {
 
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Project project = data.getValue(Project.class);
-                    System.out.println("project: "+project.getmTitle()+" ==============================>");
+                    System.out.println("project: " + project.getmTitle() + " ==============================>");
                     ArrayList<String> listMember = project.getmMembers();
                     for (String s : listMember) {
                         if (s.equals(CurrentUser.getInstance().getUserInfo(context).getUid())) {
                             listener.onSuccess(data);
-                            System.out.println("project ok: "+project.getmTitle()+" ==============================>");
+                            System.out.println("project ok: " + project.getmTitle() + " ==============================>");
 
                         }
                     }
@@ -240,6 +246,68 @@ public class CurrentUser extends User {
         }
     }
 
-    private CurrentUser() {
+    private static final String PROJECTS_REFERENCE = "projects";
+
+    public static void getProjectById(String id, OnChildEventListener listener, Context context) {
+
     }
+
+    private static final String PROJECT_LOCAL = "project";
+
+    private static void setProjectListToLocal(String id, Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                context.getResources().getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String project_arr_string = sharedPref.getString(PROJECT_LOCAL, "");
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(PROJECT_LOCAL, (project_arr_string.length() > 0) ? (project_arr_string + "," + id) : id);
+        editor.commit();
+    }
+
+    private static String[] getProjectListFromLocal(Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                context.getResources().getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String project_arr_string = sharedPref.getString(PROJECT_LOCAL, "");
+        if (project_arr_string.length() > 0) {
+            return project_arr_string.split(",");
+        }
+        return null;
+    }
+
+//    public static void getAllProject(Context context, OnChildEventListener listener) {
+//        CurrentUser.getReference(context).child(PROJECTS_REFERENCE).addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                listener.onChildAdded(dataSnapshot, s);
+//                for (DataSnapshot data : dataSnapshot.getChildren()) {
+//                    String id = data.getValue(Project.class).getmProjectId();
+//                    CurrentUser.getProjectById(id, listener, context);
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//                listener.onChildChanged(dataSnapshot, s);
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//                listener.onChildRemoved(dataSnapshot);
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//                listener.onChildMoved(dataSnapshot, s);
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                listener.onCancelled(databaseError);
+//
+//            }
+//        });
+//    }
+
 }

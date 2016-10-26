@@ -22,6 +22,7 @@ public class SettingManager {
     public static boolean isSound(Context context) {
         sharedPref = context.getSharedPreferences(
                 context.getResources().getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        System.out.println(sharedPref.getBoolean(SOUND, true));
         return sharedPref.getBoolean(SOUND, true);
     }
 

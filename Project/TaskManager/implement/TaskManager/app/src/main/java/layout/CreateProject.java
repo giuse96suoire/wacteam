@@ -21,11 +21,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.dialog.DialogDateTimePicker;
 import com.dev.wacteam.taskmanager.dialog.YesNoDialog;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,6 +75,8 @@ public class CreateProject extends Fragment {
         mBtnSaveProject = (Button) getView().findViewById(R.id.btn_save);
         mBtnResetProject = (Button) getView().findViewById(R.id.btn_reset);
         mTvMember = (TextView) getView().findViewById(R.id.tv_member);
+        mTvProjectDeadline = (TextView) getView().findViewById(R.id.tv_project_deadline);
+        mTvProjectCreateAt = (TextView) getView().findViewById(R.id.tv_create_time);
         mEtProjectDescription = (EditText) getView().findViewById(R.id.et_project_description);
         mBtnSaveProject.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +98,7 @@ public class CreateProject extends Fragment {
         mBtnResetProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YesNoDialog.mShow(getContext(), "Are you sure to reset project? All input will be removed!", new YesNoDialog.OnClickListener() {
+                YesNoDialog.mShow(getContext(), getString(R.string.confirm_reset_project), new YesNoDialog.OnClickListener() {
                     @Override
                     public void onYes(DialogInterface dialog, int which) {
                         mResetProjectForm();
@@ -104,9 +111,22 @@ public class CreateProject extends Fragment {
                 });
             }
         });
-
+        mTvProjectDeadline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogDateTimePicker.showDatePicker(2016, 2050, getActivity(), new DialogDateTimePicker.OnGetDateTimeListener() {
+                    @Override
+                    public void onChange(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                        mTvProjectDeadline.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                    }
+                });
+            }
+        });
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String currentDate = format.format(new Date());
+        mTvProjectCreateAt.setText(currentDate);
         mList_member = new ArrayList<>();
-        mList_member.add("+ Add more");
+        mList_member.add(getString(R.string.add_more));
         mTvMember.setText(getResources().getString(R.string.member_label) + " (" + (mList_member.size() - 1) + ")");
         mMemberAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, mList_member);
         mLvProjectMember.setAdapter(mMemberAdapter);
@@ -138,9 +158,9 @@ public class CreateProject extends Fragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view = inflater.inflate(R.layout.list_friend_dialog, null);
 
-        builder.setTitle("Choose members")
+        builder.setTitle(R.string.choose_member)
                 .setView(view)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.add_member, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mMemberAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, mList_member);
@@ -148,7 +168,7 @@ public class CreateProject extends Fragment {
 
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel_add_member, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -167,10 +187,10 @@ public class CreateProject extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String value = lv_friend.getItemAtPosition(position).toString();
                 if (view.isSelected()) {
-                    Toast.makeText(getContext(), "Remove " + value, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), getString(R.string.Remove_member) + value, Toast.LENGTH_LONG).show();
                     mList_member.remove(value);
                 } else {
-                    Toast.makeText(getContext(), "Add " + value, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), getString(R.string.add_member) + value, Toast.LENGTH_LONG).show();
                     mList_member.add(value);
                 }
             }
@@ -187,7 +207,11 @@ public class CreateProject extends Fragment {
 
     private void mCreateProject() {
         Project project = new Project();
-        project.setmTitle((mEtProjectName.getText().toString().length() == 0) ? "My project" : mEtProjectName.getText().toString());
+        project.setmTitle((mEtProjectName.getText().toString().length() == 0) ? getString(R.string.Create_project) : mEtProjectName.getText().toString());
+        project.setmCreateDate(mTvProjectCreateAt.getText().toString());
+        project.setmDeadline(mTvProjectDeadline.getText().toString());
+        project.setmDescription(mEtProjectDescription.getText().toString());
+        project.setmComplete(0);
         ArrayList<String> members = new ArrayList<>();
         members.add(CurrentUser.getInstance().getUserInfo(getContext()).getUid());
         project.setmMembers(members);

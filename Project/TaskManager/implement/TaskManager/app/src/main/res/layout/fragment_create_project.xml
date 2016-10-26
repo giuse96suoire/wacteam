@@ -49,7 +49,7 @@
                         android:hint="@string/project_description"
                         android:inputType="textMultiLine"
                         android:maxLength="200"
-                        android:text="This is descript tion for project! Create by wac team! :D This is descript tion for project! Create by wac team! :D This is descript tion for project! Create by wac team! :D"
+                        android:text="This is description for project! Create by wac team! :D This is description for project! Create by wac team! :D This is descript tion for project! Create by wac team! :D"
                         android:textColor="@color/cardview_light_background"
                         android:textColorHint="@color/cardview_light_background" />
                 </android.support.design.widget.TextInputLayout>
@@ -114,6 +114,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="@string/deadline_label"
                     android:textAlignment="textStart"
                     android:textSize="@dimen/label"
@@ -130,6 +131,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="@string/create_time_label"
                     android:textAlignment="textStart"
                     android:textSize="@dimen/label"

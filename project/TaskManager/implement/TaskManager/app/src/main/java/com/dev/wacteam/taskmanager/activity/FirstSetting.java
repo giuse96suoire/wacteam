@@ -10,11 +10,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.dev.wacteam.taskmanager.R;
-import com.dev.wacteam.taskmanager.database.RemoteUser;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.manager.StorageManager;
-import com.dev.wacteam.taskmanager.model.User;
-import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 

@@ -11,17 +11,35 @@ public class Project {
     private String mProjectId;
     private String mTitle;
     private String mDescription;
+    private double mComplete;
     private User mLeader;
     private ArrayList<String> mMembers;
     private ArrayList<Task> mTasks;
-    private Date mDeadline;
+    private String mDeadline;
+    private String mCreateDate;
 
     public void setmProjectId(String mProjectId) {
         this.mProjectId = mProjectId;
     }
 
+    public void setmCreateDate(String mCreateDate) {
+        this.mCreateDate = mCreateDate;
+    }
+
+    public String getmCreateDate() {
+        return mCreateDate;
+    }
+
     public void setmTitle(String mTitle) {
         this.mTitle = mTitle;
+    }
+
+    public void setmComplete(double mComplete) {
+        this.mComplete = mComplete;
+    }
+
+    public double getmComplete() {
+        return mComplete;
     }
 
     public void setmDescription(String mDescription) {
@@ -40,7 +58,7 @@ public class Project {
         this.mTasks = mTasks;
     }
 
-    public void setmDeadline(Date mDeadline) {
+    public void setmDeadline(String mDeadline) {
         this.mDeadline = mDeadline;
     }
 
@@ -69,7 +87,7 @@ public class Project {
         return mTasks;
     }
 
-    public Date getmDeadline() {
+    public String getmDeadline() {
         return mDeadline;
     }
 }

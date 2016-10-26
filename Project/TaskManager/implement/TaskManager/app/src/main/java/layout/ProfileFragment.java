@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -84,7 +83,7 @@ public class ProfileFragment extends Fragment {
         mBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YesNoDialog.mShow(getContext(), "Update your infomation?", new YesNoDialog.OnClickListener() {
+                YesNoDialog.mShow(getContext(), getString(R.string.dialog_update_information), new YesNoDialog.OnClickListener() {
                     @Override
                     public void onYes(DialogInterface dialog, int which) {
                         User user = new User();

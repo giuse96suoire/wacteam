@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/linearLayout"
-                android:text="Project" />
+                android:text="@string/project_create_label" />
         </LinearLayout>
 
         <LinearLayout
@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/linearLayout"
-                android:text="Task" />
+                android:text="@string/task_create_label" />
         </LinearLayout>
 
     </LinearLayout>
@@ -96,7 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="Project name"
+        android:hint="@string/project_name_create_label"
         android:ems="10"
         android:id="@+id/et_projectName"
         android:layout_below="@+id/linearLayout2"

@@ -139,7 +139,7 @@
             android:layout_weight="0.50"
             android:layout_marginRight="@dimen/padding_fragment"
             android:background="@drawable/border_button_profile"
-            android:text="Reset input" />
+            android:text="@string/reset_input" />
 
         <Button
             android:id="@+id/btn_saveInfo"
@@ -147,7 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.50"
             android:background="@drawable/border_button_profile"
-            android:text="Update profile"
+            android:text="@string/update_profile"
             android:textColor="#3378df" />
 
     </LinearLayout>

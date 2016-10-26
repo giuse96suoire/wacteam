@@ -138,7 +138,7 @@ public class ProjectFragment extends Fragment {
         mLvListProject.setHasFixedSize(true);
         mLvListProject.setLayoutManager(new LinearLayoutManager(getActivity()));
         mLvListProject.setAdapter(mAdapter);
-
+        mGetAllProject();
 
     }
 
@@ -153,9 +153,10 @@ public class ProjectFragment extends Fragment {
             public void onSuccess(DataSnapshot data) {
                 System.out.println("GET PROJECT IN PF");
                 Project p = data.getValue(Project.class);
+//                mListProject.clear();
                 mListProject.add(p);
+                System.out.println(mListProject.size() +" list size ===========================>");
                 mAdapter.notifyDataSetChanged();
-
             }
 
             @Override

@@ -135,6 +135,7 @@ public class CurrentUser extends User {
     }
 
     public static void getAllProject(OnGetDataListener listener, Context context) {
+        System.out.println("get all project =============>");
         listener.onStart();
         DatabaseReference db = FirebaseDatabase.getInstance()
                 .getReference(LIST_PROJECT_REFERENCE);
@@ -144,11 +145,13 @@ public class CurrentUser extends User {
 
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Project project = data.getValue(Project.class);
-                    Toast.makeText(context, project.getmTitle() + context.getString(R.string.in_current_user), Toast.LENGTH_SHORT).show();
+                    System.out.println("project: "+project.getmTitle()+" ==============================>");
                     ArrayList<String> listMember = project.getmMembers();
                     for (String s : listMember) {
                         if (s.equals(CurrentUser.getInstance().getUserInfo(context).getUid())) {
                             listener.onSuccess(data);
+                            System.out.println("project ok: "+project.getmTitle()+" ==============================>");
+
                         }
                     }
                 }

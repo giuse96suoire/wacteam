@@ -346,8 +346,8 @@ public class LoginActivity extends AppCompatActivity {
                                 user.getProfile().setUid(authResult.getUser().getUid());
                                 String name = authResult.getUser().getDisplayName();
                                 String email = authResult.getUser().getEmail();
-                                
-                                user.getProfile().setDisplayName(name == null ? );
+
+                                user.getProfile().setDisplayName(name == null ? email : name);
 
                                 user.getProfile().setEmail(authResult.getUser().getEmail());
                                 mCheckInforInServer(user);
@@ -416,15 +416,18 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(AuthResult authResult) {
                             Toast.makeText(getApplicationContext(), R.string.sign_in_success, Toast.LENGTH_LONG).show();
-
                             User user = new User();
                             Profile profile = new Profile();
                             user.setProfile(profile);
                             user.getProfile().setUid(authResult.getUser().getUid());
-                            user.getProfile().setDisplayName(authResult.getUser().getDisplayName());
-                            user.getProfile().setEmail(authResult.getUser().getEmail());
-                            System.out.println("set user value");
+                            String name = authResult.getUser().getDisplayName();
+                            String email = authResult.getUser().getEmail();
+                            if (name == null) {
+                                name = email.split("@")[0];
+                            }
+                            user.getProfile().setDisplayName(name);
 
+                            user.getProfile().setEmail(authResult.getUser().getEmail());
                             mCheckInforInServer(user);
                         }
                     });

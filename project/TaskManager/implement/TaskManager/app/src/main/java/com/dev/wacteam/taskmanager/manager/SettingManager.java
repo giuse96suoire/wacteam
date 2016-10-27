@@ -17,6 +17,7 @@ public class SettingManager {
     private static final String AUTO_ACCEPT_FRIEND = "auto_friend";
     private static final String AUTO_ACCEPT_PROJECT = "auto_project";
     private static final String AUTO_BACKUP_DATA = "auto_backup";
+    private static final String IS_HAS_NOTIFICATION = "has_notification";
 
     ///get
     public static boolean isSound(Context context) {
@@ -24,6 +25,13 @@ public class SettingManager {
                 context.getResources().getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         System.out.println(sharedPref.getBoolean(SOUND, true));
         return sharedPref.getBoolean(SOUND, true);
+    }
+
+    ///get
+    public static boolean isHasNotification(Context context) {
+        sharedPref = context.getSharedPreferences(
+                context.getResources().getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        return sharedPref.getBoolean(IS_HAS_NOTIFICATION, false);
     }
 
     public static boolean isAutoBackup(Context context) {
@@ -60,16 +68,23 @@ public class SettingManager {
         editor = sharedPref.edit();
         editor.putBoolean(SOUND, status);
         editor.commit();
-        CurrentUser.setUserInfoToServer(context);
+//        CurrentUser.setUserProfileToServer(context,null);
     }
 
+    public static void setIsHasNotification(Context context, boolean status) {
+        sharedPref = context.getSharedPreferences(
+                context.getResources().getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+        editor.putBoolean(IS_HAS_NOTIFICATION, status);
+        editor.commit();
+    }
     public static void setIsAutoBackup(Context context, boolean status) {
         sharedPref = context.getSharedPreferences(
                 context.getResources().getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         editor = sharedPref.edit();
         editor.putBoolean(AUTO_BACKUP_DATA, status);
         editor.commit();
-        CurrentUser.setUserInfoToServer(context);
+//        CurrentUser.setUserProfileToServer(context,null);
 
     }
 
@@ -79,7 +94,7 @@ public class SettingManager {
         editor = sharedPref.edit();
         editor.putBoolean(NOTIFICATION, status);
         editor.commit();
-        CurrentUser.setUserInfoToServer(context);
+//        CurrentUser.setUserProfileToServer(context,null);
 
     }
 
@@ -89,7 +104,8 @@ public class SettingManager {
         editor = sharedPref.edit();
         editor.putBoolean(AUTO_ACCEPT_FRIEND, status);
         editor.commit();
-        CurrentUser.setUserInfoToServer(context);
+//        CurrentUser.setUserProfileToServer(context,null);
+
 
     }
 
@@ -99,7 +115,8 @@ public class SettingManager {
         editor = sharedPref.edit();
         editor.putBoolean(AUTO_ACCEPT_PROJECT, status);
         editor.commit();
-        CurrentUser.setUserInfoToServer(context);
+//        CurrentUser.setUserProfileToServer(context,null);
+
 
     }
 

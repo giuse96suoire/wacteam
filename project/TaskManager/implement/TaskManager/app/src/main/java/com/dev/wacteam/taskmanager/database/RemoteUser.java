@@ -20,7 +20,7 @@ public class RemoteUser extends RemoteDatabase implements BaseModel {
 
     @Override
     public void mCreate(Object o) {
-        this.mWriteIfNotExist(USER_LIST_CHILD + "/" + ((User) o).getUid(), o);
+        this.mWriteIfNotExist(USER_LIST_CHILD + "/" + ((User) o).getProfile().getUid(), o);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class RemoteUser extends RemoteDatabase implements BaseModel {
 
     @Override
     public void mDelete(Object o) {
-        this.mRemove(USER_LIST_CHILD + "/" + ((User) o).getUid());
+        this.mRemove(USER_LIST_CHILD + "/" + ((User) o).getProfile().getUid());
     }
 
     @Override

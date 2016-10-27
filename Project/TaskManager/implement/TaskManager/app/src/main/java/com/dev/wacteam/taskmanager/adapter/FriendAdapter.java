@@ -76,8 +76,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         User u = mUserList.get(position);
         TextView name = holder.tv_friendName;
         TextView email = holder.tv_friendEmail;
-        email.setText(u.getEmail());
-        name.setText(u.getDisplayName());
+        email.setText(u.getProfile().getEmail());
+        name.setText(u.getProfile().getDisplayName());
         ImageView more = holder.iv_addFriend;
 
         CurrentUser.getAllFriend(new OnGetDataListener() {
@@ -90,7 +90,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             public void onSuccess(DataSnapshot data) {
 //                for (DataSnapshot value : data.getChildren()) {
                     User user = data.getValue(User.class);
-                    if (user.getUid().equals(u.getUid())) {
+                    if (user.getProfile().getUid().equals(u.getProfile().getUid())) {
                         isYourFriend = true;
                     }
 
@@ -129,8 +129,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         final View view = inflater.inflate(R.layout.friend_dialog, null);
         TextView name = (TextView) view.findViewById(R.id.friendName);
         TextView email = (TextView) view.findViewById(R.id.friendEmail);
-        name.setText(u.getDisplayName());
-        email.setText(u.getEmail());
+        name.setText(u.getProfile().getDisplayName());
+        email.setText(u.getProfile().getEmail());
         CurrentUser.getAllFriend(new OnGetDataListener() {
             @Override
             public void onStart() {
@@ -145,7 +145,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             public void onSuccess(DataSnapshot data) {
 //                for (DataSnapshot value : data.getChildren()) {
                     User user = data.getValue(User.class);
-                    if (user.getUid().equals(u.getUid())) {
+                    if (user.getProfile().getUid().equals(u.getProfile().getUid())) {
                         isYourFriend = true;
                     }
 //                }

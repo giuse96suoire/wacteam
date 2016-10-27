@@ -9,10 +9,10 @@ import com.dev.wacteam.taskmanager.database.RemoteUser;
 import com.dev.wacteam.taskmanager.listener.OnChildEventListener;
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.manager.SettingManager;
+import com.dev.wacteam.taskmanager.model.Profile;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.model.Setting;
 import com.dev.wacteam.taskmanager.model.User;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +38,7 @@ public class CurrentUser extends User {
     private static final String GENDER = "gender";
     private static final String PROVIDER_ID = "provider_id";
     private static final String LIST_PROJECT_REFERENCE = "projects/list";
-    private static final String LIST_FRIEND_REFERENCE = "friends";
+    private static final String LIST_FRIEND_REFERENCE = "listFriend";
 
     //    public static boolean isLogined = false;
     private CurrentUser() {
@@ -48,17 +48,21 @@ public class CurrentUser extends User {
         return ourInstance;
     }
 
-    public static void setInfo(User user, Context context) {
+    public static void setUserProfileAndSettingToLocal(User user, Context context) {
         SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getResources().getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(UID, user.getUid());
-        editor.putString(DISPLAY_NAME, user.getDisplayName());
-        editor.putString(DOB, user.getDob());
-        editor.putString(ADDRESS, user.getAddress());
-        editor.putString(PHONE_NUMBER, user.getPhoneNumber());
-        editor.putString(EMAIL, user.getEmail());
-        editor.commit();
+        if (user.getProfile() != null) {
+            editor.putString(UID, user.getProfile().getUid());
+            editor.putString(DISPLAY_NAME, user.getProfile().getDisplayName());
+            editor.putString(DOB, user.getProfile().getDob());
+            editor.putString(ADDRESS, user.getProfile().getAddress());
+            editor.putString(PHONE_NUMBER, user.getProfile().getPhoneNumber());
+            editor.putString(EMAIL, user.getProfile().getEmail());
+            editor.commit();
+        } else {
+            System.out.println("PROFILE NULL ===============================>");
+        }
         if (user.getSetting() != null) {
             SettingManager.setIsAutoBackup(context, user.getSetting().ismAutoBackupData());
             SettingManager.setIsAutoAcceptProject(context, user.getSetting().ismAutoAcceptFriend());
@@ -72,24 +76,6 @@ public class CurrentUser extends User {
         Toast.makeText(context, R.string.Update_profile_success, Toast.LENGTH_LONG).show();
     }
 
-    private void writeToLocal() {
-
-    }
-
-    public static void resetInfo() {
-        CurrentUser.getInstance().setEmail(null);
-        CurrentUser.getInstance().setDisplayName(null);
-        CurrentUser.getInstance().setProviderId(null);
-        CurrentUser.getInstance().setUid(null);
-        CurrentUser.getInstance().setPhotoUrl(null);
-        CurrentUser.getInstance().setDob(null);
-        CurrentUser.getInstance().setAddress(null);
-        CurrentUser.getInstance().setListFriend(null);
-        CurrentUser.getInstance().setSetting(null);
-        CurrentUser.getInstance().setListProject(null);
-        CurrentUser.getInstance().setPhoneNumber(null);
-        isNotNull = false;
-    }
 
     public static void createProject(Project project, Context context) {
         DatabaseReference db = FirebaseDatabase.getInstance()
@@ -104,7 +90,7 @@ public class CurrentUser extends User {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long id = dataSnapshot.getChildrenCount();
-                db.child(id + "").setValue(u.getUid());
+                db.child(id + "").setValue(u.getProfile().getUid());
             }
 
             @Override
@@ -124,9 +110,9 @@ public class CurrentUser extends User {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
 
                     User u = data.getValue(User.class);
-                    if (u.getEmail() != null) {
-                        if (u.getEmail().toLowerCase().contains(emailOrName.toLowerCase()) || u.getDisplayName().toLowerCase().contains(emailOrName.toLowerCase())
-                                && !u.getEmail().equals(CurrentUser.getUserInfo(context).getEmail())) {
+                    if (u.getProfile().getEmail() != null) {
+                        if (u.getProfile().getEmail().toLowerCase().contains(emailOrName.toLowerCase()) || u.getProfile().getDisplayName().toLowerCase().contains(emailOrName.toLowerCase())
+                                && !u.getProfile().getEmail().equals(CurrentUser.getUserProfileFromLocal(context).getProfile().getEmail())) {
                             listener.onSuccess(data);
                         }
                     }
@@ -154,7 +140,7 @@ public class CurrentUser extends User {
                     System.out.println("project: " + project.getmTitle() + " ==============================>");
                     ArrayList<String> listMember = project.getmMembers();
                     for (String s : listMember) {
-                        if (s.equals(CurrentUser.getInstance().getUserInfo(context).getUid())) {
+                        if (s.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
                             listener.onSuccess(data);
                             System.out.println("project ok: " + project.getmTitle() + " ==============================>");
 
@@ -183,6 +169,7 @@ public class CurrentUser extends User {
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         String friendId = data.getValue(String.class);
                         listFriend.add(friendId);
+                        System.out.println("Friend ID: " + friendId);
                     }
                 }
                 FirebaseDatabase.getInstance()
@@ -192,8 +179,10 @@ public class CurrentUser extends User {
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                                     User u = data.getValue(User.class);
-                                    if (listFriend.contains(u.getUid())) {
+                                    if (listFriend.contains(u.getProfile().getUid())) {
                                         listener.onSuccess(data);
+                                        System.out.println("Friend OK");
+
                                     }
                                 }
                             }
@@ -213,10 +202,8 @@ public class CurrentUser extends User {
         });
     }
 
-    public static void setUserInfoToServer(Context context) {
-        User u = CurrentUser.getUserInfo(context);
-
-        CurrentUser.getInstance().getReference(context).setValue(u);
+    public static void setUserProfileToServer(Context context, User u) {
+        CurrentUser.getReference(context).child("profile").setValue(u.getProfile());
     }
 
     private static final String IS_LOGINED = "is_logined";
@@ -236,16 +223,18 @@ public class CurrentUser extends User {
 
     }
 
-    public static User getUserInfo(Context context) {
+    public static User getUserProfileFromLocal(Context context) {
         User user = new User();
         SharedPreferences sharedPref = context.getSharedPreferences(
                 context.getResources().getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        user.setUid(sharedPref.getString(UID, context.getResources().getString(R.string.default_uid)));
-        user.setDisplayName(sharedPref.getString(DISPLAY_NAME, context.getResources().getString(R.string.default_full_name)));
-        user.setEmail(sharedPref.getString(EMAIL, context.getResources().getString(R.string.default_email)));
-        user.setPhoneNumber(sharedPref.getString(PHONE_NUMBER, context.getResources().getString(R.string.default_phone_number)));
-        user.setAddress(sharedPref.getString(ADDRESS, context.getResources().getString(R.string.default_address)));
-        user.setDob(sharedPref.getString(DOB, context.getResources().getString(R.string.default_dob)));
+        Profile profile = new Profile();
+        user.setProfile(profile);
+        user.getProfile().setUid(sharedPref.getString(UID, context.getResources().getString(R.string.default_uid)));
+        user.getProfile().setDisplayName(sharedPref.getString(DISPLAY_NAME, context.getResources().getString(R.string.default_full_name)));
+        user.getProfile().setEmail(sharedPref.getString(EMAIL, context.getResources().getString(R.string.default_email)));
+        user.getProfile().setPhoneNumber(sharedPref.getString(PHONE_NUMBER, context.getResources().getString(R.string.default_phone_number)));
+        user.getProfile().setAddress(sharedPref.getString(ADDRESS, context.getResources().getString(R.string.default_address)));
+        user.getProfile().setDob(sharedPref.getString(DOB, context.getResources().getString(R.string.default_dob)));
         Setting setting = new Setting();
         setting.setmAutoBackupData(SettingManager.isAutoBackup(context));
         setting.setmSound(SettingManager.isSound(context));
@@ -258,7 +247,7 @@ public class CurrentUser extends User {
 
     public static DatabaseReference getReference(Context context) {
         return FirebaseDatabase.getInstance()
-                .getReference(RemoteUser.USER_LIST_CHILD + "/" + CurrentUser.getInstance().getUserInfo(context).getUid());
+                .getReference(RemoteUser.USER_LIST_CHILD + "/" + CurrentUser.getUserProfileFromLocal(context).getProfile().getUid());
     }
 
 
@@ -297,41 +286,5 @@ public class CurrentUser extends User {
         return null;
     }
 
-//    public static void getAllProject(Context context, OnChildEventListener listener) {
-//        CurrentUser.getReference(context).child(PROJECTS_REFERENCE).addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                listener.onChildAdded(dataSnapshot, s);
-//                for (DataSnapshot data : dataSnapshot.getChildren()) {
-//                    String id = data.getValue(Project.class).getmProjectId();
-//                    CurrentUser.getProjectById(id, listener, context);
-//                }
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//                listener.onChildChanged(dataSnapshot, s);
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//                listener.onChildRemoved(dataSnapshot);
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//                listener.onChildMoved(dataSnapshot, s);
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                listener.onCancelled(databaseError);
-//
-//            }
-//        });
-//    }
 
 }

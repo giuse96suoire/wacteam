@@ -138,7 +138,7 @@ public class FriendFragment extends Fragment {
                 boolean isExist = false;
                 User user = data.getValue(User.class);
                 for (int i = 0; i < mListFriend.size(); i++) {
-                    if (!(mListFriend.get(i).getEmail().contains(emailOrName)) && !(mListFriend.get(i).getDisplayName().contains(emailOrName))) {
+                    if (!(mListFriend.get(i).getProfile().getEmail().contains(emailOrName)) && !(mListFriend.get(i).getProfile().getDisplayName().contains(emailOrName))) {
                         mListFriend.remove(i);
 //                        mFriendAdapter.notifyDataSetChanged();
                     }
@@ -146,7 +146,7 @@ public class FriendFragment extends Fragment {
 
                 }
                 for (int i = 0; i < mListFriend.size(); i++) {
-                    if ((mListFriend.get(i).getEmail().equals(user.getEmail()))) {
+                    if ((mListFriend.get(i).getProfile().getEmail().equals(user.getProfile().getEmail()))) {
                         isExist = true;
                     }
                 }

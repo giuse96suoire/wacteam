@@ -33,6 +33,7 @@ import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.dialog.DialogAlert;
 import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.manager.NetworkManager;
+import com.dev.wacteam.taskmanager.model.Profile;
 import com.dev.wacteam.taskmanager.model.Setting;
 import com.dev.wacteam.taskmanager.model.User;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
@@ -240,7 +241,7 @@ public class LoginActivity extends AppCompatActivity {
         System.out.println(getString(R.string.check_user_in_server));
         CurrentUser.setLogined(true, getApplicationContext());
         FirebaseDatabase.getInstance()
-                .getReference("users/list/" + user.getUid())
+                .getReference("users/list/" + user.getProfile().getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -253,11 +254,16 @@ public class LoginActivity extends AppCompatActivity {
                             setting.setmNotification(true);
                             setting.setmSound(true);
                             user.setSetting(setting);
-                            CurrentUser.setInfo(user, getApplicationContext());
-                            CurrentUser.setUserInfoToServer(getApplicationContext());
+                            ArrayList<String> listFriend = new ArrayList<String>();
+                            listFriend.add("TVj2RdWN4BPiXYQnLSW9Q4JDQ333");
+                            listFriend.add("bOP8bGJVcYgskEGMfl643H1db3B3");
+                            listFriend.add("sqYvanpvJwOax8Oo9DGxABdx0Ev1");
+                            user.setFriends(listFriend);
+                            CurrentUser.setUserProfileAndSettingToLocal(user, getApplicationContext());
+                            CurrentUser.setUserProfileToServer(getApplicationContext(), user);
                             mGoToActivity(MainActivity.class);
                         } else {
-                            CurrentUser.setInfo(nUser, getApplicationContext());
+                            CurrentUser.setUserProfileAndSettingToLocal(nUser, getApplicationContext());
                             mGoToActivity(MainActivity.class);
                         }
                     }
@@ -335,9 +341,15 @@ public class LoginActivity extends AppCompatActivity {
                             public void onSuccess(AuthResult authResult) {
                                 Toast.makeText(LoginActivity.this, R.string.sign_up_success, Toast.LENGTH_LONG).show();
                                 User user = new User();
-                                user.setUid(authResult.getUser().getUid());
-                                user.setDisplayName(authResult.getUser().getDisplayName());
-                                user.setEmail(authResult.getUser().getEmail());
+                                Profile profile = new Profile();
+                                user.setProfile(profile);
+                                user.getProfile().setUid(authResult.getUser().getUid());
+                                String name = authResult.getUser().getDisplayName();
+                                String email = authResult.getUser().getEmail();
+                                
+                                user.getProfile().setDisplayName(name == null ? );
+
+                                user.getProfile().setEmail(authResult.getUser().getEmail());
                                 mCheckInforInServer(user);
                             }
                         });
@@ -403,17 +415,14 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-//                                    mIsNewUser(authResult.getUser().getUid());
                             Toast.makeText(getApplicationContext(), R.string.sign_in_success, Toast.LENGTH_LONG).show();
-//                                    User user = new User();
-//                                    user.setDisplayName(authResult.getUser().getDisplayName());
-//                                    user.setUid(authResult.getUser().getUid());
-//                                    user.setPhotoUrl(authResult.getUser().getPhotoUrl());
-//                                    user.setProviderId(authResult.getUser().getProviderId());
+
                             User user = new User();
-                            user.setUid(authResult.getUser().getUid());
-                            user.setDisplayName(authResult.getUser().getDisplayName());
-                            user.setEmail(authResult.getUser().getEmail());
+                            Profile profile = new Profile();
+                            user.setProfile(profile);
+                            user.getProfile().setUid(authResult.getUser().getUid());
+                            user.getProfile().setDisplayName(authResult.getUser().getDisplayName());
+                            user.getProfile().setEmail(authResult.getUser().getEmail());
                             System.out.println("set user value");
 
                             mCheckInforInServer(user);
@@ -483,7 +492,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean mIsUserLoginedOffline() {
-        return (CurrentUser.getInstance().getDisplayName() == null) ? false : true;
+        return (CurrentUser.getInstance().getProfile().getDisplayName() == null) ? false : true;
     }
 
     private boolean mIsUserLogined() {

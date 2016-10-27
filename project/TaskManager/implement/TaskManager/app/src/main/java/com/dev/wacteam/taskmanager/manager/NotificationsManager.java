@@ -125,19 +125,19 @@ public class NotificationsManager {
         String message = "";
         int sizeOld = oldMember.size();
         int sizeNew = newMember.size();
-        if (newMember.get(sizeOld - 1).getUid() != oldMember.get(sizeNew - 1).getUid()) {
+        if (newMember.get(sizeOld - 1).getProfile().getUid() != oldMember.get(sizeNew - 1).getProfile().getUid()) {
             int sOld = 0, sNew = 0;
             do {
                 if (sOld < sizeOld) {
-                    if (newMember.get(sNew).getUid() == oldMember.get(sOld).getUid()) {
+                    if (newMember.get(sNew).getProfile().getUid() == oldMember.get(sOld).getProfile().getUid()) {
                         sNew++;
                         sOld++;
                     } else {
-                        message += " Task member name:" + oldMember.get(sOld).getDisplayName() + " had been removed \n";
+                        message += " Task member name:" + oldMember.get(sOld).getProfile().getDisplayName() + " had been removed \n";
                         sOld++;
                     }
                 } else {
-                    message += " Task member name:" + newMember.get(sNew).getDisplayName() + " had been added \n";
+                    message += " Task member name:" + newMember.get(sNew).getProfile().getDisplayName() + " had been added \n";
                     sNew++;
                 }
             }

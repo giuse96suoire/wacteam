@@ -14,9 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.activity.MainActivity;
 import com.dev.wacteam.taskmanager.adapter.ProjectAdapter;
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.manager.NotificationsManager;
+import com.dev.wacteam.taskmanager.manager.SettingManager;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.database.DataSnapshot;
@@ -136,8 +138,9 @@ public class ProjectFragment extends Fragment {
                 if (mListProject.size() > 0) {
                     for (int i = 0; i < mListProject.size(); i++) {
                         if (mListProject.get(i).getmProjectId().equals(p.getmProjectId())) {
-                            System.out.println(p.getmTitle()+" project name ===========>");
+                            System.out.println(p.getmTitle() + " project name ===========>");
                             NotificationsManager.notifyProjectChange(mListProject.get(i), p, getContext());
+                            ((MainActivity) getActivity()).changeNotificationIcon(true);
                             mListProject.remove(i);
                             mListProject.add(i, p);
                             notFound = false;

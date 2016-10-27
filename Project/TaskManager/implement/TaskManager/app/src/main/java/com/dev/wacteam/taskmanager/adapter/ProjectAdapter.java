@@ -112,7 +112,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         tv_task_failed = (TextView) view.findViewById(R.id.tv_project_dialog_total_task_failed);
 
         tv_complete.setText(p.getmComplete() + " %");
-        tv_leader.setText(p.getmLeader() == null ? "No name" : p.getmLeader().getDisplayName());
+        tv_leader.setText(p.getmLeader() == null ? "No name" : p.getmLeader().getProfile().getDisplayName());
         tv_memeber.setText((p.getmMembers() == null) ? "0" : p.getmMembers().size() + "");
         tv_total_task.setText((p.getmTasks() == null) ? "0" : p.getmTasks().size() + "");
         tv_task_complete.setText("0");

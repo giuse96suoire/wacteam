@@ -27,7 +27,6 @@ import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -213,7 +212,7 @@ public class CreateProject extends Fragment {
         project.setmDescription(mEtProjectDescription.getText().toString());
         project.setmComplete(0);
         ArrayList<String> members = new ArrayList<>();
-        members.add(CurrentUser.getInstance().getUserInfo(getContext()).getUid());
+        members.add(CurrentUser.getInstance().getUserProfileFromLocal(getContext()).getProfile().getUid());
         project.setmMembers(members);
         CurrentUser.createProject(project, getContext());
     }

@@ -1,9 +1,6 @@
 package com.dev.wacteam.taskmanager.model;
 
-import android.net.Uri;
-
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by giuse96suoire on 10/12/2016.
@@ -11,70 +8,15 @@ import java.util.Date;
 public class User {
 
     public User() {
-
+        profile = new Profile();
+        setting = new Setting();
     }
 
-    private String uid;
-    private String displayName;
-    private String dob;
-    private String email;
-    private boolean emailVerified;
-    private Uri photoUrl;
-    private ArrayList<Project> listProject;
-    private ArrayList<String> listFriend; //list friend id
+    private ArrayList<Project> projects;
+    private ArrayList<String> friends; //list friend id
+    private Profile profile;
     private Setting setting;
-    private String providerId;
-    private String phoneNumber;
-    private String address;
-    private boolean gender;
 
-    public void setGender(boolean gender) { // true is man, false is woman
-        this.gender = gender;
-    }
-
-    public boolean getGender() {
-        return gender;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setEmailVerified(boolean emailVerified) {
-        this.emailVerified = emailVerified;
-    }
-
-    public void setListFriend(ArrayList<String> listFriend) {
-        this.listFriend = listFriend;
-    }
-
-    public void setProviderId(String providerId) {
-        this.providerId = providerId;
-    }
-
-    public boolean isEmailVerified() {
-        return emailVerified;
-    }
-
-    public ArrayList<String> getListFriend() {
-        return listFriend;
-    }
-
-    public String getProviderId() {
-        return providerId;
-    }
 
     public void setSetting(Setting setting) {
         this.setting = setting;
@@ -84,51 +26,27 @@ public class User {
         return setting;
     }
 
-    public ArrayList<Project> getListProject() {
-        return listProject;
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
-    public void setListProject(ArrayList<Project> listProject) {
-        this.listProject = listProject;
+    public Profile getProfile() {
+        return profile;
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+    public void setFriends(ArrayList<String> friends) {
+        this.friends = friends;
     }
 
-    public void setDob(String dob) {
-        this.dob = dob;
+    public ArrayList<String> getFriends() {
+        return friends;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public ArrayList<Project> getProjects() {
+        return projects;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPhotoUrl(Uri photoUrl) {
-        this.photoUrl = photoUrl;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public String getDob() {
-        return dob;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public Uri getPhotoUrl() {
-        return photoUrl;
+    public void setProjects(ArrayList<Project> projects) {
+        this.projects = projects;
     }
 }

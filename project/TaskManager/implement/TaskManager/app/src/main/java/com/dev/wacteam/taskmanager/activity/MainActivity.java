@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.manager.SettingManager;
 import com.dev.wacteam.taskmanager.model.User;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private TextView mTvUserFullName, mTvUserEmail;
+    private MenuItem mMiNotification;
 
     @Override
     protected void onPause() {
@@ -64,41 +66,6 @@ public class MainActivity extends AppCompatActivity
         if (!CurrentUser.isLogined(getApplicationContext())) {
             mGoToActivity(LoginActivity.class);
         }
-//        FirebaseDatabase.getInstance().setPersistenceEnabled(true   ); //set firebase can write data in offline
-//        CurrentUser.getUserInfo(new OnGetDataListener() {
-//            @Override
-//            public void onStart() {
-//                //do nothing
-//            }
-//
-//            @Override
-//            public void onSuccess(DataSnapshot data) {
-//                if (data != null) {
-//                    System.out.println("DATA NOT NULL IN MAIN");
-//
-//                    User user = data.getValue(User.class);
-////                    if (user == null || user.getUid() == null || user.getDisplayName() == null || user.getEmail() == null) {
-////                        System.out.println("USER NULL IN MAIN");
-////
-////                        mGoToActivity(LoginActivity.class);
-////                    } else {
-//////                        mTvUserFullName.setText(user.getDisplayName());
-//////                        mTvUserEmail.setText(user.getEmail());
-////                        Toast.makeText(getApplicationContext(), "Logined", Toast.LENGTH_LONG).show();
-////                        //TODO: update some UI
-////                    }
-//                } else {
-//                    System.out.println("DATA NULL IN MAIN");
-//                    mGoToActivity(LoginActivity.class);
-//                }
-//            }
-
-//            @Override
-//            public void onFailed(DatabaseError databaseError) {
-//                mGoToActivity(LoginActivity.class);
-//
-//            }
-//        });
         setContentView(R.layout.activity_main);
         if (findViewById(R.id.content_main) != null) {
             if (savedInstanceState != null) {
@@ -110,10 +77,7 @@ public class MainActivity extends AppCompatActivity
         init();
 
 
-
-
     }
-
 
 
     private void init() {
@@ -142,13 +106,13 @@ public class MainActivity extends AppCompatActivity
         View header = navigationView.getHeaderView(0);
         mTvUserFullName = (TextView) header.findViewById(R.id.tv_userFullName);
         mTvUserEmail = (TextView) header.findViewById(R.id.tv_userEmail);
-        User user = CurrentUser.getUserInfo(getApplicationContext());
+        User user = CurrentUser.getUserProfileFromLocal(getApplicationContext());
         mUpdateUserUI(user);
     }
 
     public void mUpdateUserUI(User user) {
-        mTvUserEmail.setText(user.getEmail());
-        mTvUserFullName.setText(user.getDisplayName());
+        mTvUserEmail.setText(user.getProfile().getEmail());
+        mTvUserFullName.setText(user.getProfile().getDisplayName());
     }
 
     @Override
@@ -165,7 +129,24 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        mMiNotification = menu.findItem(R.id.action_notification);
+        if (SettingManager.isHasNotification(getApplicationContext())) {
+            changeNotificationIcon(true);
+        };
+
         return true;
+    }
+
+    public void changeNotificationIcon(boolean isNotify) {
+        if (isNotify) {
+            mMiNotification.setIcon(R.drawable.ic_notification_active_24);
+            SettingManager.setIsHasNotification(getApplicationContext(), isNotify);
+
+        } else {
+            mMiNotification.setIcon(R.drawable.ic_notification_24);
+            SettingManager.setIsHasNotification(getApplicationContext(), isNotify);
+
+        }
     }
 
     @Override
@@ -177,6 +158,11 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == R.id.action_notification) {
+            changeNotificationIcon(false);
+
             return true;
         }
 
@@ -223,9 +209,9 @@ public class MainActivity extends AppCompatActivity
             callFragment(new AboutUsFragment());
             setTitle(R.string.title_aboutUs_fragment);
         } else if (id == R.id.nav_signOut) {
-                FirebaseAuth.getInstance().signOut();
-                CurrentUser.setLogined(false, getApplicationContext());
-                mGoToActivity(LoginActivity.class);
+            FirebaseAuth.getInstance().signOut();
+            CurrentUser.setLogined(false, getApplicationContext());
+            mGoToActivity(LoginActivity.class);
 
         }
 

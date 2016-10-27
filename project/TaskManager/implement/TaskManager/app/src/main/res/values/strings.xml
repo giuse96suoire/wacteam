@@ -71,7 +71,7 @@
     <string name="task_list_label">Task list</string>
     <string name="create_time_label">Create at</string>
     <string name="leader_label">Leader</string>
-    <string name="login_licence">By login, you are agreeing to our Tesm of Service and Provacu Policy</string>
+    <string name="login_licence">By login, you are agreeing to our Team of Service.</string>
     <!-- default value -->
     <string name="default_email">youremail@gmail.com</string>
     <string name="default_full_name">Your name</string>

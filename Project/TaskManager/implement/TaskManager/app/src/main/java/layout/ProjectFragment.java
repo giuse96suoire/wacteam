@@ -18,7 +18,6 @@ import com.dev.wacteam.taskmanager.activity.MainActivity;
 import com.dev.wacteam.taskmanager.adapter.ProjectAdapter;
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.manager.NotificationsManager;
-import com.dev.wacteam.taskmanager.manager.SettingManager;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.database.DataSnapshot;
@@ -112,12 +111,21 @@ public class ProjectFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mListProject = new ArrayList<>();
 
-
         mAdapter = new ProjectAdapter(getContext(), getActivity(), mListProject);
+//        mListProject = CurrentProject.getListProject(new CurrentProject.onDataChangeListener() {
+//            @Override
+//            public void onDateChange(ArrayList<Project> list) {
+//                mListProject = list;
+//                mAdapter.notifyDataSetChanged();
+//            }
+//        });
+
         mLvListProject = (RecyclerView) getView().findViewById(R.id.rv_project);
+
         mLvListProject.setHasFixedSize(true);
         mLvListProject.setLayoutManager(new LinearLayoutManager(getActivity()));
         mLvListProject.setAdapter(mAdapter);
+
         mGetAllProject();
 
     }
@@ -138,7 +146,6 @@ public class ProjectFragment extends Fragment {
                 if (mListProject.size() > 0) {
                     for (int i = 0; i < mListProject.size(); i++) {
                         if (mListProject.get(i).getmProjectId().equals(p.getmProjectId())) {
-                            System.out.println(p.getmTitle() + " project name ===========>");
                             NotificationsManager.notifyProjectChange(mListProject.get(i), p, getContext());
                             ((MainActivity) getActivity()).changeNotificationIcon(true);
                             mListProject.remove(i);

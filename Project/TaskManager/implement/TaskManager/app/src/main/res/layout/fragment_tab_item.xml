@@ -8,17 +8,7 @@
     android:layout_height="match_parent">
 
 
-    <Button
-        android:layout_width="match_parent"
-        android:padding="8dp"
-        android:id="@+id/btn_addtask"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:text="Thêm nhiệm vụ"
-        android:gravity="center"
-        android:layout_alignBottom="@+id/lnlayout"
-        android:background="@color/colorPrimary"
-        />
+
 
     <LinearLayout
         android:id="@+id/lnlayout"
@@ -38,5 +28,15 @@
 
 
     </LinearLayout>
-
+    <Button
+        android:layout_width="match_parent"
+        android:padding="8dp"
+        android:id="@+id/btn_addtask"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:text="Thêm nhiệm vụ"
+        android:gravity="center"
+        android:layout_alignBottom="@+id/lnlayout"
+        android:background="@color/colorPrimary"
+        />
 </RelativeLayout>

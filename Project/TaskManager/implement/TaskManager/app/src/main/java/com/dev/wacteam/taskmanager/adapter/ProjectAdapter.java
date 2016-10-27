@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.activity.MainActivity;
+import com.dev.wacteam.taskmanager.dialog.YesNoDialog;
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.model.User;
@@ -21,6 +27,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
 import java.util.ArrayList;
+
+import layout.ProjectDetailFragment;
 
 /**
  * Created by huynh.mh on 10/25/2016.
@@ -124,13 +132,25 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
                 .setNegativeButton("View detail", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        Bundle args = new Bundle();
+                        args.putString("projectId",p.getmProjectId());
+                        ((MainActivity)mActivity).callFragment(new ProjectDetailFragment());
                     }
                 })
                 .setPositiveButton("Delete project", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        YesNoDialog.mShow(mContext, "Are you sure delete it? ", new YesNoDialog.OnClickListener() {
+                            @Override
+                            public void onYes(DialogInterface dialog, int which) {
 
+                            }
+
+                            @Override
+                            public void onNo(DialogInterface dialog, int which) {
+
+                            }
+                        });
                     }
                 })
                 .setNeutralButton("Share", new DialogInterface.OnClickListener() {

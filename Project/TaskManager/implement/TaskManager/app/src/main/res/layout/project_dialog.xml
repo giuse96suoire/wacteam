@@ -27,7 +27,6 @@
             android:paddingLeft="@dimen/padding_fragment">
 
 
-
             <TextView
                 android:id="@+id/tv_project_dialog_create_date"
                 android:layout_width="match_parent"
@@ -62,10 +61,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Complete: 69%"
+                android:text="Complete: "
+
+                android:textSize="@dimen/project_text_size_medium" />
+
+            <TextView
                 android:id="@+id/tv_project_dialog_complete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="69%"
                 android:textSize="@dimen/project_text_size_medium" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,11 +82,19 @@
                 android:layout_width="@dimen/icon_small_width"
                 android:layout_height="@dimen/icon_small_height"
                 android:src="@drawable/ic_leader_48" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Leader: "
+
+                android:textSize="@dimen/project_text_size_medium" />
+
             <TextView
                 android:id="@+id/tv_project_dialog_leader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Leader: Hoang Huynh"
+                android:text="Hoang Huynh"
                 android:textSize="@dimen/project_text_size_medium" />
         </LinearLayout>
 
@@ -91,13 +106,20 @@
             <ImageView
                 android:layout_width="@dimen/icon_small_width"
                 android:layout_height="@dimen/icon_small_height"
-                android:src="@drawable/ic_team_48"
-                />
+                android:src="@drawable/ic_team_48" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Members: "
+
+                android:textSize="@dimen/project_text_size_medium" />
+
             <TextView
                 android:id="@+id/tv_project_dialog_member"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Team members: 9"
+                android:text="  9"
                 android:textSize="@dimen/project_text_size_medium" />
         </LinearLayout>
 
@@ -109,13 +131,20 @@
             <ImageView
                 android:layout_width="@dimen/icon_small_width"
                 android:layout_height="@dimen/icon_small_height"
-                android:src="@drawable/ic_total_48"
-                />
+                android:src="@drawable/ic_total_48" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total task: "
+
+                android:textSize="@dimen/project_text_size_medium" />
+
             <TextView
                 android:id="@+id/tv_project_dialog_total_task"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total task: 19"
+                android:text="19"
                 android:textSize="@dimen/project_text_size_medium" />
         </LinearLayout>
 
@@ -127,13 +156,20 @@
             <ImageView
                 android:layout_width="@dimen/icon_small_width"
                 android:layout_height="@dimen/icon_small_height"
-                android:src="@drawable/ic_complete_48"
-                />
+                android:src="@drawable/ic_complete_48" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Complete: "
+
+                android:textSize="@dimen/project_text_size_medium" />
+
             <TextView
                 android:id="@+id/tv_project_dialog_total_task_complete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Task complete: 9"
+                android:text="9"
                 android:textSize="@dimen/project_text_size_medium" />
         </LinearLayout>
 
@@ -145,13 +181,19 @@
             <ImageView
                 android:layout_width="@dimen/icon_small_width"
                 android:layout_height="@dimen/icon_small_height"
-                android:src="@drawable/ic_failed_48"
-                />
+                android:src="@drawable/ic_failed_48" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Task failed: "
+                android:textSize="@dimen/project_text_size_medium" />
+
             <TextView
                 android:id="@+id/tv_project_dialog_total_task_failed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Task failed: 10"
+                android:text="10"
                 android:textSize="@dimen/project_text_size_medium" />
         </LinearLayout>
 

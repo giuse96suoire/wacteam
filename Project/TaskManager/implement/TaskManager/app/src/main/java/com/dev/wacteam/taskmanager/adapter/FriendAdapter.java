@@ -88,19 +88,19 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
             @Override
             public void onSuccess(DataSnapshot data) {
-                for (DataSnapshot value : data.getChildren()) {
-                    User user = value.getValue(User.class);
+//                for (DataSnapshot value : data.getChildren()) {
+                    User user = data.getValue(User.class);
                     if (user.getUid().equals(u.getUid())) {
-                        isFound = true;
+                        isYourFriend = true;
                     }
 
-                    if (isFound) {
+                    if (isYourFriend) {
                         more.setImageResource(R.drawable.ic_finish_task);
-                        isFound = false;
+                        isYourFriend = false;
                     } else {
                         more.setImageResource(R.drawable.ic_add);
                     }
-                }
+//                }
 
             }
 
@@ -119,7 +119,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
     }
 
-    boolean isFound = false;
+    boolean isYourFriend = false;
     ProgressDialog mProgressDialog;
 
     private void mShowFriendInfo(User u, ImageView icon) {
@@ -143,22 +143,22 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
             @Override
             public void onSuccess(DataSnapshot data) {
-                for (DataSnapshot value : data.getChildren()) {
-                    User user = value.getValue(User.class);
+//                for (DataSnapshot value : data.getChildren()) {
+                    User user = data.getValue(User.class);
                     if (user.getUid().equals(u.getUid())) {
-                        isFound = true;
+                        isYourFriend = true;
                     }
-                }
+//                }
 
 
-                if (isFound) {
+                if (isYourFriend) {
                     builder.setNegativeButton(R.string.remove_friend, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
                         }
                     });
-                    isFound = false;
+                    isYourFriend = false;
                 } else {
                     builder.setNegativeButton(R.string.add_friend, new DialogInterface.OnClickListener() {
                         @Override

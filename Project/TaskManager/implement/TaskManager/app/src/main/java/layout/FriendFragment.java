@@ -109,10 +109,10 @@ public class FriendFragment extends Fragment {
                 if (data.getChildrenCount() == 0) {
                     mProgressDialog.dismiss();
                 } else {
-                    for (DataSnapshot value : data.getChildren()) {
-                        User user = value.getValue(User.class);
-                        mListFriend.add(user);
-                    }
+//                    for (DataSnapshot value : data.getChildren()) {
+                    User user = data.getValue(User.class);
+                    mListFriend.add(user);
+//                    }
                     mFriendAdapter.notifyDataSetChanged();
                     mProgressDialog.dismiss();
                 }
@@ -127,7 +127,7 @@ public class FriendFragment extends Fragment {
 
 
     private void mSearchFriend(String emailOrName) {
-        CurrentUser.searchFriend(getContext(),emailOrName, new OnGetDataListener() {
+        CurrentUser.searchFriend(getContext(), emailOrName, new OnGetDataListener() {
             @Override
             public void onStart() {
 

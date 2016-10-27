@@ -136,6 +136,7 @@ public class ProjectFragment extends Fragment {
                 if (mListProject.size() > 0) {
                     for (int i = 0; i < mListProject.size(); i++) {
                         if (mListProject.get(i).getmProjectId().equals(p.getmProjectId())) {
+                            System.out.println(p.getmTitle()+" project name ===========>");
                             NotificationsManager.notifyProjectChange(mListProject.get(i), p, getContext());
                             mListProject.remove(i);
                             mListProject.add(i, p);

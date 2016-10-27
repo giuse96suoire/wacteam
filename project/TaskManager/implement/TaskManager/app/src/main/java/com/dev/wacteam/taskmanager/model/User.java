@@ -21,12 +21,13 @@ public class User {
     private boolean emailVerified;
     private Uri photoUrl;
     private ArrayList<Project> listProject;
-    private ArrayList<User> listFriend;
+    private ArrayList<String> listFriend; //list friend id
     private Setting setting;
     private String providerId;
     private String phoneNumber;
     private String address;
     private boolean gender;
+
     public void setGender(boolean gender) { // true is man, false is woman
         this.gender = gender;
     }
@@ -55,7 +56,7 @@ public class User {
         this.emailVerified = emailVerified;
     }
 
-    public void setListFriend(ArrayList<User> listFriend) {
+    public void setListFriend(ArrayList<String> listFriend) {
         this.listFriend = listFriend;
     }
 
@@ -67,7 +68,7 @@ public class User {
         return emailVerified;
     }
 
-    public ArrayList<User> getListFriend() {
+    public ArrayList<String> getListFriend() {
         return listFriend;
     }
 

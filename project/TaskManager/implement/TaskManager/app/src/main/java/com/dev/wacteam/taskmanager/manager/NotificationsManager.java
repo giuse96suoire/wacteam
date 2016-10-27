@@ -63,76 +63,85 @@ public class NotificationsManager {
         if (!newProject.getmDeadline().equals(oldProject.getmDeadline())) {
             message += " Deadline " + oldProject.getmDeadline() + " -> " + newProject.getmDeadline() + " \n";
         }
-        if (!newProject.getmTitle().equals(oldProject.getmComplete())) {
+        if (!newProject.getmTitle().equals(oldProject.getmTitle())) {
             message += " Title " + oldProject.getmTitle() + " -> " + newProject.getmTitle() + " \n";
         }
-        message += notifyTaskChange(oldProject.getmTasks(),newProject.getmTasks());
-        mNotify(mContext, newProject.getmTitle() + " - PROJECT HAS MANY CHANGE ", message);
-    }
-    public static String notifyTaskChange(ArrayList<Task> oldTask,ArrayList<Task> newTask){
-        String message="";
-        int sizeOld = oldTask.size();
-        int sizeNew = newTask.size();
-        if(newTask.get(sizeOld-1).getmTaskId()==oldTask.get(sizeNew-1).getmTaskId()){
-            for(int i = 0;i<sizeNew;i++){
-                message += notifyTaskChangeDetail(oldTask.get(i),newTask.get(i));
-            }
+        message += notifyTaskChange(oldProject.getmTasks(), newProject.getmTasks());
+        if (message.length() > 1) {
+            System.out.println(" ============================> ");
+            System.out.println(message + " ============================> message");
+            System.out.println(" ============================> ");
+            mNotify(mContext, newProject.getmTitle() + " - PROJECT HAS MANY CHANGE ", message);
         }
-        else{
-            int sOld = 0 , sNew  = 0;
-            do{
-                if(sOld<sizeOld) {
-                    if (newTask.get(sNew).getmTaskId() == oldTask.get(sOld).getmTaskId()) {
-                        message += notifyTaskChangeDetail(oldTask.get(sOld), newTask.get(sNew));
-                        sNew++;
-                        sOld++;
+    }
+
+    public static String notifyTaskChange(ArrayList<Task> oldTask, ArrayList<Task> newTask) {
+        String message = "";
+        if (oldTask != null && newTask != null) {
+            int sizeOld = oldTask.size();
+            int sizeNew = newTask.size();
+            if (newTask.get(sizeOld - 1).getmTaskId() == oldTask.get(sizeNew - 1).getmTaskId()) {
+                for (int i = 0; i < sizeNew; i++) {
+                    message += notifyTaskChangeDetail(oldTask.get(i), newTask.get(i));
+                }
+            } else {
+                int sOld = 0, sNew = 0;
+                do {
+                    if (sOld < sizeOld) {
+                        if (newTask.get(sNew).getmTaskId() == oldTask.get(sOld).getmTaskId()) {
+                            message += notifyTaskChangeDetail(oldTask.get(sOld), newTask.get(sNew));
+                            sNew++;
+                            sOld++;
+                        } else {
+                            message += " Task title:" + oldTask.get(sOld).getmTitle() + " had been deleted \n";
+                            sOld++;
+                        }
                     } else {
-                        message += " Task title:"+oldTask.get(sOld).getmTitle()+" had been deleted \n";
-                        sOld++;
+                        message += " Task title:" + newTask.get(sNew).getmTitle() + " had been added \n";
+                        sNew++;
                     }
                 }
-                else{
-                    message += " Task title:"+newTask.get(sNew).getmTitle()+" had been added \n";
-                    sNew++;
-                }
+                while (sNew < sizeNew);
             }
-            while(sNew<sizeNew);
         }
+
         return message;
+
     }
-    public static String notifyTaskChangeDetail(Task oldTask, Task newTask){
-        String message="";
+
+    public static String notifyTaskChangeDetail(Task oldTask, Task newTask) {
+        String message = "";
         if (newTask.getmTitle() != oldTask.getmTitle())
-            message += " Task title:"+oldTask.getmTitle()+" title "+oldTask.getmTitle() +" % -> " + newTask.getmTitle() +" % \n";
+            message += " Task title:" + oldTask.getmTitle() + " title " + oldTask.getmTitle() + " % -> " + newTask.getmTitle() + " % \n";
         if (newTask.getmDeadline() != oldTask.getmDeadline())
-            message += " Task title:"+newTask.getmTitle()+" deadline "+oldTask.getmDeadline() +" % -> " + newTask.getmDeadline() +" % \n";
+            message += " Task title:" + newTask.getmTitle() + " deadline " + oldTask.getmDeadline() + " % -> " + newTask.getmDeadline() + " % \n";
         if (newTask.getmDescription() != oldTask.getmDescription())
-            message += " Task title:"+newTask.getmTitle()+" description "+oldTask.getmDescription() +" % -> " + newTask.getmDescription() +" % \n";
-        message += notifyTaskChangeMember(oldTask.getmExecutors(),newTask.getmExecutors());
+            message += " Task title:" + newTask.getmTitle() + " description " + oldTask.getmDescription() + " % -> " + newTask.getmDescription() + " % \n";
+        message += notifyTaskChangeMember(oldTask.getmExecutors(), newTask.getmExecutors());
         return message;
     }
-    public static String notifyTaskChangeMember(ArrayList<User> oldMember, ArrayList<User> newMember){
-        String message="";
+
+    public static String notifyTaskChangeMember(ArrayList<User> oldMember, ArrayList<User> newMember) {
+        String message = "";
         int sizeOld = oldMember.size();
         int sizeNew = newMember.size();
-        if(newMember.get(sizeOld-1).getUid()!=oldMember.get(sizeNew-1).getUid()){
-            int sOld = 0 , sNew  = 0;
-            do{
-                if(sOld<sizeOld) {
+        if (newMember.get(sizeOld - 1).getUid() != oldMember.get(sizeNew - 1).getUid()) {
+            int sOld = 0, sNew = 0;
+            do {
+                if (sOld < sizeOld) {
                     if (newMember.get(sNew).getUid() == oldMember.get(sOld).getUid()) {
                         sNew++;
                         sOld++;
                     } else {
-                        message += " Task member name:"+oldMember.get(sOld).getDisplayName()+" had been removed \n";
+                        message += " Task member name:" + oldMember.get(sOld).getDisplayName() + " had been removed \n";
                         sOld++;
                     }
-                }
-                else{
-                    message += " Task member name:"+newMember.get(sNew).getDisplayName()+" had been added \n";
+                } else {
+                    message += " Task member name:" + newMember.get(sNew).getDisplayName() + " had been added \n";
                     sNew++;
                 }
             }
-            while(sNew<sizeNew);
+            while (sNew < sizeNew);
         }
         return message;
     }

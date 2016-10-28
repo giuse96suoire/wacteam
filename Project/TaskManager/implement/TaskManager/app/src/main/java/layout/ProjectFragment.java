@@ -17,7 +17,6 @@ import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.activity.MainActivity;
 import com.dev.wacteam.taskmanager.adapter.ProjectAdapter;
 import com.dev.wacteam.taskmanager.listener.OnChildEventListener;
-import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.manager.NotificationsManager;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
@@ -142,7 +141,7 @@ public class ProjectFragment extends Fragment {
                     for (int i = 0; i < mListProject.size(); i++) {
                         if (mListProject.get(i).getmProjectId().equals(p.getmProjectId())) {
                             NotificationsManager.notifyProjectChange(mListProject.get(i), p, getContext());
-                            ((MainActivity) getActivity()).changeNotificationIcon(true);
+//                            ((MainActivity) getActivity()).changeNotificationIcon(true);
                             mListProject.remove(i);
                             mListProject.add(i, p);
                             notFound = false;
@@ -164,7 +163,9 @@ public class ProjectFragment extends Fragment {
                     for (int i = 0; i < mListProject.size(); i++) {
                         if (mListProject.get(i).getmProjectId().equals(p.getmProjectId())) {
                             NotificationsManager.notifyProjectChange(mListProject.get(i), p, getContext());
-                            ((MainActivity) getActivity()).changeNotificationIcon(true);
+                            if (getActivity() != null) {
+                                ((MainActivity) getActivity()).changeNotificationIcon(true);
+                            }
                             mListProject.remove(i);
                             break;
                         }

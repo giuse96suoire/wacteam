@@ -161,7 +161,8 @@
     <string name="project_type_label">Loại</string>
     <string name="task_list_label">Danh sách công việc cần làm</string>
     <string name="title_create_project_fragment">Tạo dự án</string>
-    <string name="login_licence">Bằng cách đăng nhập, bạn đồng ý với đội của chúng tôi Dịch vụ và Chính sách bảo mật</string>
+    <string name="preference_file_key">người dùng hiện tại</string>
+    <string name="login_licence">Bằng cách đăng nhập, bạn đồng ý dịch vụ và chính sách bảo mật của chúng tôi!</string>
     <string name="default_uid">id người dùng</string>
     <string name="Authenticating">Đang xác thực...</string>
     <string name="Create_project">Dự án của tôi</string>
@@ -178,7 +179,7 @@
     <string name="ask_user_create">Bạn muốn tạo cái gì?</string>
     <string name="auto_accept_friend_setting">Tự động kết bạn</string>
     <string name="auto_accept_join_project_setting">Tự động chấp nhận tham gia dự án</string>
-    <string name="auto_backup_data_to_local_setting">Tự động khôi phục dữ liệu tới server</string>
+    <string name="auto_backup_data_to_local_setting">Tự động đồng bộ dữ liệu với server</string>
     <string name="begin_task">Bắt đầu:</string>
     <string name="cancel_add_member">Hủy bỏ</string>
     <string name="cancel_create_project">Hủy bỏ</string>
@@ -187,14 +188,14 @@
     <string name="check_user_in_server">Kiểm tra người dùng ở server</string>
     <string name="choose_member">Chọn thành viên</string>
     <string name="confirm_dialog">Xác nhận</string>
-    <string name="confirm_reset_project">Bạn có chắc là khôi phục lại ban đầu? Tất cả dữ liệu nhập vào sẽ bị hủy bỏ!</string>
+    <string name="confirm_reset_project">Bạn có chắc không? Tất cả dữ liệu sẽ bị hủy bỏ!</string>
     <string name="create_project">Tạo</string>
     <string name="date_task">Ngày:</string>
     <string name="day_month_year_task">ngày/tháng/năm</string>
     <string name="day_month_years_schedule">ngày/tháng/năm</string>
     <string name="dialog_get_friend">Đang cập nhật danh sách...</string>
     <string name="dialog_update_information">Cập nhật thông tin của bạn?</string>
-    <string name="disconnect">Không có kết nối internet. Vui lòng kiểm tra lại đường truyền!</string>
+    <string name="disconnect">Không có kết nối. Vui lòng kiểm tra lại đường truyền!</string>
     <string name="err_valid_login_password">Vui lòng nhập password.</string>
     <string name="everything_is_simple">EVERYTHING IS SIMPLE</string>
     <string name="error_valid_login_email">Vui lòng nhập email.</string>
@@ -225,7 +226,7 @@
     <string name="sign_up_success">Đăng ký thành công!</string>
     <string name="sound_setting">Âm thanh</string>
     <string name="task_create_label">Công việc</string>
-    <string name="task_manager">Quản lý công việc</string>
+    <string name="task_manager">QUẢN LÝ CÔNG VIỆC</string>
     <string name="task_member_task">Tên thành viên:</string>
     <string name="task_name_task">Tên công việc:</string>
     <string name="to_do_item_schedule">Những gì cần làm</string>

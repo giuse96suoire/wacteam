@@ -157,7 +157,7 @@
     <string name="default_full_name">Your name</string>
     <string name="leader_label">Leader</string>
     <string name="job_fragment_profile">Job</string>
-    <string name="login_licence">By login, you are agreeing to our Tesm of Service and Provacu Policy</string>
+    <string name="login_licence">By login, you are agree to the Terms of Use and Privacy Statement</string>
     <string name="member_label">Member</string>
     <string name="project_description">Desciption</string>
     <string name="project_name_label">Project_name</string>
@@ -176,7 +176,7 @@
     <string name="add_friend">Add friend</string>
     <string name="add_member">Add</string>
     <string name="add_more">+ Add more</string>
-    <string name="already_login">Yoy\'re logined</string>
+    <string name="already_login">You\'re logined</string>
     <string name="add_to_project">Add to project</string>
     <string name="auto_accept_friend_setting">Auto accept friend</string>
     <string name="ask_user_create">What you want to create?</string>

@@ -224,8 +224,11 @@ public class CreateProject extends Fragment {
         project.setmDescription(mEtProjectDescription.getText().toString());
         project.setmComplete(0);
         ArrayList<String> members = new ArrayList<>();
-        members.add(CurrentUser.getInstance().getUserProfileFromLocal(getContext()).getProfile().getUid());
+        String uid = CurrentUser.getInstance().getUserProfileFromLocal(getContext()).getProfile().getUid();
+        members.add(uid);
         project.setmMembers(members);
+        project.setmLeaderId(uid);
+
         CurrentUser.createProject(project, getContext());
     }
 

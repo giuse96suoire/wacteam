@@ -100,7 +100,7 @@ public class CurrentUser extends User {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Project project = dataSnapshot.getValue(Project.class);
                 String uid = CurrentUser.getUserProfileFromLocal(context).getProfile().getUid();
-                if (project.getmLeaderId().equals(uid)) {
+                if (project.getmLeaderId() != null && project.getmLeaderId().equals(uid)) {
                     db.setValue(null);///remove project
                 } else {
                     db.child("mMembers").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -163,25 +163,28 @@ public class CurrentUser extends User {
         db.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                Project project = dataSnapshot.getValue(Project.class);
-                ArrayList<String> listMember = project.getmMembers();
-                for (String memId : listMember) {
-                    if (memId.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
-                        listener.onChildAdded(dataSnapshot, s);
-                    }
-                }
-//                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Project project = dataSnapshot.getValue(Project.class);
                 ArrayList<String> listMember = project.getmMembers();
                 if (listMember != null) {
                     for (String memId : listMember) {
                         if (memId.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
+                            listener.onChildAdded(dataSnapshot, s);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Project project = dataSnapshot.getValue(Project.class);
+                boolean isYours = false;
+                ArrayList<String> listMember = project.getmMembers();
+                if (listMember != null) {
+                    for (String memId : listMember) {
+                        if (memId.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
+                            isYours = true;
                             listener.onChildChanged(dataSnapshot, s);
+                            break;
                         }
                     }
                 }
@@ -191,9 +194,11 @@ public class CurrentUser extends User {
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Project project = dataSnapshot.getValue(Project.class);
                 ArrayList<String> listMember = project.getmMembers();
-                for (String memId : listMember) {
-                    if (memId.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
-                        listener.onChildRemoved(dataSnapshot);
+                if (listMember != null) {
+                    for (String memId : listMember) {
+                        if (memId.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
+                            listener.onChildRemoved(dataSnapshot);
+                        }
                     }
                 }
             }
@@ -202,9 +207,11 @@ public class CurrentUser extends User {
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
                 Project project = dataSnapshot.getValue(Project.class);
                 ArrayList<String> listMember = project.getmMembers();
-                for (String memId : listMember) {
-                    if (memId.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
-                        listener.onChildMoved(dataSnapshot, s);
+                if (listMember != null) {
+                    for (String memId : listMember) {
+                        if (memId.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
+                            listener.onChildMoved(dataSnapshot, s);
+                        }
                     }
                 }
             }
@@ -229,11 +236,13 @@ public class CurrentUser extends User {
                     Project project = data.getValue(Project.class);
                     System.out.println("project: " + project.getmTitle() + " ==============================>");
                     ArrayList<String> listMember = project.getmMembers();
-                    for (String s : listMember) {
-                        if (s.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
-                            listener.onSuccess(data);
-                            System.out.println("project ok: " + project.getmTitle() + " ==============================>");
+                    if (listMember != null) {
+                        for (String s : listMember) {
+                            if (s.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
+                                listener.onSuccess(data);
+                                System.out.println("project ok: " + project.getmTitle() + " ==============================>");
 
+                            }
                         }
                     }
                 }

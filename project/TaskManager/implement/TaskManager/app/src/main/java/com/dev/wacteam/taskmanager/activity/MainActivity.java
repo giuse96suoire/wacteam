@@ -28,11 +28,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.manager.SettingManager;
+import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.model.User;
+import com.dev.wacteam.taskmanager.system.CurrentFriend;
+import com.dev.wacteam.taskmanager.system.CurrentProject;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 
 import layout.AboutUsFragment;
 import layout.CreateProject;
@@ -52,7 +58,7 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private TextView mTvUserFullName, mTvUserEmail;
-    private MenuItem mMiNotification;
+    private MenuItem mMiNotification, mMiSound, mMiMessage;
 
     @Override
     protected void onPause() {
@@ -63,6 +69,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getAllProject();
+        getAllFriend();
         if (!CurrentUser.isLogined(getApplicationContext())) {
             mGoToActivity(LoginActivity.class);
         }
@@ -79,20 +87,57 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    private void getAllProject() {
+        CurrentUser.getAllProject(new OnGetDataListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot data) {
+                CurrentProject.addProject(data.getValue(Project.class));
+            }
+
+            @Override
+            public void onFailed(DatabaseError databaseError) {
+
+            }
+        }, getApplicationContext());
+    }
+
+    private void getAllFriend() {
+        CurrentUser.getAllFriend(new OnGetDataListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot data) {
+                CurrentFriend.addFriend(data.getValue(User.class));
+            }
+
+            @Override
+            public void onFailed(DatabaseError databaseError) {
+
+            }
+        }, getApplicationContext());
+    }
 
     private void init() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                mDisplayQuickCreateDialog();
-            }
-        });
+//
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+////                        .setAction("Action", null).show();
+//                mDisplayQuickCreateDialog();
+//            }
+//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -130,10 +175,16 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         mMiNotification = menu.findItem(R.id.action_notification);
+        mMiMessage = menu.findItem(R.id.action_message);
+        mMiSound = menu.findItem(R.id.action_sound);
         if (SettingManager.isHasNotification(getApplicationContext())) {
             changeNotificationIcon(true);
-        };
-
+        }
+        ;
+        if (!SettingManager.isSound(getApplicationContext())) {
+            changeSoundIcon(false);
+        }
+        ;
         return true;
     }
 
@@ -149,6 +200,18 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public void changeSoundIcon(boolean isSound) {
+        if (isSound) {
+            mMiSound.setIcon(R.drawable.ic_volume_up_white_24dp);
+            SettingManager.setIsSound(getApplicationContext(), isSound);
+
+        } else {
+            mMiSound.setIcon(R.drawable.ic_volume_off_white_24dp);
+            SettingManager.setIsSound(getApplicationContext(), isSound);
+
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -157,7 +220,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_quick_create) {
+            mDisplayQuickCreateDialog();
             return true;
         }
         if (id == R.id.action_notification) {
@@ -165,6 +229,16 @@ public class MainActivity extends AppCompatActivity
 
             return true;
         }
+        if (id == R.id.action_sound) {
+            if (!SettingManager.isSound(getApplicationContext())) {
+                changeSoundIcon(true);
+            } else {
+                changeSoundIcon(false);
+            }
+
+            return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }

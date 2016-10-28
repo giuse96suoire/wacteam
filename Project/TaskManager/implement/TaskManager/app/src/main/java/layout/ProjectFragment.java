@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.activity.MainActivity;
 import com.dev.wacteam.taskmanager.adapter.ProjectAdapter;
+import com.dev.wacteam.taskmanager.listener.OnChildEventListener;
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.manager.NotificationsManager;
 import com.dev.wacteam.taskmanager.model.Project;
@@ -131,16 +132,10 @@ public class ProjectFragment extends Fragment {
     }
 
     private void mGetAllProject() {
-        CurrentUser.getAllProject(new OnGetDataListener() {
+        CurrentUser.getAllProject(new OnChildEventListener() {
             @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onSuccess(DataSnapshot data) {
-                System.out.println("GET PROJECT IN PF");
-                Project p = data.getValue(Project.class);
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Project p = dataSnapshot.getValue(Project.class);
                 boolean notFound = true;
 //                mListProject.clear();
                 if (mListProject.size() > 0) {
@@ -151,19 +146,64 @@ public class ProjectFragment extends Fragment {
                             mListProject.remove(i);
                             mListProject.add(i, p);
                             notFound = false;
+                            break;
                         }
                     }
                 }
                 if (notFound) {
                     mListProject.add(p);
                 }
-                System.out.println(mListProject.size() + " list size ===========================>");
                 mAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailed(DatabaseError databaseError) {
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Project p = dataSnapshot.getValue(Project.class);
+//                mListProject.clear();
+                if (mListProject.size() > 0) {
+                    for (int i = 0; i < mListProject.size(); i++) {
+                        if (mListProject.get(i).getmProjectId().equals(p.getmProjectId())) {
+                            NotificationsManager.notifyProjectChange(mListProject.get(i), p, getContext());
+                            ((MainActivity) getActivity()).changeNotificationIcon(true);
+                            mListProject.remove(i);
+                            break;
+                        }
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Project p = dataSnapshot.getValue(Project.class);
+                boolean notFound = true;
+//                mListProject.clear();
+                if (mListProject.size() > 0) {
+                    for (int i = 0; i < mListProject.size(); i++) {
+                        if (mListProject.get(i).getmProjectId().equals(p.getmProjectId())) {
+                            NotificationsManager.notifyProjectChange(mListProject.get(i), p, getContext());
+                            ((MainActivity) getActivity()).changeNotificationIcon(true);
+                            mListProject.remove(i);
+                            mListProject.add(i, p);
+                            notFound = false;
+                            break;
+                        }
+                    }
+                }
+                if (notFound) {
+                    mListProject.add(p);
+                }
+                mAdapter.notifyDataSetChanged();
             }
         }, getContext());
     }

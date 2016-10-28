@@ -1,7 +1,6 @@
 package com.dev.wacteam.taskmanager.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 
 /**
@@ -12,7 +11,7 @@ public class Project {
     private String mTitle;
     private String mDescription;
     private double mComplete;
-    private User mLeader;
+    private String mLeaderId; //leader id
     private ArrayList<String> mMembers;
     private ArrayList<Task> mTasks;
     private String mDeadline;
@@ -46,8 +45,8 @@ public class Project {
         this.mDescription = mDescription;
     }
 
-    public void setmLeader(User mLeader) {
-        this.mLeader = mLeader;
+    public void setmLeaderId(String mLeaderId) {
+        this.mLeaderId = mLeaderId;
     }
 
     public void setmMembers(ArrayList<String> mMembers) {
@@ -75,8 +74,8 @@ public class Project {
         return mDescription;
     }
 
-    public User getmLeader() {
-        return mLeader;
+    public String getmLeaderId() {
+        return mLeaderId;
     }
 
     public ArrayList<String> getmMembers() {

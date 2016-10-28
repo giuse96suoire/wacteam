@@ -5,9 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,12 +16,8 @@ import android.widget.TextView;
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.activity.MainActivity;
 import com.dev.wacteam.taskmanager.dialog.YesNoDialog;
-import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.model.Project;
-import com.dev.wacteam.taskmanager.model.User;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 
 import java.util.ArrayList;
 
@@ -120,7 +113,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         tv_task_failed = (TextView) view.findViewById(R.id.tv_project_dialog_total_task_failed);
 
         tv_complete.setText(p.getmComplete() + " %");
-        tv_leader.setText(p.getmLeader() == null ? "No name" : p.getmLeader().getProfile().getDisplayName());
+        tv_leader.setText(p.getmLeaderId() == null ? "No name" : p.getmLeaderId());
         tv_memeber.setText((p.getmMembers() == null) ? "0" : p.getmMembers().size() + "");
         tv_total_task.setText((p.getmTasks() == null) ? "0" : p.getmTasks().size() + "");
         tv_task_complete.setText("0");
@@ -133,8 +126,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Bundle args = new Bundle();
-                        args.putString("projectId",p.getmProjectId());
-                        ((MainActivity)mActivity).callFragment(new ProjectDetailFragment());
+                        args.putString("projectId", p.getmProjectId());
+                        ((MainActivity) mActivity).callFragment(new ProjectDetailFragment());
                     }
                 })
                 .setPositiveButton("Delete project", new DialogInterface.OnClickListener() {
@@ -143,7 +136,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
                         YesNoDialog.mShow(mContext, "Are you sure delete it? ", new YesNoDialog.OnClickListener() {
                             @Override
                             public void onYes(DialogInterface dialog, int which) {
-
+                                CurrentUser.deleteProjectById(p.getmProjectId(), getmContext());
                             }
 
                             @Override

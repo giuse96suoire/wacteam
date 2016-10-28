@@ -51,7 +51,9 @@ public class CurrentFriend {
     public static ArrayList<User> getmListFriend() {
         return mListFriend;
     }
-
+    public static int getFriendCount(){
+        return getmListFriend().size();
+    }
     public interface onDataChangeListener {
         public void onDateChange(ArrayList<Project> list);
     }

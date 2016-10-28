@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="sad"
-        app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_refresh"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_refresh_white_24"
+        android:title="Sound"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_sound"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_volume_up_white_24dp"
+        android:title="Sound"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_message"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_email_white_24dp"
+        android:title="Message"
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_notification"
         android:orderInCategory="100"
@@ -15,4 +28,10 @@
         app:showAsAction="always"
         android:numericShortcut="123"
         android:actionLayout="@layout/activity_first_setting"/>
+    <item
+        android:id="@+id/action_quick_create"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_add_circle_outline_white_24dp"
+        android:title="Create new"
+        app:showAsAction="always" />
 </menu>

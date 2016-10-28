@@ -21,6 +21,7 @@ import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.adapter.FriendAdapter;
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.model.User;
+import com.dev.wacteam.taskmanager.system.CurrentFriend;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -93,6 +94,8 @@ public class FriendFragment extends Fragment {
     ProgressDialog mProgressDialog;
 
     private void mGetAllFriend() {
+//        mListFriend = CurrentFriend.getmListFriend();
+//        mFriendAdapter.notifyDataSetChanged();
         CurrentUser.getAllFriend(new OnGetDataListener() {
             @Override
             public void onStart() {
@@ -105,7 +108,7 @@ public class FriendFragment extends Fragment {
 
             @Override
             public void onSuccess(DataSnapshot data) {
-                mListFriend.clear();
+//                mListFriend.clear();
                 if (data.getChildrenCount() == 0) {
                     mProgressDialog.dismiss();
                 } else {

@@ -74,26 +74,7 @@ public class ProjectDetailFragment extends Fragment {
         if (getArguments() != null) {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
-            mProjectId = getArguments().getString("projectId");
-            CurrentUser.getProjectById(mProjectId, new OnGetDataListener() {
-                @Override
-                public void onStart() {
 
-                }
-
-                @Override
-                public void onSuccess(DataSnapshot data) {
-                    mProject = data.getValue(Project.class);
-//                    Toast.makeText(getContext(),mProject.getmTitle(),Toast.LENGTH_LONG).show();
-                    System.out.println(mProject.getmTitle()+"=========================================>");
-                    getActivity().setTitle(mProject.getmTitle());
-                }
-
-                @Override
-                public void onFailed(DatabaseError databaseError) {
-
-                }
-            }, getContext());
 
         }
     }

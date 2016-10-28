@@ -67,6 +67,7 @@ public class SettingManager {
         editor = sharedPref.edit();
         editor.putBoolean(SOUND, status);
         editor.commit();
+
 //        CurrentUser.setUserProfileToServer(context,null);
     }
 

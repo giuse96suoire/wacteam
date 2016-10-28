@@ -14,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.activity.MainActivity;
 import com.dev.wacteam.taskmanager.manager.SettingManager;
 
 /**
@@ -66,7 +67,9 @@ public class SettingFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
     private Switch mSwitchSound, mSwitchNotification, mSwitchAutoAcceptFriend, mSwitchAutoAcceptProject, mSwicthAutoBackup;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -85,35 +88,36 @@ public class SettingFragment extends Fragment {
         mSwitchSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SettingManager.setIsSound(getContext(),isChecked);
+                SettingManager.setIsSound(getContext(), isChecked);
+                ((MainActivity) getActivity()).changeSoundIcon(isChecked);
             }
         });
 
         mSwitchNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SettingManager.setIsNotify(getContext(),isChecked);
+                SettingManager.setIsNotify(getContext(), isChecked);
             }
         });
 
         mSwitchAutoAcceptProject.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SettingManager.setIsAutoAcceptProject(getContext(),isChecked);
+                SettingManager.setIsAutoAcceptProject(getContext(), isChecked);
             }
         });
 
         mSwitchAutoAcceptFriend.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SettingManager.setIsAutoAcceptFriend(getContext(),isChecked);
+                SettingManager.setIsAutoAcceptFriend(getContext(), isChecked);
             }
         });
 
         mSwicthAutoBackup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SettingManager.setIsAutoBackup(getContext(),isChecked);
+                SettingManager.setIsAutoBackup(getContext(), isChecked);
             }
         });
     }
@@ -131,6 +135,7 @@ public class SettingFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -142,6 +147,7 @@ public class SettingFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener ");
         }
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

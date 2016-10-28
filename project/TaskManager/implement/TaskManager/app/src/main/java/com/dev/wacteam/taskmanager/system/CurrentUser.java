@@ -13,6 +13,7 @@ import com.dev.wacteam.taskmanager.model.Profile;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.model.Setting;
 import com.dev.wacteam.taskmanager.model.User;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +39,7 @@ public class CurrentUser extends User {
     private static final String GENDER = "gender";
     private static final String PROVIDER_ID = "provider_id";
     private static final String LIST_PROJECT_REFERENCE = "projects/list";
-    private static final String LIST_FRIEND_REFERENCE = "listFriend";
+    private static final String LIST_FRIEND_REFERENCE = "friends";
 
     //    public static boolean isLogined = false;
     private CurrentUser() {
@@ -85,12 +86,39 @@ public class CurrentUser extends User {
     }
 
     public static void addFriend(User u, Context context) {
-        DatabaseReference db = CurrentUser.getReference(context).child(LIST_FRIEND_REFERENCE);
+        int index = CurrentFriend.getFriendCount();
+        CurrentUser.getReference(context).child(LIST_FRIEND_REFERENCE).child(index + "").setValue(u.getProfile().getUid());
+
+    }
+
+    public static void deleteProjectById(String id, Context context) {
+        DatabaseReference db = FirebaseDatabase.getInstance()
+                .getReference(LIST_PROJECT_REFERENCE)
+                .child(id);
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                long id = dataSnapshot.getChildrenCount();
-                db.child(id + "").setValue(u.getProfile().getUid());
+                Project project = dataSnapshot.getValue(Project.class);
+                String uid = CurrentUser.getUserProfileFromLocal(context).getProfile().getUid();
+                if (project.getmLeaderId().equals(uid)) {
+                    db.setValue(null);///remove project
+                } else {
+                    db.child("mMembers").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                if (data.getValue(String.class).equals(uid)) {
+                                    data.getRef().setValue(null); //remove user
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
             }
 
             @Override
@@ -98,6 +126,7 @@ public class CurrentUser extends User {
 
             }
         });
+
     }
 
     public static void searchFriend(Context context, String emailOrName, OnGetDataListener listener) {
@@ -122,6 +151,67 @@ public class CurrentUser extends User {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 listener.onFailed(databaseError);
+            }
+        });
+    }
+
+    public static void getAllProject(OnChildEventListener listener, Context context) {
+        System.out.println("get all project =============>");
+        DatabaseReference db = FirebaseDatabase.getInstance()
+                .getReference(LIST_PROJECT_REFERENCE);
+
+        db.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                Project project = dataSnapshot.getValue(Project.class);
+                ArrayList<String> listMember = project.getmMembers();
+                for (String memId : listMember) {
+                    if (memId.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
+                        listener.onChildAdded(dataSnapshot, s);
+                    }
+                }
+//                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Project project = dataSnapshot.getValue(Project.class);
+                ArrayList<String> listMember = project.getmMembers();
+                if (listMember != null) {
+                    for (String memId : listMember) {
+                        if (memId.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
+                            listener.onChildChanged(dataSnapshot, s);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Project project = dataSnapshot.getValue(Project.class);
+                ArrayList<String> listMember = project.getmMembers();
+                for (String memId : listMember) {
+                    if (memId.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
+                        listener.onChildRemoved(dataSnapshot);
+                    }
+                }
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                Project project = dataSnapshot.getValue(Project.class);
+                ArrayList<String> listMember = project.getmMembers();
+                for (String memId : listMember) {
+                    if (memId.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
+                        listener.onChildMoved(dataSnapshot, s);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }

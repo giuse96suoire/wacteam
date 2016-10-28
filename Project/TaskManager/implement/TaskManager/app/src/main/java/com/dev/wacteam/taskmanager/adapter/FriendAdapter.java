@@ -165,7 +165,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             builder.setNegativeButton(R.string.add_friend, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+                    CurrentUser.addFriend(u,getmContext());
                 }
             });
 

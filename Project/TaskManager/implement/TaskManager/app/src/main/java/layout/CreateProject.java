@@ -173,8 +173,9 @@ public class CreateProject extends Fragment {
                 .setPositiveButton(R.string.add_member, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mMemberAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, mList_member);
-                        mLvProjectMember.setAdapter(mMemberAdapter);
+//                        mMemberAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, mList_member);
+//                        mLvProjectMember.setAdapter(mMemberAdapter);
+                        mMemberAdapter.notifyDataSetChanged();
 
                     }
                 })
@@ -196,7 +197,7 @@ public class CreateProject extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String value = lv_friend.getItemAtPosition(position).toString();
-                if (view.isSelected()) {
+                if (!lv_friend.isItemChecked(position)) {
                     Toast.makeText(getContext(), getString(R.string.Remove_member) + value, Toast.LENGTH_LONG).show();
                     mList_member.remove(value);
                 } else {

@@ -176,7 +176,7 @@
     <string name="add_more">+ Thêm nữa</string>
     <string name="add_to_project">Thêm vào dự án</string>
     <string name="already_login">Bạn đã đăng nhập</string>
-    <string name="ask_user_create">Tên dự án bạn muốn tạo.</string>
+    <string name="ask_user_create">Tạo nhanh</string>
     <string name="auto_accept_friend_setting">Tự động kết bạn</string>
     <string name="auto_accept_join_project_setting">Tự động chấp nhận tham gia dự án</string>
     <string name="auto_backup_data_to_local_setting">Tự động đồng bộ dữ liệu với server</string>
@@ -207,7 +207,7 @@
     <string name="hours_item_schedule">giờ làm việc</string>
     <string name="go_to_main"><![CDATA[Đi tới trang chủ ===================>]]></string>
     <string name="in_current_user">người dùng hiện tại</string>
-    <string name="login">Đăng nhập</string>
+    <string name="login">ĐĂNG NHẬP</string>
     <string name="low_connection">Mạng của bạn quá chậm, vui lòng đợi...</string>
     <string name="member_task">Thành viên:</string>
     <string name="no_dialog">Không</string>

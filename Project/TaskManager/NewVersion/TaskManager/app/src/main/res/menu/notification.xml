@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/action_walk"
+            android:title="Quân đã nhắc tới bạn trong một bình luận \n"
+            android:titleCondensed="@string/aboutUs"
+            />
+
+        <item
+            android:id="@+id/action_bus"
+            android:title="Trâm Anh đã xóa thẻ [...]" />
+
+        <item
+            android:id="@+id/action_car"
+            android:title="Cường đã nhận nhiệm vụ [...]" />
+
+    </group>
+
+</menu>

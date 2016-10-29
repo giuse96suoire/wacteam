@@ -2,36 +2,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cardview_light_background"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_fragment">
+        android:paddingLeft="@dimen/project_padding"
+        android:paddingRight="@dimen/project_padding">
 
+
+<<<<<<< HEAD
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
 
             android:orientation="horizontal">
+=======
+>>>>>>> dd7a3ff1cf78b0b7e87d943cb46fb2b04a66bb60
 
             <TextView
+                android:maxWidth="@dimen/max_width"
+                android:maxHeight="@dimen/max_height_medium"
+                android:paddingLeft="@dimen/project_padding"
+                android:layout_alignParentLeft="true"
                 android:id="@+id/tv_item_project_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="start"
+<<<<<<< HEAD
                 android:maxLines="1"
                 android:text="My Projecqưeqwewqqưewqt"
+=======
+                android:text="My Project fdgfdhfhgf fsdgdgfdgdsgsgsdgsdgsdgdfdh"
+>>>>>>> dd7a3ff1cf78b0b7e87d943cb46fb2b04a66bb60
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="@dimen/project_text_size_medium" />
-            <TextView
-                android:id="@+id/tv_item_project_create_date"
+
+
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                 android:gravity="start"
                 android:maxLines="1"
                 android:text="- Create 25/10/2016"
@@ -45,6 +59,26 @@
             android:layout_height="24dp"
             android:src="@drawable/ic_error_black_24dp" />
     </LinearLayout>
+=======
+                android:layout_alignParentRight="true"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/project_padding"
+                android:paddingTop="@dimen/project_padding">
+
+                <ImageView
+                    android:id="@+id/iv_item_project_status"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_error_black_24dp"
+                    android:layout_gravity="right"
+                    />
+
+
+
+            </LinearLayout>
+
+    </RelativeLayout>
+>>>>>>> dd7a3ff1cf78b0b7e87d943cb46fb2b04a66bb60
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,12 +88,13 @@
         android:padding="8dp">
 
 
+
         <TextView
             android:id="@+id/tv_item_project_deadline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:text="Deadline: 20/10/2016"
+            android:text="Deadline20/10/2016"
             android:textColor="@color/cardview_light_background"
             android:textSize="@dimen/project_text_size_small" />
 

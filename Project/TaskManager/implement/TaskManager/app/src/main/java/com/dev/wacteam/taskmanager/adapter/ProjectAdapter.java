@@ -21,7 +21,7 @@ import com.dev.wacteam.taskmanager.system.CurrentUser;
 
 import java.util.ArrayList;
 
-import layout.ProjectDetailFragment;
+import com.dev.wacteam.taskmanager.fragment.ProjectDetailFragment;
 
 /**
  * Created by huynh.mh on 10/25/2016.

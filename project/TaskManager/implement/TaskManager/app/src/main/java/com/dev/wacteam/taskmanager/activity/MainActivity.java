@@ -41,15 +41,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
-import layout.AboutUsFragment;
-import layout.CreateProject;
-import layout.FriendFragment;
-import layout.HomeFragment;
-import layout.ProfileFragment;
-import layout.ProjectDetailFragment;
-import layout.ProjectFragment;
-import layout.SettingFragment;
-import layout.TodayFragment;
+import com.dev.wacteam.taskmanager.fragment.AboutUsFragment;
+import com.dev.wacteam.taskmanager.fragment.CreateProject;
+import com.dev.wacteam.taskmanager.fragment.FriendFragment;
+import com.dev.wacteam.taskmanager.fragment.HomeFragment;
+import com.dev.wacteam.taskmanager.fragment.ProfileFragment;
+import com.dev.wacteam.taskmanager.fragment.ProjectDetailFragment;
+import com.dev.wacteam.taskmanager.fragment.ProjectFragment;
+import com.dev.wacteam.taskmanager.fragment.SettingFragment;
+import com.dev.wacteam.taskmanager.fragment.TodayFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ProfileFragment.OnFragmentInteractionListener,

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +16,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,18 +41,20 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
-import layout.AboutUsFragment;
-import layout.CreateProject;
-import layout.FriendFragment;
-import layout.HomeFragment;
-import layout.ProfileFragment;
-import layout.ProjectFragment;
-import layout.SettingFragment;
-import layout.TodayFragment;
+import com.dev.wacteam.taskmanager.fragment.AboutUsFragment;
+import com.dev.wacteam.taskmanager.fragment.CreateProject;
+import com.dev.wacteam.taskmanager.fragment.FriendFragment;
+import com.dev.wacteam.taskmanager.fragment.HomeFragment;
+import com.dev.wacteam.taskmanager.fragment.ProfileFragment;
+import com.dev.wacteam.taskmanager.fragment.ProjectDetailFragment;
+import com.dev.wacteam.taskmanager.fragment.ProjectFragment;
+import com.dev.wacteam.taskmanager.fragment.SettingFragment;
+import com.dev.wacteam.taskmanager.fragment.TodayFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ProfileFragment.OnFragmentInteractionListener,
         CreateProject.OnFragmentInteractionListener,
+        ProjectDetailFragment.OnFragmentInteractionListener,
         FriendFragment.OnFragmentInteractionListener, SettingFragment.OnFragmentInteractionListener,
         HomeFragment.OnFragmentInteractionListener, ProjectFragment.OnFragmentInteractionListener,
         TodayFragment.OnFragmentInteractionListener, AboutUsFragment.OnFragmentInteractionListener {
@@ -63,7 +66,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-//        NotificationsManager.mNotify(this); //notify example
     }
 
     @Override
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity
             }
         }, getApplicationContext());
     }
-
+    private    DrawerLayout mDrawer;
     private void init() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -139,13 +141,24 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+                this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navNotifyView = (NavigationView) findViewById(R.id.nav_notification);
+        navNotifyView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_home);
         View header = navigationView.getHeaderView(0);
@@ -226,6 +239,7 @@ public class MainActivity extends AppCompatActivity
         }
         if (id == R.id.action_notification) {
             changeNotificationIcon(false);
+            mDrawer.openDrawer(Gravity.RIGHT);
 
             return true;
         }

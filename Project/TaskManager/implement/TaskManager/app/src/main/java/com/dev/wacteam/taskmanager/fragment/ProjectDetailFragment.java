@@ -1,6 +1,7 @@
 package com.dev.wacteam.taskmanager.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,10 +12,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.adapter.TabFragmentAdapter;
+import com.dev.wacteam.taskmanager.listener.OnChildEventListener;
+import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.model.Project;
+import com.dev.wacteam.taskmanager.system.CurrentUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +41,7 @@ public class ProjectDetailFragment extends Fragment {
     private String mProjectId;
     private String mParam2;
     private Project mProject;
+    private int mProjectType;
     Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -69,8 +77,9 @@ public class ProjectDetailFragment extends Fragment {
         if (getArguments() != null) {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
-
-
+            mProjectId = getArguments().getString("projectId");
+            mProjectType = getArguments().getInt("projectType");
+            System.out.println(getArguments().getInt("projectType") + " ==========================================>");
         }
     }
 
@@ -88,18 +97,94 @@ public class ProjectDetailFragment extends Fragment {
         }
     }
 
+    private void getProjectDetail(String projectId) {
+        CurrentUser.getProjectById(projectId, new OnChildEventListener() {
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                mProject = dataSnapshot.getValue(Project.class);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                mProject = dataSnapshot.getValue(Project.class);
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                mProject = dataSnapshot.getValue(Project.class);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                mProject = dataSnapshot.getValue(Project.class);
+
+            }
+        }, getContext());
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         viewPager = (ViewPager) getView().findViewById(R.id.viewPager);
-        viewPager.setAdapter(new TabFragmentAdapter(getFragmentManager()));
+        TabFragmentAdapter tabAdapter = new TabFragmentAdapter(getFragmentManager());
         tabLayout = (TabLayout) getView().findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
-        String[] title = getResources().getStringArray(R.array.tab_title_array);
-        for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            tabLayout.getTabAt(i).setText(title[i]);
+//        int project_type = mProject.getmType();
+        String[] title;
+        if (mProjectType == EnumDefine.PROJECT_MANAGEMENT_TYPE) {
+            title = getResources().getStringArray(R.array.tab_project_management_title_array);
+            tabAdapter.setCount(4);
+        } else if (mProjectType == EnumDefine.TODO_TYPE) {
+            title = getResources().getStringArray(R.array.tab_todo_title_array);
+            tabAdapter.setCount(1);
+        } else {
+            title = getResources().getStringArray(R.array.tab_schedule_title_array);
+            tabAdapter.setCount(7);
+
         }
+//        tabAdapter.setCount(7);
+//        title = getResources().getStringArray(R.array.tab_schedule_title_array);
+        Bundle args = new Bundle();
+//        tabAdapter.setProjectId(mProjectId);
+        tabAdapter.setProjectId(mProjectId);
+        tabAdapter.setmProjectType(mProjectType);
+        viewPager.setAdapter(tabAdapter);
+//        tabAdapter.notifyDataSetChanged();
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+//                tabLayout.getChildAt(tab.getPosition()).findViewById(R.id.btn_addtask).setVisibility(View.INVISIBLE);
+                tabAdapter.getItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        if (title != null) {
+            for (int i = 0; i < tabLayout.getTabCount(); i++) {
+                tabLayout.getTabAt(i).setText(title[i]);
+            }
+        } else {
+            System.out.println("title is null! ================================>");
+        }
+
+//        viewPager.setAdapter(tabAdapter);
+
     }
+
 
     @Override
     public void onAttach(Context context) {

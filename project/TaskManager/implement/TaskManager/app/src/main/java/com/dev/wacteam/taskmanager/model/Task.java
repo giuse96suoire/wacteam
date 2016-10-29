@@ -12,8 +12,8 @@ public class Task {
     private String mTaskId;
     private String mTitle;
     private String mDescription;
-    private Date mDeadline;
-    private ArrayList<User> mExecutors;
+    private String mDeadline;
+    private ArrayList<String> mExecutors;
 
     public void setmTaskId(String mTaskId) {
         this.mTaskId = mTaskId;
@@ -27,11 +27,11 @@ public class Task {
         this.mDescription = mDescription;
     }
 
-    public void setmDeadline(Date mDeadline) {
+    public void setmDeadline(String mDeadline) {
         this.mDeadline = mDeadline;
     }
 
-    public void setmExecutors(ArrayList<User> mExecutors) {
+    public void setmExecutors(ArrayList<String> mExecutors) {
         this.mExecutors = mExecutors;
     }
 
@@ -48,11 +48,11 @@ public class Task {
         return mDescription;
     }
 
-    public Date getmDeadline() {
+    public String getmDeadline() {
         return mDeadline;
     }
 
-    public ArrayList<User> getmExecutors() {
+    public ArrayList<String> getmExecutors() {
         return mExecutors;
     }
 }

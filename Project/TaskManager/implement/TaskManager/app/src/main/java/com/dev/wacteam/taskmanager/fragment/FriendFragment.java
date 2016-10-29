@@ -108,7 +108,8 @@ public class FriendFragment extends Fragment {
             @Override
             public void onSuccess(DataSnapshot data) {
 //                mListFriend.clear();
-                if (data.getChildrenCount() == 0) {
+
+                if (data.getChildrenCount() == 0 || data == null) {
                     mProgressDialog.dismiss();
                 } else {
 //                    for (DataSnapshot value : data.getChildren()) {

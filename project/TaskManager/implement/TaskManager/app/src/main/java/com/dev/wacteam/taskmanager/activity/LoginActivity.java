@@ -520,6 +520,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void mDisplayNoConnectionAlert() { //display dialog alert that user not connect to network
+        mDismissProgessDialog();
         if (mAlertDialog != null && mAlertDialog.isShowing()) {
             mAlertDialog.dismiss();
         }

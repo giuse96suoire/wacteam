@@ -154,6 +154,8 @@
     <string name="project_name_create_label">Project name</string>
     <string name="reset_input">Reset input</string>
     <string name="update_profile">Update profile</string>
+    <string name="subject_name_label">New subject</string>
+    <string name="task_name_label">Task name</string>
     <string-array name="job_array">
         <item>Student</item>
         <item>Teacher</item>
@@ -168,10 +170,26 @@
         <item>Todo list</item>
         <item>Schedule</item>
     </string-array>
-    <string-array name="tab_title_array">
+    <string-array name="tab_project_management_title_array">
         <item>ToDo</item>
         <item>Processing</item>
         <item>Finish</item>
         <item>Failed</item>
+    </string-array>
+    <string-array name="tab_todo_title_array">
+        <item>ToDo</item>
+        <item>Processing</item>
+        <item>Finish</item>
+        <item>Failed</item>
+    </string-array>
+
+    <string-array name="tab_schedule_title_array">
+        <item>Thứ 2</item>
+        <item>Thứ 3</item>
+        <item>Thứ 4</item>
+        <item>Thứ 5</item>
+        <item>Thứ 6</item>
+        <item>Thứ 7</item>
+        <item>Chủ nhật</item>
     </string-array>
 </resources>

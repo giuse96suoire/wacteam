@@ -14,12 +14,12 @@
         android:icon="@drawable/ic_volume_up_white_24dp"
         android:title="Sound"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/action_message"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_email_white_24dp"
-        android:title="Message"
-        app:showAsAction="always" />
+    <!--<item-->
+        <!--android:id="@+id/action_message"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:icon="@drawable/ic_email_white_24dp"-->
+        <!--android:title="Message"-->
+        <!--app:showAsAction="always" />-->
     <item
         android:id="@+id/action_notification"
         android:orderInCategory="100"

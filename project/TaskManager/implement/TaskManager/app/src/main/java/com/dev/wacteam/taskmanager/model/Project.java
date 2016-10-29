@@ -13,6 +13,15 @@ public class Project {
     private ArrayList<Task> mTasks;
     private String mDeadline;
     private String mCreateDate;
+    private int mType;
+
+    public void setmType(int mType) {
+        this.mType = mType;
+    }
+
+    public int getmType() {
+        return mType;
+    }
 
     public void setmProjectId(String mProjectId) {
         this.mProjectId = mProjectId;

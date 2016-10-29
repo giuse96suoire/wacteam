@@ -24,7 +24,7 @@
         <TextView
             android:padding="8dp"
             tools:text="Text will be adapter here"
-            android:id="@+id/tvTitle"
+            android:id="@+id/tv_task_name_detail"
             android:textSize="16sp"
             android:textColor="@android:color/background_dark"
             android:layout_width="280dp"
@@ -33,7 +33,7 @@
         <Button
             android:layout_width="48dp"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_movetask"
+            android:id="@+id/btn_move_task"
             android:background="@drawable/ic_move"/>
 
     </LinearLayout>

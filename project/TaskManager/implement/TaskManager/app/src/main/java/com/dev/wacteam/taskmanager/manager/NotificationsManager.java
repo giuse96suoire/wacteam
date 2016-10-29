@@ -115,7 +115,7 @@ public class NotificationsManager {
             message += " Task title:" + newTask.getmTitle() + " deadline " + oldTask.getmDeadline() + " % -> " + newTask.getmDeadline() + " % \n";
         if (newTask.getmDescription() != oldTask.getmDescription())
             message += " Task title:" + newTask.getmTitle() + " description " + oldTask.getmDescription() + " % -> " + newTask.getmDescription() + " % \n";
-        message += notifyTaskChangeMember(oldTask.getmExecutors(), newTask.getmExecutors());
+//        message += notifyTaskChangeMember(oldTask.getmExecutors(), newTask.getmExecutors());
         return message;
     }
 

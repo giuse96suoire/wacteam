@@ -29,18 +29,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
-import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
-import com.dev.wacteam.taskmanager.manager.SettingManager;
-import com.dev.wacteam.taskmanager.model.Project;
-import com.dev.wacteam.taskmanager.model.User;
-import com.dev.wacteam.taskmanager.system.CurrentFriend;
-import com.dev.wacteam.taskmanager.system.CurrentProject;
-import com.dev.wacteam.taskmanager.system.CurrentUser;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-
 import com.dev.wacteam.taskmanager.fragment.AboutUsFragment;
 import com.dev.wacteam.taskmanager.fragment.CreateProject;
 import com.dev.wacteam.taskmanager.fragment.FriendFragment;
@@ -50,6 +38,20 @@ import com.dev.wacteam.taskmanager.fragment.ProjectDetailFragment;
 import com.dev.wacteam.taskmanager.fragment.ProjectFragment;
 import com.dev.wacteam.taskmanager.fragment.SettingFragment;
 import com.dev.wacteam.taskmanager.fragment.TodayFragment;
+import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
+import com.dev.wacteam.taskmanager.manager.SettingManager;
+import com.dev.wacteam.taskmanager.model.Project;
+import com.dev.wacteam.taskmanager.model.Task;
+import com.dev.wacteam.taskmanager.model.User;
+import com.dev.wacteam.taskmanager.system.CurrentFriend;
+import com.dev.wacteam.taskmanager.system.CurrentProject;
+import com.dev.wacteam.taskmanager.system.CurrentUser;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ProfileFragment.OnFragmentInteractionListener,
@@ -86,6 +88,24 @@ public class MainActivity extends AppCompatActivity
         }
         init();
 
+        Project p = new Project();
+        p.setmTitle("Huynh test");
+        ArrayList<Task> listTask = new ArrayList<>();
+        Task t = new Task();
+        t.setmTitle("Task 1");
+        t.setmDeadline("22/10/2015");
+        t.setmDescription("this is task 1");
+        listTask.add(t);
+        t.setmTitle("Task 2");
+        listTask.add(t);
+        t.setmTitle("Task 3");
+        listTask.add(t);
+        t.setmTitle("Task 4");
+        listTask.add(t);
+        t.setmTitle("Task 5");
+        listTask.add(t);
+        p.setmTasks(listTask);
+        CurrentUser.createProject(p, getApplicationContext());
 
     }
 
@@ -126,7 +146,9 @@ public class MainActivity extends AppCompatActivity
             }
         }, getApplicationContext());
     }
-    private    DrawerLayout mDrawer;
+
+    private DrawerLayout mDrawer;
+
     private void init() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -141,7 +163,7 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        });
 
-         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.setDrawerListener(toggle);
@@ -188,16 +210,14 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         mMiNotification = menu.findItem(R.id.action_notification);
-        mMiMessage = menu.findItem(R.id.action_message);
+//        mMiMessage = menu.findItem(R.id.action_message);
         mMiSound = menu.findItem(R.id.action_sound);
         if (SettingManager.isHasNotification(getApplicationContext())) {
             changeNotificationIcon(true);
         }
-        ;
         if (!SettingManager.isSound(getApplicationContext())) {
             changeSoundIcon(false);
         }
-        ;
         return true;
     }
 

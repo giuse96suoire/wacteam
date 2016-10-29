@@ -359,7 +359,50 @@ public class CurrentUser extends User {
     private static final String PROJECTS_REFERENCE = "projects";
 
     public static void getProjectById(String id, OnChildEventListener listener, Context context) {
+        System.out.println("GET PROJECT " + id);
+        FirebaseDatabase.getInstance()
+                .getReference(LIST_PROJECT_REFERENCE)
+                .child(id)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        listener.onChildChanged(dataSnapshot,"");
+                    }
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+//                .addChildEventListener(new ChildEventListener() {
+//                    @Override
+//                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                        System.out.println(dataSnapshot.getRef().toString());
+//                        listener.onChildAdded(dataSnapshot, s);
+//                    }
+//
+//                    @Override
+//                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//                        listener.onChildChanged(dataSnapshot, s);
+//
+//                    }
+//
+//                    @Override
+//                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+//                        listener.onChildRemoved(dataSnapshot);
+//                    }
+//
+//                    @Override
+//                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//                        listener.onChildMoved(dataSnapshot, s);
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
     }
 
     private static final String PROJECT_LOCAL = "project";

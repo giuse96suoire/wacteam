@@ -16,12 +16,11 @@ import android.widget.TextView;
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.activity.MainActivity;
 import com.dev.wacteam.taskmanager.dialog.YesNoDialog;
+import com.dev.wacteam.taskmanager.fragment.ProjectDetailFragment;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 
 import java.util.ArrayList;
-
-import com.dev.wacteam.taskmanager.fragment.ProjectDetailFragment;
 
 
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHolder> {
@@ -74,6 +73,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        System.out.println("bind data p viewholder =>>>>>>>>>>>>>>>>...");
 
         Project p = mProjectList.get(position);
         TextView name = holder.tv_projectName;
@@ -125,7 +125,11 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
                     public void onClick(DialogInterface dialog, int which) {
                         Bundle args = new Bundle();
                         args.putString("projectId", p.getmProjectId());
-                        ((MainActivity) mActivity).callFragment(new ProjectDetailFragment());
+                        args.putInt("projectType", p.getmType());
+//                        args.putInt("projectType", 2);
+                        ProjectDetailFragment f = new ProjectDetailFragment();
+                        f.setArguments(args);
+                        ((MainActivity) mActivity).callFragment(f);
                     }
                 })
                 .setPositiveButton("Delete project", new DialogInterface.OnClickListener() {

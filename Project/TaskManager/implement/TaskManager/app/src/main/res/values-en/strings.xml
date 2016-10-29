@@ -142,7 +142,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="aboutUs">
-        "Task Manager\n"
+        "Schedule\n"
         "Version: 1.0\n"
         "Create and develop: Wacteam\n"
         "Contact us: wacteam.com and fb.com/wacteamvn\n"
@@ -228,7 +228,7 @@
     <string name="sign_up_success">Sign up success!</string>
     <string name="sound_setting">Sound</string>
     <string name="task_create_label">Task</string>
-    <string name="task_manager">TASK MANAGER</string>
+    <string name="task_manager">SCHEDULE</string>
     <string name="task_member_task">Member name:</string>
     <string name="task_name_task">Task name:</string>
     <string name="to_do_item_schedule">to do</string>

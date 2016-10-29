@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <LinearLayout
@@ -15,9 +16,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#00000000"
+            tools:text="Name"
             android:padding="@dimen/padding_fragment"
             android:textColor="@color/cardview_light_background"
-            android:textSize="@dimen/project_name_large" />
+            android:textSize="@dimen/project_text_size_medium" />
 
 
         <LinearLayout
@@ -39,7 +41,7 @@
                 android:paddingLeft="4dp"
                 android:text="tramanh@abc.com"
                 android:textColor="@color/cardview_light_background"
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="@dimen/project_text_size_small" />
         </LinearLayout>
 
 
@@ -72,9 +74,10 @@
                 android:background="#00000000"
                 android:focusable="false"
                 android:inputType="date"
+
                 android:text="29/06/1996"
 
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="@dimen/project_text_size_small" />
 
 
         </LinearLayout>
@@ -97,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:background="#00000000"
                 android:hint="Your address"
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="@dimen/project_text_size_small" />
         </LinearLayout>
 
         <LinearLayout
@@ -118,7 +121,7 @@
                 android:background="#00000000"
                 android:inputType="phone"
                 android:text="0988247131"
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="@dimen/project_text_size_small" />
         </LinearLayout>
 
 
@@ -129,23 +132,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_gravity="right"
         android:padding="@dimen/padding_fragment">
 
-        <Button
-            android:id="@+id/btn_resetInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.50"
-            android:layout_marginRight="@dimen/padding_fragment"
-            android:background="@drawable/border_button_profile"
-            android:text="@string/reset_input"
-            android:textColor="@color/colorPrimary"/>
+        <!--<Button-->
+            <!--android:id="@+id/btn_resetInfo"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="0.50"-->
+            <!--android:layout_marginRight="@dimen/padding_fragment"-->
+            <!--android:background="@drawable/border_button_profile"-->
+            <!--android:text="@string/reset_input"-->
+            <!--android:textColor="@color/colorPrimary"/>-->
 
         <Button
             android:id="@+id/btn_saveInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.50"
+            android:gravity="center"
+            android:layout_gravity="right"
             android:background="@drawable/border_button_profile"
             android:text="@string/update_profile"
             android:textColor="@color/colorPrimary" />

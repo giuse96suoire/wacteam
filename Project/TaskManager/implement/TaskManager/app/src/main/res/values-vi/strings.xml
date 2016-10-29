@@ -145,8 +145,8 @@
         "Quản lý công việc\n"
         "Phiên bản: 1.0\n"
         "Thiết kế và thực hiện: Wacteam\n"
-        "Liên hệ chúng tôi: wacteam.com và fb.com/wacteamvn\n"
-        "Hi vọng bạn sẽ thích nó"
+        "Liên hệ chúng tôi: wacteam.com \n fb.com/wacteamvn\n"
+        "Hi vọng bạn sẽ thích ứng dụng này"
     </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -183,7 +183,7 @@
     <string name="cancel_add_member">Hủy bỏ</string>
     <string name="cancel_create_project">Hủy bỏ</string>
     <string name="chat_to_friend">Nói chuyện</string>
-    <string name="check_internect_connection">Vui lòng kiểm tra lại kết nối internet</string>
+    <string name="check_internect_connection">Vui lòng kiểm tra lại thông tin đăng nhập</string>
     <string name="check_user_in_server">Kiểm tra người dùng ở server</string>
     <string name="choose_member">Chọn thành viên</string>
     <string name="confirm_dialog">Xác nhận</string>
@@ -210,7 +210,7 @@
     <string name="low_connection">Mạng của bạn quá chậm, vui lòng đợi...</string>
     <string name="member_task">Thành viên:</string>
     <string name="no_dialog">Không</string>
-    <string name="no_network_connection">Không có kết nối internet</string>
+    <string name="no_network_connection">Lỗi</string>
     <string name="nothing_to_display">Không có gì để hiện thị</string>
     <string name="notification_setting">Thông báo</string>
     <string name="oke_dialog">Chấp nhận</string>

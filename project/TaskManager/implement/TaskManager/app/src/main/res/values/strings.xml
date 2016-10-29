@@ -55,7 +55,7 @@
     <string name="title_system_activity_main_drawer">System</string>
     <string name="title_aboutUs_fragment">About us</string>
     <string name="aboutUs">
-        "Task Manager\n"
+        "Schedule\n"
         "Version: 1.0\n"
         "Create and develop: Wac team\n"
         "Contact us: wacteam.com and fb.com/wacteamvn\n"
@@ -126,7 +126,7 @@
     <string name="dialog_get_friend">Get your friends...</string>
     <string name="dialog_update_information">Update your information?</string>
     <string name="nothing_to_display">No thing to display</string>
-    <string name="task_manager">TASK MANAGER</string>
+    <string name="task_manager">SCHEDULE</string>
     <string name="save_your_time_save_your_life">Save your time, save your life</string>
     <string name="everything_is_simple">EVERYTHING IS SIMPLE</string>
     <string name="login">LOGIN</string>

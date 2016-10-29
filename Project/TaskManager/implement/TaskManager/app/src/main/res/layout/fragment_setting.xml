@@ -16,7 +16,7 @@
 
                 <TextView
                     android:layout_weight="1"
-                    android:textSize="@dimen/project_text_size_medium"
+                    android:textSize="@dimen/project_text_size_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sound_setting"
@@ -37,7 +37,7 @@
 
                 <TextView
                     android:layout_weight="1"
-                    android:textSize="@dimen/project_text_size_medium"
+                    android:textSize="@dimen/project_text_size_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/notification_setting"
@@ -59,7 +59,7 @@
                 <TextView
                     android:layout_weight="1"
                     android:padding="@dimen/project_padding"
-                    android:textSize="@dimen/project_text_size_medium"
+                    android:textSize="@dimen/project_text_size_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/auto_accept_join_project_setting"
@@ -79,7 +79,7 @@
                 <TextView
                     android:layout_weight="1"
                     android:padding="@dimen/project_padding"
-                    android:textSize="@dimen/project_text_size_medium"
+                    android:textSize="@dimen/project_text_size_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/auto_accept_friend_setting"
@@ -99,7 +99,7 @@
                 <TextView
                     android:layout_weight="1"
                     android:padding="@dimen/project_padding"
-                    android:textSize="@dimen/project_text_size_medium"
+                    android:textSize="@dimen/project_text_size_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/auto_backup_data_to_local_setting"/>

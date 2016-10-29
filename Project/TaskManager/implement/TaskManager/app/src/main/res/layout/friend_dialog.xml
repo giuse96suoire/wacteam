@@ -27,8 +27,8 @@
             android:paddingLeft="@dimen/padding_fragment">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/icon_small_width"
+                android:layout_height="@dimen/icon_small_height"
                 android:src="@android:drawable/ic_dialog_email" />
 
             <TextView
@@ -58,8 +58,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/icon_small_width"
+                android:layout_height="@dimen/icon_small_height"
                 android:src="@drawable/ic_date_range_black_24dp" />
 
             <TextView
@@ -75,8 +75,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/icon_small_width"
+                android:layout_height="@dimen/icon_small_height"
                 android:src="@drawable/ic_location_on_black_24dp" />
             <TextView
                 android:layout_width="wrap_content"

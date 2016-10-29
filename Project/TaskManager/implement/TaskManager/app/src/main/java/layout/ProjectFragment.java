@@ -14,8 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.activity.MainActivity;
 import com.dev.wacteam.taskmanager.adapter.ProjectAdapter;
-import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
+import com.dev.wacteam.taskmanager.listener.OnChildEventListener;
+import com.dev.wacteam.taskmanager.manager.NotificationsManager;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.database.DataSnapshot;
@@ -108,59 +110,101 @@ public class ProjectFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mListProject = new ArrayList<>();
-//        Project project = new Project();
-//        project.setmComplete(69.9);
-//        project.setmDeadline("12/11/2016");
-//        project.setmCreateDate("12/10/2016");
-//        project.setmTitle("Task Manager");
-//        listProject.add(project);
-//        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
-//        listProject.add(project);
-//        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
-//        listProject.add(project);
-//        project.setmTitle("Prepare for microsoft - Wacteam");
-//        listProject.add(project);
-//        project.setmTitle("Prepare for FPT FU SANG TAO 2016 - Wacteam");
-//        listProject.add(project);
-//        project.setmTitle("Prepare 2016 - Wacteam");
-//        listProject.add(project);
-//        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
-//        listProject.add(project);
-//        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
-//        listProject.add(project);
-//        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
-//        listProject.add(project);
-//        project.setmTitle("Prepare for hackathon 2016 - Wacteam");
-//        listProject.add(project);
 
         mAdapter = new ProjectAdapter(getContext(), getActivity(), mListProject);
+//        mListProject = CurrentProject.getListProject(new CurrentProject.onDataChangeListener() {
+//            @Override
+//            public void onDateChange(ArrayList<Project> list) {
+//                mListProject = list;
+//                mAdapter.notifyDataSetChanged();
+//            }
+//        });
+
         mLvListProject = (RecyclerView) getView().findViewById(R.id.rv_project);
+
         mLvListProject.setHasFixedSize(true);
         mLvListProject.setLayoutManager(new LinearLayoutManager(getActivity()));
         mLvListProject.setAdapter(mAdapter);
 
+        mGetAllProject();
 
     }
 
     private void mGetAllProject() {
-        CurrentUser.getAllProject(new OnGetDataListener() {
+        CurrentUser.getAllProject(new OnChildEventListener() {
             @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onSuccess(DataSnapshot data) {
-                System.out.println("GET PROJECT IN PF");
-                Project p = data.getValue(Project.class);
-                mListProject.add(p);
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Project p = dataSnapshot.getValue(Project.class);
+                boolean notFound = true;
+//                mListProject.clear();
+                if (mListProject.size() > 0) {
+                    for (int i = 0; i < mListProject.size(); i++) {
+                        if (mListProject.get(i).getmProjectId().equals(p.getmProjectId())) {
+                            NotificationsManager.notifyProjectChange(mListProject.get(i), p, getContext());
+//                            ((MainActivity) getActivity()).changeNotificationIcon(true);
+                            mListProject.remove(i);
+                            mListProject.add(i, p);
+                            notFound = false;
+                            break;
+                        }
+                    }
+                }
+                if (notFound) {
+                    mListProject.add(p);
+                }
                 mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Project p = dataSnapshot.getValue(Project.class);
+//                mListProject.clear();
+                if (mListProject.size() > 0) {
+                    for (int i = 0; i < mListProject.size(); i++) {
+                        if (mListProject.get(i).getmProjectId().equals(p.getmProjectId())) {
+                            NotificationsManager.notifyProjectChange(mListProject.get(i), p, getContext());
+                            if (getActivity() != null) {
+                                ((MainActivity) getActivity()).changeNotificationIcon(true);
+                            }
+                            mListProject.remove(i);
+                            break;
+                        }
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
             }
 
             @Override
-            public void onFailed(DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
 
+            }
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Project p = dataSnapshot.getValue(Project.class);
+                boolean notFound = true;
+//                mListProject.clear();
+                if (mListProject.size() > 0) {
+                    for (int i = 0; i < mListProject.size(); i++) {
+                        if (mListProject.get(i).getmProjectId().equals(p.getmProjectId())) {
+                            NotificationsManager.notifyProjectChange(mListProject.get(i), p, getContext());
+                            ((MainActivity) getActivity()).changeNotificationIcon(true);
+                            mListProject.remove(i);
+                            mListProject.add(i, p);
+                            notFound = false;
+                            break;
+                        }
+                    }
+                }
+                if (notFound) {
+                    mListProject.add(p);
+                }
+                mAdapter.notifyDataSetChanged();
             }
         }, getContext());
     }

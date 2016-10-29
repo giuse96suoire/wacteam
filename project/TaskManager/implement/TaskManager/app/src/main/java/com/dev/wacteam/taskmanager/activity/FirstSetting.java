@@ -66,13 +66,7 @@ public class FirstSetting extends AppCompatActivity {
     }
 
     private void mSaveInfo() {
-//        User user = new User();
-//        user.setDisplayName(etDisplayName.getText().toString());
-//        user.setAddress(etAdress.getText().toString());
-//        user.setPhoneNumber(etPhoneNumber.getText().toString());
-//        user.setEmail(etEmail.getText().toString());
-//        new RemoteUser().mCreate(user);
-//        CurrentUser.getInstance().setInfo(user);
+
 
         Intent intent = new Intent(FirstSetting.this, MainActivity.class);
         startActivity(intent);

@@ -21,6 +21,7 @@ import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.adapter.FriendAdapter;
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.model.User;
+import com.dev.wacteam.taskmanager.system.CurrentFriend;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -93,6 +94,8 @@ public class FriendFragment extends Fragment {
     ProgressDialog mProgressDialog;
 
     private void mGetAllFriend() {
+//        mListFriend = CurrentFriend.getmListFriend();
+//        mFriendAdapter.notifyDataSetChanged();
         CurrentUser.getAllFriend(new OnGetDataListener() {
             @Override
             public void onStart() {
@@ -105,14 +108,14 @@ public class FriendFragment extends Fragment {
 
             @Override
             public void onSuccess(DataSnapshot data) {
-                mListFriend.clear();
+//                mListFriend.clear();
                 if (data.getChildrenCount() == 0) {
                     mProgressDialog.dismiss();
                 } else {
-                    for (DataSnapshot value : data.getChildren()) {
-                        User user = value.getValue(User.class);
-                        mListFriend.add(user);
-                    }
+//                    for (DataSnapshot value : data.getChildren()) {
+                    User user = data.getValue(User.class);
+                    mListFriend.add(user);
+//                    }
                     mFriendAdapter.notifyDataSetChanged();
                     mProgressDialog.dismiss();
                 }
@@ -127,7 +130,7 @@ public class FriendFragment extends Fragment {
 
 
     private void mSearchFriend(String emailOrName) {
-        CurrentUser.searchFriend(getContext(),emailOrName, new OnGetDataListener() {
+        CurrentUser.searchFriend(getContext(), emailOrName, new OnGetDataListener() {
             @Override
             public void onStart() {
 
@@ -138,7 +141,7 @@ public class FriendFragment extends Fragment {
                 boolean isExist = false;
                 User user = data.getValue(User.class);
                 for (int i = 0; i < mListFriend.size(); i++) {
-                    if (!(mListFriend.get(i).getEmail().contains(emailOrName)) && !(mListFriend.get(i).getDisplayName().contains(emailOrName))) {
+                    if (!(mListFriend.get(i).getProfile().getEmail().contains(emailOrName)) && !(mListFriend.get(i).getProfile().getDisplayName().contains(emailOrName))) {
                         mListFriend.remove(i);
 //                        mFriendAdapter.notifyDataSetChanged();
                     }
@@ -146,7 +149,7 @@ public class FriendFragment extends Fragment {
 
                 }
                 for (int i = 0; i < mListFriend.size(); i++) {
-                    if ((mListFriend.get(i).getEmail().equals(user.getEmail()))) {
+                    if ((mListFriend.get(i).getProfile().getEmail().equals(user.getProfile().getEmail()))) {
                         isExist = true;
                     }
                 }

@@ -168,4 +168,10 @@
         <item>Todo list</item>
         <item>Schedule</item>
     </string-array>
+    <string-array name="tab_title_array">
+        <item>ToDo</item>
+        <item>Processing</item>
+        <item>Finish</item>
+        <item>Failed</item>
+    </string-array>
 </resources>

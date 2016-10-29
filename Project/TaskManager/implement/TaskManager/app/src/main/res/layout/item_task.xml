@@ -15,6 +15,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <Button
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_color"
+            android:background="@drawable/ic_color_project"/>
+
         <TextView
             android:padding="8dp"
             tools:text="Text will be adapter here"
@@ -23,12 +29,6 @@
             android:textColor="@android:color/background_dark"
             android:layout_width="280dp"
             android:layout_height="wrap_content" />
-
-        <Button
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_color"
-            android:background="@drawable/ic_color_project"/>
 
         <Button
             android:layout_width="48dp"

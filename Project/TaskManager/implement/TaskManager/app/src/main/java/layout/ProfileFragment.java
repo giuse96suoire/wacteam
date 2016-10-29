@@ -58,12 +58,12 @@ public class ProfileFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         init();
         User user = new User();
-        user = CurrentUser.getUserInfo(getContext());
-        mEtEmail.setText(user.getEmail());
-        mEtAddress.setText(user.getAddress());
-        mEtFullName.setText(user.getDisplayName());
-        mEtPhoneNumber.setText(user.getPhoneNumber());
-        mEtDob.setText(user.getDob());
+        user = CurrentUser.getUserProfileFromLocal(getContext());
+        mEtEmail.setText(user.getProfile().getEmail());
+        mEtAddress.setText(user.getProfile().getAddress());
+        mEtFullName.setText(user.getProfile().getDisplayName());
+        mEtPhoneNumber.setText(user.getProfile().getPhoneNumber());
+        mEtDob.setText(user.getProfile().getDob());
         String[] job_arr = getResources().getStringArray(R.array.job_array);
 //        mAcJob.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, job_arr));
 
@@ -87,12 +87,12 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onYes(DialogInterface dialog, int which) {
                         User user = new User();
-                        user.setEmail(mEtEmail.getText().toString());
-                        user.setUid(CurrentUser.getUserInfo(getContext()).getUid());
-                        user.setDisplayName(mEtFullName.getText().toString());
-                        user.setAddress(mEtAddress.getText().toString());
-                        user.setPhoneNumber(mEtPhoneNumber.getText().toString());
-                        user.setDob(mEtDob.getText().toString());
+                        user.getProfile().setEmail(mEtEmail.getText().toString());
+                        user.getProfile().setUid(CurrentUser.getUserProfileFromLocal(getContext()).getProfile().getUid());
+                        user.getProfile().setDisplayName(mEtFullName.getText().toString());
+                        user.getProfile().setAddress(mEtAddress.getText().toString());
+                        user.getProfile().setPhoneNumber(mEtPhoneNumber.getText().toString());
+                        user.getProfile().setDob(mEtDob.getText().toString());
                         mUpdateInfo(user);
                         ((MainActivity) getActivity()).mUpdateUserUI(user);
                     }
@@ -204,7 +204,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void mUpdateInfo(User u) {
-        CurrentUser.setInfo(u, getContext());
-        CurrentUser.setUserInfoToServer(getContext());
+        CurrentUser.setUserProfileAndSettingToLocal(u, getContext());
+        CurrentUser.setUserProfileToServer(getContext(),u);
     }
 }

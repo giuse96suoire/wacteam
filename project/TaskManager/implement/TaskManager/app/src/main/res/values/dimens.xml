@@ -36,4 +36,8 @@
 
     <dimen name="project_name_large">40dp</dimen>
     <dimen name="padding_fragment">16dp</dimen>
+
+    <dimen name="projcet_text_size_small">16dp</dimen>
+
+
 </resources>

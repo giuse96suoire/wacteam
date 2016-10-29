@@ -3,6 +3,9 @@ package com.dev.wacteam.taskmanager.adapter;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.activity.MainActivity;
+import com.dev.wacteam.taskmanager.dialog.YesNoDialog;
 import com.dev.wacteam.taskmanager.model.Project;
+import com.dev.wacteam.taskmanager.system.CurrentUser;
 
 import java.util.ArrayList;
+
+import layout.ProjectDetailFragment;
 
 /**
  * Created by huynh.mh on 10/25/2016.
@@ -78,10 +86,75 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
 
         deadline.setText("Deadline: " + p.getmDeadline());
         create.setText(" - Create: " + p.getmCreateDate());
-        name.setText("#"+(position + 1) + ". " + p.getmTitle());
+        name.setText("#" + (position + 1) + ". " + p.getmTitle());
         complete.setText(p.getmComplete() + " %");
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mShowProjectInfo(p);
+            }
+        });
         //TODO: set status icon to red if project has changed
 
+
+    }
+
+    private void mShowProjectInfo(Project p) {
+        LayoutInflater inflater = mActivity.getLayoutInflater();
+        final View view = inflater.inflate(R.layout.project_dialog, null);
+
+        TextView tv_complete, tv_leader, tv_memeber, tv_total_task, tv_task_complete, tv_task_failed;
+
+        tv_complete = (TextView) view.findViewById(R.id.tv_project_dialog_complete);
+        tv_leader = (TextView) view.findViewById(R.id.tv_project_dialog_leader);
+        tv_memeber = (TextView) view.findViewById(R.id.tv_project_dialog_member);
+        tv_total_task = (TextView) view.findViewById(R.id.tv_project_dialog_total_task);
+        tv_task_complete = (TextView) view.findViewById(R.id.tv_project_dialog_total_task_complete);
+        tv_task_failed = (TextView) view.findViewById(R.id.tv_project_dialog_total_task_failed);
+
+        tv_complete.setText(p.getmComplete() + " %");
+        tv_leader.setText(p.getmLeaderId() == null ? "No name" : p.getmLeaderId());
+        tv_memeber.setText((p.getmMembers() == null) ? "0" : p.getmMembers().size() + "");
+        tv_total_task.setText((p.getmTasks() == null) ? "0" : p.getmTasks().size() + "");
+        tv_task_complete.setText("0");
+        tv_task_failed.setText("0");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setView(view);
+        builder
+                .setNegativeButton("View detail", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Bundle args = new Bundle();
+                        args.putString("projectId", p.getmProjectId());
+                        ((MainActivity) mActivity).callFragment(new ProjectDetailFragment());
+                    }
+                })
+                .setPositiveButton("Delete project", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        YesNoDialog.mShow(mContext, "Are you sure delete it? ", new YesNoDialog.OnClickListener() {
+                            @Override
+                            public void onYes(DialogInterface dialog, int which) {
+                                CurrentUser.deleteProjectById(p.getmProjectId(), getmContext());
+                            }
+
+                            @Override
+                            public void onNo(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                    }
+                })
+                .setNeutralButton("Share", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
     }
 

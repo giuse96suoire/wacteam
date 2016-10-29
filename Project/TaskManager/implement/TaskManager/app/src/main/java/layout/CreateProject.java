@@ -24,10 +24,11 @@ import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.dialog.DialogDateTimePicker;
 import com.dev.wacteam.taskmanager.dialog.YesNoDialog;
 import com.dev.wacteam.taskmanager.model.Project;
+import com.dev.wacteam.taskmanager.model.User;
+import com.dev.wacteam.taskmanager.system.CurrentFriend;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,6 +59,7 @@ public class CreateProject extends Fragment {
     private Button mBtnSaveProject, mBtnResetProject;
     private ArrayList<String> mList_member;
     private ArrayAdapter mMemberAdapter;
+    private ArrayList<String> mListFriendName;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -70,8 +72,16 @@ public class CreateProject extends Fragment {
         mSpProjectType = (Spinner) getView().findViewById(R.id.sp_project_type);
         String[] projecTypeData = getResources().getStringArray(R.array.project_type_array);
         mSpProjectType.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, projecTypeData));
-        String[] projecLeaderData = new String[]{"Hoang Huynh", "The Quan", "Manh Cuong", "Tram Anh", "Thuy Ngoc"};
-        mSpProjectLeader.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, projecLeaderData));
+
+        ArrayList<User> listFriend;
+        mListFriendName = new ArrayList<>();
+        listFriend = CurrentFriend.getmListFriend();
+        for (User u : listFriend) {
+            mListFriendName.add(u.getProfile().getDisplayName());
+        }
+
+
+        mSpProjectLeader.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, mListFriendName));
         mBtnSaveProject = (Button) getView().findViewById(R.id.btn_save);
         mBtnResetProject = (Button) getView().findViewById(R.id.btn_reset);
         mTvMember = (TextView) getView().findViewById(R.id.tv_member);
@@ -128,7 +138,7 @@ public class CreateProject extends Fragment {
         mList_member = new ArrayList<>();
         mList_member.add(getString(R.string.add_more));
         mTvMember.setText(getResources().getString(R.string.member_label) + " (" + (mList_member.size() - 1) + ")");
-        mMemberAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, mList_member);
+        mMemberAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, mListFriendName);
         mLvProjectMember.setAdapter(mMemberAdapter);
         mLvProjectMember.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -163,8 +173,9 @@ public class CreateProject extends Fragment {
                 .setPositiveButton(R.string.add_member, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mMemberAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, mList_member);
-                        mLvProjectMember.setAdapter(mMemberAdapter);
+//                        mMemberAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, mList_member);
+//                        mLvProjectMember.setAdapter(mMemberAdapter);
+                        mMemberAdapter.notifyDataSetChanged();
 
                     }
                 })
@@ -177,8 +188,8 @@ public class CreateProject extends Fragment {
 
         AlertDialog dialog = builder.create();
         lv_friend = (ListView) view.findViewById(R.id.lv_friend);
-        String[] arrFriend = new String[]{"Manh Hoang Huynh", "Mai The Quan", "Tram Anh", "Thuy Ngoc", "Manh Cuong"};
-        mAdapterFriendDialog = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_checked, arrFriend);
+
+        mAdapterFriendDialog = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_checked, mListFriendName);
         lv_friend.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         lv_friend.setAdapter(mAdapterFriendDialog);
 
@@ -186,7 +197,7 @@ public class CreateProject extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String value = lv_friend.getItemAtPosition(position).toString();
-                if (view.isSelected()) {
+                if (!lv_friend.isItemChecked(position)) {
                     Toast.makeText(getContext(), getString(R.string.Remove_member) + value, Toast.LENGTH_LONG).show();
                     mList_member.remove(value);
                 } else {
@@ -213,8 +224,11 @@ public class CreateProject extends Fragment {
         project.setmDescription(mEtProjectDescription.getText().toString());
         project.setmComplete(0);
         ArrayList<String> members = new ArrayList<>();
-        members.add(CurrentUser.getInstance().getUserInfo(getContext()).getUid());
+        String uid = CurrentUser.getInstance().getUserProfileFromLocal(getContext()).getProfile().getUid();
+        members.add(uid);
         project.setmMembers(members);
+        project.setmLeaderId(uid);
+
         CurrentUser.createProject(project, getContext());
     }
 

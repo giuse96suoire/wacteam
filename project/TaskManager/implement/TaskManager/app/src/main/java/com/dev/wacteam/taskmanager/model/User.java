@@ -2,9 +2,6 @@ package com.dev.wacteam.taskmanager.model;
 
 import java.util.ArrayList;
 
-/**
- * Created by giuse96suoire on 10/12/2016.
- */
 public class User {
 
     public User() {

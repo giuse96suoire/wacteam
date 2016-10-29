@@ -17,9 +17,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by giuse96suoire on 10/15/2016.
- */
+
 
 public class StorageManager {
     private static final FirebaseStorage storage = FirebaseStorage.getInstance();

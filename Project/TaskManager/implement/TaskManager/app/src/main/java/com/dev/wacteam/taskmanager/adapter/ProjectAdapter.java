@@ -23,9 +23,7 @@ import java.util.ArrayList;
 
 import com.dev.wacteam.taskmanager.fragment.ProjectDetailFragment;
 
-/**
- * Created by huynh.mh on 10/25/2016.
- */
+
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHolder> {
     ArrayList<Project> mProjectList;
     Context mContext;

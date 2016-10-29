@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.dev.wacteam.taskmanager.R;
+
 /**
  * Created by anhntt on 10/29/2016.
  */
 
-public class TabFragment extends Fragment {
+public class TabFragment extends android.support.v4.app.Fragment {
 
     TextView tvTitle;
 

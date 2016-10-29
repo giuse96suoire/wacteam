@@ -72,7 +72,7 @@ public class FristSetting extends  AppCompatActivity{
     private void mSaveInfo() {
 
 
-        Intent intent = new Intent(FirstSetting.this, MainActivity.class);
+        Intent intent = new Intent(FristSetting.this, MainActivity.class);
         startActivity(intent);
         this.finish();
     }

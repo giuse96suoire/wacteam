@@ -10,9 +10,7 @@ import com.dev.wacteam.taskmanager.model.Project;
 
 import java.util.ArrayList;
 
-/**
- * Created by giuse96suoire on 10/27/2016.
- */
+
 //can remove this class
 public class CurrentProject {
     private static ArrayList<Project> listProject = new ArrayList<>();

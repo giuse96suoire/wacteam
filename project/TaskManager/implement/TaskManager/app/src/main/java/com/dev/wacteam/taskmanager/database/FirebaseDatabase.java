@@ -1,8 +1,6 @@
 package com.dev.wacteam.taskmanager.database;
 
-/**
- * Created by huynh.mh on 10/21/2016.
- */
+
 public class FirebaseDatabase {
     private static com.google.firebase.database.FirebaseDatabase mDatabase;
 

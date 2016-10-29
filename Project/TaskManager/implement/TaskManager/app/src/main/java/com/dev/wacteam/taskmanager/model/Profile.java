@@ -4,9 +4,7 @@ import android.net.Uri;
 
 import java.util.ArrayList;
 
-/**
- * Created by huynh.mh on 10/27/2016.
- */
+
 public class Profile {
     private String uid;
     private String displayName;

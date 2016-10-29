@@ -4,16 +4,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/padding_fragment">
+
     <TextView
         android:id="@+id/tv_task_time"
-        android:textSize="@dimen/project_text_size_small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="22h23p"/>
-    <EditText
-        android:id="@+id/et_task_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Môn học "/>
+        android:text="22h23p"
+        android:textSize="@dimen/project_text_size_small" />
 
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <AutoCompleteTextView
+            android:id="@+id/ac_subject_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên môn học"
+            android:inputType="textEmailAddress"
+            android:paddingBottom="10dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="10dp"
+            android:textColorHint="#5b90a8" />
+    </android.support.design.widget.TextInputLayout>
 </LinearLayout>

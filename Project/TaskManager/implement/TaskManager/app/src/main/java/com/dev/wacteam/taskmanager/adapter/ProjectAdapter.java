@@ -1,11 +1,9 @@
 package com.dev.wacteam.taskmanager.adapter;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,10 +40,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView tv_projectName;
-        public TextView tv_projectDeadline;
-        public TextView tv_projectCreateDate;
-        public TextView tv_projectComplete;
-        public ImageView iv_iconStatus;
+        public ImageView iv_delete, iv_share;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -53,11 +48,9 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-            tv_projectCreateDate = (TextView) itemView.findViewById(R.id.tv_item_project_create_date);
             tv_projectName = (TextView) itemView.findViewById(R.id.tv_item_project_name);
-            tv_projectComplete = (TextView) itemView.findViewById(R.id.tv_item_project_complete);
-            tv_projectDeadline = (TextView) itemView.findViewById(R.id.tv_item_project_deadline);
-            iv_iconStatus = (ImageView) itemView.findViewById(R.id.iv_item_project_status);
+            iv_delete = (ImageView) itemView.findViewById(R.id.iv_ic_delete);
+            iv_share = (ImageView) itemView.findViewById(R.id.iv_ic_share);
         }
     }
 
@@ -77,19 +70,43 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
 
         Project p = mProjectList.get(position);
         TextView name = holder.tv_projectName;
-        TextView deadline = holder.tv_projectDeadline;
-        TextView complete = holder.tv_projectComplete;
-        TextView create = holder.tv_projectCreateDate;
-        ImageView status = holder.iv_iconStatus;
-
-        deadline.setText("Deadline: " + p.getmDeadline());
-        create.setText(" - Create: " + p.getmCreateDate());
-        name.setText("#" + (position + 1) + ". " + p.getmTitle());
-        complete.setText(p.getmComplete() + " %");
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        ImageView delete = holder.iv_delete;
+        ImageView share = holder.iv_share;
+        delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mShowProjectInfo(p);
+                YesNoDialog.mShow(getmContext(), "Bạn có chắc chắn muốn xóa ?", new YesNoDialog.OnClickListener() {
+                    @Override
+                    public void onYes(DialogInterface dialog, int which) {
+                        //delete
+                        CurrentUser.deleteProjectById(p.getmProjectId(), mContext);
+                        mProjectList.remove(p);
+                        notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onNo(DialogInterface dialog, int which) {
+
+                    }
+                });
+            }
+        });
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //share
+            }
+        });
+        name.setText("#" + (position + 1) + ". " + p.getmTitle());
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //go to detail
+                Bundle args = new Bundle();
+                args.putString("projectId", p.getmProjectId());
+                ProjectDetailFragment f = new ProjectDetailFragment();
+                f.setArguments(args);
+                ((MainActivity) mActivity).callFragment(f);
             }
         });
         //TODO: set status icon to red if project has changed
@@ -97,70 +114,6 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
 
     }
 
-    private void mShowProjectInfo(Project p) {
-        LayoutInflater inflater = mActivity.getLayoutInflater();
-        final View view = inflater.inflate(R.layout.project_dialog, null);
-
-        TextView tv_complete, tv_leader, tv_memeber, tv_total_task, tv_task_complete, tv_task_failed;
-
-        tv_complete = (TextView) view.findViewById(R.id.tv_project_dialog_complete);
-        tv_leader = (TextView) view.findViewById(R.id.tv_project_dialog_leader);
-        tv_memeber = (TextView) view.findViewById(R.id.tv_project_dialog_member);
-        tv_total_task = (TextView) view.findViewById(R.id.tv_project_dialog_total_task);
-        tv_task_complete = (TextView) view.findViewById(R.id.tv_project_dialog_total_task_complete);
-        tv_task_failed = (TextView) view.findViewById(R.id.tv_project_dialog_total_task_failed);
-
-        tv_complete.setText(p.getmComplete() + " %");
-        tv_leader.setText(p.getmLeaderId() == null ? "No name" : p.getmLeaderId());
-        tv_memeber.setText((p.getmMembers() == null) ? "0" : p.getmMembers().size() + "");
-        tv_total_task.setText((p.getmTasks() == null) ? "0" : p.getmTasks().size() + "");
-        tv_task_complete.setText("0");
-        tv_task_failed.setText("0");
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setView(view);
-        builder
-                .setNegativeButton("View detail", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Bundle args = new Bundle();
-                        args.putString("projectId", p.getmProjectId());
-                        args.putInt("projectType", p.getmType());
-//                        args.putInt("projectType", 2);
-                        ProjectDetailFragment f = new ProjectDetailFragment();
-                        f.setArguments(args);
-                        ((MainActivity) mActivity).callFragment(f);
-                    }
-                })
-                .setPositiveButton("Delete project", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        YesNoDialog.mShow(mContext, "Are you sure delete it? ", new YesNoDialog.OnClickListener() {
-                            @Override
-                            public void onYes(DialogInterface dialog, int which) {
-                                CurrentUser.deleteProjectById(p.getmProjectId(), getmContext());
-                            }
-
-                            @Override
-                            public void onNo(DialogInterface dialog, int which) {
-
-                            }
-                        });
-                    }
-                })
-                .setNeutralButton("Share", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-    }
-
-    ProgressDialog mProgressDialog;
 
     @Override
     public int getItemCount() {

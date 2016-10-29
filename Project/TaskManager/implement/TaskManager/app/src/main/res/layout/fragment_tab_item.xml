@@ -16,7 +16,7 @@
         android:background="@color/colorPrimary"
         android:gravity="center"
         android:padding="8dp"
-        android:text="Thêm nhiệm vụ" />
+        android:text="Thêm môn học" />
 
     <LinearLayout
         android:id="@+id/lnlayout"

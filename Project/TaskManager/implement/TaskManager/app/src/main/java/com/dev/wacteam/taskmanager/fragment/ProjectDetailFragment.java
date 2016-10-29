@@ -1,7 +1,6 @@
 package com.dev.wacteam.taskmanager.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,12 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.adapter.TabFragmentAdapter;
 import com.dev.wacteam.taskmanager.listener.OnChildEventListener;
-import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +38,6 @@ public class ProjectDetailFragment extends Fragment {
     private String mProjectId;
     private String mParam2;
     private Project mProject;
-    private int mProjectType;
     Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -64,10 +60,6 @@ public class ProjectDetailFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static ProjectDetailFragment newInstance(String param1, String param2) {
         ProjectDetailFragment fragment = new ProjectDetailFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -78,8 +70,6 @@ public class ProjectDetailFragment extends Fragment {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
             mProjectId = getArguments().getString("projectId");
-            mProjectType = getArguments().getInt("projectType");
-            System.out.println(getArguments().getInt("projectType") + " ==========================================>");
         }
     }
 
@@ -135,31 +125,19 @@ public class ProjectDetailFragment extends Fragment {
         TabFragmentAdapter tabAdapter = new TabFragmentAdapter(getFragmentManager());
         tabLayout = (TabLayout) getView().findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
-//        int project_type = mProject.getmType();
         String[] title;
-        if (mProjectType == EnumDefine.PROJECT_MANAGEMENT_TYPE) {
-            title = getResources().getStringArray(R.array.tab_project_management_title_array);
-            tabAdapter.setCount(4);
-        } else if (mProjectType == EnumDefine.TODO_TYPE) {
-            title = getResources().getStringArray(R.array.tab_todo_title_array);
-            tabAdapter.setCount(1);
-        } else {
-            title = getResources().getStringArray(R.array.tab_schedule_title_array);
-            tabAdapter.setCount(7);
 
-        }
-//        tabAdapter.setCount(7);
-//        title = getResources().getStringArray(R.array.tab_schedule_title_array);
+        title = getResources().getStringArray(R.array.tab_schedule_title_array);
+        tabAdapter.setCount(7);
+
+
         Bundle args = new Bundle();
-//        tabAdapter.setProjectId(mProjectId);
+        System.out.println("Project id =>>>>>>>>>>.. "+mProjectId);
         tabAdapter.setProjectId(mProjectId);
-        tabAdapter.setmProjectType(mProjectType);
         viewPager.setAdapter(tabAdapter);
-//        tabAdapter.notifyDataSetChanged();
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-//                tabLayout.getChildAt(tab.getPosition()).findViewById(R.id.btn_addtask).setVisibility(View.INVISIBLE);
                 tabAdapter.getItem(tab.getPosition());
             }
 

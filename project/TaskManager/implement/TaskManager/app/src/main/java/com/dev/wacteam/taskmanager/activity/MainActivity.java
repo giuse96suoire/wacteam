@@ -2,7 +2,6 @@ package com.dev.wacteam.taskmanager.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,10 +20,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +37,6 @@ import com.dev.wacteam.taskmanager.fragment.TodayFragment;
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.manager.SettingManager;
 import com.dev.wacteam.taskmanager.model.Project;
-import com.dev.wacteam.taskmanager.model.Task;
 import com.dev.wacteam.taskmanager.model.User;
 import com.dev.wacteam.taskmanager.system.CurrentFriend;
 import com.dev.wacteam.taskmanager.system.CurrentProject;
@@ -50,8 +45,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ProfileFragment.OnFragmentInteractionListener,
@@ -88,24 +81,6 @@ public class MainActivity extends AppCompatActivity
         }
         init();
 
-        Project p = new Project();
-        p.setmTitle("Huynh test");
-        ArrayList<Task> listTask = new ArrayList<>();
-        Task t = new Task();
-        t.setmTitle("Task 1");
-        t.setmDeadline("22/10/2015");
-        t.setmDescription("this is task 1");
-        listTask.add(t);
-        t.setmTitle("Task 2");
-        listTask.add(t);
-        t.setmTitle("Task 3");
-        listTask.add(t);
-        t.setmTitle("Task 4");
-        listTask.add(t);
-        t.setmTitle("Task 5");
-        listTask.add(t);
-        p.setmTasks(listTask);
-        CurrentUser.createProject(p, getApplicationContext());
 
     }
 
@@ -305,9 +280,9 @@ public class MainActivity extends AppCompatActivity
             callFragment(new ProjectFragment());
             setTitle(R.string.title_all_project_fragment);
 
-        } else if (id == R.id.nav_today) {
-            callFragment(new TodayFragment());
-            setTitle(R.string.title_all_today_fragment);
+//        } else if (id == R.id.nav_today) {
+//            callFragment(new TodayFragment());
+//            setTitle(R.string.title_all_today_fragment);
 
         } else if (id == R.id.nav_home) {
             callFragment(new HomeFragment());
@@ -340,19 +315,26 @@ public class MainActivity extends AppCompatActivity
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = MainActivity.this.getLayoutInflater();
         final View view = inflater.inflate(R.layout.quick_create_project, null);
-        builder.setTitle(R.string.ask_user_create)
+        builder.setTitle(R.string.quick_create)
                 .setView(view)
                 .setPositiveButton(R.string.create_project, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(MainActivity.this, R.string.create_project, Toast.LENGTH_LONG).show();
-                        Bundle args = new Bundle();
+
                         EditText project_name = (EditText) view.findViewById(R.id.et_projectName);
-                        args.putString("project_name", project_name.getText().toString());
-                        CreateProject createProjectFragment = new CreateProject();
-                        createProjectFragment.setArguments(args);
-                        callFragment(createProjectFragment);
-                        setTitle(R.string.title_create_project_fragment);
+                        EditText project_descipt = (EditText) view.findViewById(R.id.et_project_description);
+                        Project p = new Project();
+                        p.setmTitle(project_name.getText().toString());
+                        p.setmDescription(project_descipt.getText().toString());
+                        String projectId = CurrentUser.createProject(p, getApplicationContext());
+                        Bundle args = new Bundle();
+                        args.putString("projectId", projectId);
+
+                        ProjectDetailFragment f = new ProjectDetailFragment();
+                        f.setArguments(args);
+                        callFragment(f);
+                        setTitle(project_name.getText().toString());
                     }
                 })
                 .setNegativeButton(R.string.cancel_create_project, new DialogInterface.OnClickListener() {
@@ -363,33 +345,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
         AlertDialog dialog = builder.create();
-        Spinner chooseProject = (Spinner) view.findViewById(R.id.sp_chooseProject);
-        EditText projectName = (EditText) view.findViewById(R.id.et_projectName);
-        ImageView project = (ImageView) view.findViewById(R.id.iv_project);
-        ImageView task = (ImageView) view.findViewById(R.id.iv_task);
-        project.setBackgroundColor(Color.rgb(120, 133, 224));
-        String[] data = new String[]{"Project 1", "Project 2", "Project 3"};
-        chooseProject.setAdapter(new ArrayAdapter<String>(MainActivity.this, R.layout.support_simple_spinner_dropdown_item, data));
-        project.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                projectName.setVisibility(View.VISIBLE);
-                chooseProject.setVisibility(View.GONE);
-                project.setBackgroundColor(Color.rgb(120, 133, 224));
-                task.setBackgroundColor(Color.WHITE);
 
-            }
-        });
-        task.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseProject.setVisibility(View.VISIBLE);
-                projectName.setVisibility(View.GONE);
-                task.setBackgroundColor(Color.rgb(120, 133, 224));
-                project.setBackgroundColor(Color.WHITE);
-
-            }
-        });
         dialog.show();
 
 

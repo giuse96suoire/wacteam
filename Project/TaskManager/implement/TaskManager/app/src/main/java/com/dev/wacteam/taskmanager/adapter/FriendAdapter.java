@@ -136,13 +136,13 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         email.setText(u.getProfile().getEmail());
 
         builder.setView(view)
-                .setNeutralButton(R.string.chat_to_friend, new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.chat, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
                 })
-                .setPositiveButton(R.string.add_to_project, new DialogInterface.OnClickListener() {
+                .setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

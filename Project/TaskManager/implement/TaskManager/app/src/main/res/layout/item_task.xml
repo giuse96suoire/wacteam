@@ -1,40 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="16dp"
     android:layout_margin="4dp"
-    app:cardMaxElevation="6dp"
-    >
+    app:cardElevation="16dp"
+    app:cardMaxElevation="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_color"
-            android:background="@drawable/ic_color_project"/>
 
         <TextView
+            android:id="@+id/tv_subject_name_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="1"
             android:padding="8dp"
-            tools:text="Text will be adapter here"
-            android:id="@+id/tv_task_name_detail"
-            android:textSize="16sp"
             android:textColor="@android:color/background_dark"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content" />
+            android:textSize="16sp"
+            tools:text="Toán" />
+
+        <EditText
+            android:id="@+id/et_subject_name_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:hint="Tên môn"
+            android:textColor="@android:color/background_dark"
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:text="" />
 
         <Button
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_move_task"
-            android:background="@drawable/ic_move"/>
+            android:id="@+id/btn_edit"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="@drawable/ic_edit_black_24dp" />
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="@drawable/ic_remove" />
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

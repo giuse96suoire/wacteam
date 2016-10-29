@@ -14,11 +14,8 @@
         <item
             android:id="@+id/nav_allProject"
             android:icon="@drawable/ic_menu_project"
-            android:title="@string/title_all_project_fragment" />
-        <item
-            android:id="@+id/nav_today"
-            android:icon="@drawable/ic_menu_today"
-            android:title="@string/title_all_today_fragment" />
+            android:title="Thời khóa biểu" />
+
     </group>
 
     <item android:title="@string/title_communicate_activity_main_drawer">
@@ -28,22 +25,31 @@
                 android:icon="@drawable/ic_menu_friend"
                 android:title="@string/title_friend_fragment" />
             <item
-                android:id="@+id/nav_setting"
-                android:icon="@drawable/ic_menu_setting"
-                android:title="@string/title_setting_fragment" />
+                android:id="@+id/nav_teacher"
+                android:icon="@drawable/ic_menu_friend"
+                android:title="Giáo viên" />
+            <item
+                android:id="@+id/nav_parent"
+                android:icon="@drawable/ic_menu_friend"
+                android:title="Phụ huynh" />
+
         </menu>
     </item>
     <item android:title="@string/title_system_activity_main_drawer">
         <menu>
             <item
+                android:id="@+id/nav_aboutUs"
+                android:icon="@drawable/ic_menu_about"
+                android:title="@string/title_aboutUs_fragment" />
+            <item
+                android:id="@+id/nav_setting"
+                android:icon="@drawable/ic_menu_setting"
+                android:title="@string/title_setting_fragment" />
+            <item
                 android:id="@+id/nav_signOut"
                 android:icon="@drawable/ic_menu_logout"
                 android:title="@string/title_signOut" />
-            <item
-                android:id="@+id/nav_aboutUs"
-                android:icon="@drawable/ic_menu_about"
-                android:title="@string/title_aboutUs_fragment"
-                />
+
         </menu>
     </item>
 

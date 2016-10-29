@@ -67,26 +67,26 @@ public class CreateProject extends Fragment {
         mEtProjectName = (EditText) getView().findViewById(R.id.et_project_name);
         Bundle args = getArguments();
         mEtProjectName.setText(args.getString("project_name"));
-        mLvProjectMember = (ListView) getView().findViewById(R.id.lv_project_member);
-        mSpProjectLeader = (Spinner) getView().findViewById(R.id.sp_project_leader);
-        mSpProjectType = (Spinner) getView().findViewById(R.id.sp_project_type);
+//        mLvProjectMember = (ListView) getView().findViewById(R.id.lv_project_member);
+//        mSpProjectLeader = (Spinner) getView().findViewById(R.id.sp_project_leader);
+//        mSpProjectType = (Spinner) getView().findViewById(R.id.sp_project_type);
         String[] projecTypeData = getResources().getStringArray(R.array.project_type_array);
         mSpProjectType.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, projecTypeData));
 
-        ArrayList<User> listFriend;
+//        ArrayList<User> listFriend;
         mListFriendName = new ArrayList<>();
-        listFriend = CurrentFriend.getmListFriend();
-        for (User u : listFriend) {
-            mListFriendName.add(u.getProfile().getDisplayName());
-        }
+//        listFriend = CurrentFriend.getmListFriend();
+//        for (User u : listFriend) {
+//            mListFriendName.add(u.getProfile().getDisplayName());
+//        }
 
 
-        mSpProjectLeader.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, mListFriendName));
+//        mSpProjectLeader.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, mListFriendName));
         mBtnSaveProject = (Button) getView().findViewById(R.id.btn_save);
         mBtnResetProject = (Button) getView().findViewById(R.id.btn_reset);
-        mTvMember = (TextView) getView().findViewById(R.id.tv_member);
-        mTvProjectDeadline = (TextView) getView().findViewById(R.id.tv_project_deadline);
-        mTvProjectCreateAt = (TextView) getView().findViewById(R.id.tv_create_time);
+//        mTvMember = (TextView) getView().findViewById(R.id.tv_member);
+//        mTvProjectDeadline = (TextView) getView().findViewById(R.id.tv_project_deadline);
+//        mTvProjectCreateAt = (TextView) getView().findViewById(R.id.tv_create_time);
         mEtProjectDescription = (EditText) getView().findViewById(R.id.et_project_description);
         mBtnSaveProject.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -155,6 +155,8 @@
     <string name="update_profile">Update profile</string>
     <string name="subject_name_label">New subject</string>
     <string name="task_name_label">Task name</string>
+    <string name="quick_create">Tạo nhanh</string>
+    <string name="chat">Chat</string>
     <string-array name="job_array">
         <item>Student</item>
         <item>Teacher</item>
@@ -190,5 +192,24 @@
         <item>Thứ 6</item>
         <item>Thứ 7</item>
         <item>Chủ nhật</item>
+    </string-array>
+
+    <string-array name="subject_array">
+        <item>Toán</item>
+        <item>Lý</item>
+        <item>Hóa</item>
+        <item>Sinh</item>
+        <item>Sử</item>
+        <item>Địa</item>
+        <item>Giáo dục công dân</item>
+        <item>Tin</item>
+        <item>Ngữ văn</item>
+        <item>Ngoại ngữ</item>
+        <item>Công nghệ</item>
+        <item>Đạo đức</item>
+        <item>Tiếng nhật</item>
+        <item>Tiếng anh</item>
+        <item>Thể dục</item>
+        <item>Quốc phòng</item>
     </string-array>
 </resources>

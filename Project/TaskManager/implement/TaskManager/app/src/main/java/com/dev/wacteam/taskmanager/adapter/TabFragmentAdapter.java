@@ -12,7 +12,7 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
     private int count;
     private String mProjectId;
     private int mProjectType;
-
+    
     public void setmProjectType(int mProjectType) {
         this.mProjectType = mProjectType;
     }

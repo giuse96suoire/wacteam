@@ -12,6 +12,7 @@ import com.dev.wacteam.taskmanager.manager.SettingManager;
 import com.dev.wacteam.taskmanager.model.Profile;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.model.Setting;
+import com.dev.wacteam.taskmanager.model.Task;
 import com.dev.wacteam.taskmanager.model.User;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -76,11 +77,13 @@ public class CurrentUser extends User {
     }
 
 
-    public static void createProject(Project project, Context context) {
+    public static String createProject(Project project, Context context) {
         DatabaseReference db = FirebaseDatabase.getInstance()
                 .getReference(LIST_PROJECT_REFERENCE).push();
         project.setmProjectId(db.getKey());
+        project.setmLeaderId(CurrentUser.getUserProfileFromLocal(context).getProfile().getUid());
         db.setValue(project);
+        return db.getKey();
     }
 
     public static void addFriend(User u, Context context) {
@@ -153,6 +156,8 @@ public class CurrentUser extends User {
         });
     }
 
+
+
     public static void getAllProject(OnChildEventListener listener, Context context) {
         System.out.println("get all project =============>");
         DatabaseReference db = FirebaseDatabase.getInstance()
@@ -163,13 +168,19 @@ public class CurrentUser extends User {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Project project = dataSnapshot.getValue(Project.class);
                 ArrayList<String> listMember = project.getmMembers();
-                if (listMember != null) {
-                    for (String memId : listMember) {
-                        if (memId.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
-                            listener.onChildAdded(dataSnapshot, s);
+                String leaderId = project.getmLeaderId();
+                if (leaderId != null && leaderId.equals(CurrentUser.getUserProfileFromLocal(context).getProfile().getUid())) {
+                    listener.onChildAdded(dataSnapshot, s);
+                } else {
+                    if (listMember != null) {
+                        for (String memId : listMember) {
+                            if (memId.equals(CurrentUser.getInstance().getUserProfileFromLocal(context).getProfile().getUid())) {
+                                listener.onChildAdded(dataSnapshot, s);
+                            }
                         }
                     }
                 }
+
             }
 
             @Override
@@ -358,6 +369,14 @@ public class CurrentUser extends User {
 
     private static final String PROJECTS_REFERENCE = "projects";
 
+    public static void updateTask(String projectId, ArrayList<Task> listTask) {
+        FirebaseDatabase.getInstance()
+                .getReference(LIST_PROJECT_REFERENCE)
+                .child(projectId)
+                .child("mTasks")
+                .setValue(listTask);
+    }
+
     public static void getProjectById(String id, OnChildEventListener listener, Context context) {
         System.out.println("GET PROJECT " + id);
         FirebaseDatabase.getInstance()
@@ -366,7 +385,7 @@ public class CurrentUser extends User {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        listener.onChildChanged(dataSnapshot,"");
+                        listener.onChildChanged(dataSnapshot, "");
                     }
 
                     @Override

@@ -8,6 +8,8 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,7 +18,6 @@ import android.widget.Toast;
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.adapter.TaskAdapter;
 import com.dev.wacteam.taskmanager.listener.OnChildEventListener;
-import com.dev.wacteam.taskmanager.manager.EnumDefine;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.model.Task;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
@@ -35,6 +36,7 @@ public class TabFragment extends Fragment {
     //    RecyclerView mLvListTask;
     ListView mLvListTask;
     ArrayList<Task> mTaskDataList = new ArrayList<>();
+    ArrayList<Task> mAllTaskWithNoFillter = new ArrayList<>();
 
 
     public static TabFragment newInstance(String title) {
@@ -72,37 +74,59 @@ public class TabFragment extends Fragment {
         return rootView;
     }
 
+    TaskAdapter adapter;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         String title = getArguments().getString("title");
-        mProjectType = getArguments().getInt("projectType");
         mProjectId = getArguments().getString("projectId");
         mTabPostition = getArguments().getInt("tabPosition");
-        Task t = new Task();
-        t.setmTitle("test demo");
-        mTaskDataList.add(t);
-        mTaskDataList.add(t);
-        mTaskDataList.add(t);
-        mTaskDataList.add(t);
-        TaskAdapter adapter = new TaskAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, mTaskDataList);
-//        ArrayList<String> arr = new ArrayList<>();
-//        arr.add("2323");
-//        arr.add("2323");
-//        arr.add("2323qwe");
-//        arr.add("2323");
-//        arr.add("2323qe");
-//        arr.add("2323");
-//        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, arr);
+
+        adapter = new TaskAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, mTaskDataList, mProjectId);
 
         mLvListTask.setAdapter(adapter);
-//        mLvListTask.setAdapter(adapter);
-//        tvTitle.setText(title);
+
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Toast.makeText(getContext(), mProjectId, Toast.LENGTH_LONG).show();
+        btnAddProject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Task t = new Task();
+//                t.setmTitle("");
+//                mTaskDataList.add(t);
+//                adapter.notifyDataSetChanged();
+                showCreateTaskDialog();
+            }
+        });
         CurrentUser.getProjectById(mProjectId, new OnChildEventListener() {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 mTaskDataList.clear();
-                mTaskDataList.add(t);
+                mAllTaskWithNoFillter.clear();
+                Project p = dataSnapshot.getValue(Project.class);
+                ArrayList<Task> list = new ArrayList<Task>();
+                if (p != null) {
+                    list = p.getmTasks();
+                }
+                if (list != null)
+                    for (Task ta : list) {
+                        mAllTaskWithNoFillter.add(ta);
+                        if (ta.getmDayOfWeek() == mTabPostition)
+                            mTaskDataList.add(ta);
+
+                    }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                mTaskDataList.clear();
                 ArrayList<Task> list = dataSnapshot.getValue(Project.class).getmTasks();
                 for (Task ta : list) {
                     mTaskDataList.add(ta);
@@ -112,14 +136,13 @@ public class TabFragment extends Fragment {
             }
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                mTaskDataList = dataSnapshot.getValue(Project.class).getmTasks();
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                mTaskDataList = dataSnapshot.getValue(Project.class).getmTasks();
+                mTaskDataList.clear();
+                ArrayList<Task> list = dataSnapshot.getValue(Project.class).getmTasks();
+                for (Task ta : list) {
+                    mTaskDataList.add(ta);
+
+                }
                 adapter.notifyDataSetChanged();
             }
 
@@ -130,22 +153,15 @@ public class TabFragment extends Fragment {
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                mTaskDataList = dataSnapshot.getValue(Project.class).getmTasks();
+                mTaskDataList.clear();
+                ArrayList<Task> list = dataSnapshot.getValue(Project.class).getmTasks();
+                for (Task ta : list) {
+                    mTaskDataList.add(ta);
+
+                }
                 adapter.notifyDataSetChanged();
             }
         }, getContext());
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Toast.makeText(getContext(), mProjectId, Toast.LENGTH_LONG).show();
-        btnAddProject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCreateTaskDialog();
-            }
-        });
     }
 
     private void showCreateTaskDialog() {
@@ -153,18 +169,28 @@ public class TabFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         String title = "";
-        if (mProjectType == EnumDefine.PROJECT_MANAGEMENT_TYPE || mProjectType == EnumDefine.TODO_TYPE) {
-            title = getString(R.string.task_name_label);
-        } else if (mProjectType == EnumDefine.SCHEDULE_TYPE) {
-            title = getResources().getString(R.string.subject_name_label);
-        }
+
+        title = getResources().getString(R.string.subject_name_label);
+
         final View view = inflater.inflate(R.layout.create_task_dialog, null);
+        AutoCompleteTextView name = (AutoCompleteTextView) view.findViewById(R.id.ac_subject_name);
+        String[] listSubject = getResources().getStringArray(R.array.subject_array);
+        name.setAdapter(
+                new ArrayAdapter<String>(
+                        getContext(),
+                        android.R.layout.simple_list_item_1, listSubject
+                )
+        );
         builder.setTitle(title)
                 .setView(view)
                 .setPositiveButton(R.string.create_project, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        Task t = new Task();
+                        t.setmTitle(name.getText().toString());
+                        t.setmDayOfWeek(mTabPostition);
+                        mAllTaskWithNoFillter.add(t);
+                        CurrentUser.updateTask(mProjectId, mAllTaskWithNoFillter);
                     }
                 })
                 .setNegativeButton(R.string.cancel_create_project, new DialogInterface.OnClickListener() {

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/imgbtn_schedule_left"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/ic_schedule_left"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toRightOf="@+id/imgbtn_schedule_left">
+
+                <TextView
+                    android:id="@+id/txtv_schedula_weekdays"
+                    android:textSize="24dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/weekdays_schedule"
+                    android:paddingLeft="25dp"/>
+
+                <TextView
+                    android:id="@+id/txtv_schedula_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/day_month_years_schedule"
+                    android:textSize="18dp"
+                    android:paddingLeft="18dp"/>
+
+
+            </LinearLayout>
+
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/ic_schedule_right"
+                android:layout_toLeftOf="@+id/imgbtn_schedule_down"/>
+
+            <ImageButton
+                android:id="@+id/imgbtn_schedule_down"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/ic_schedula_down"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_schedular"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+</FrameLayout>

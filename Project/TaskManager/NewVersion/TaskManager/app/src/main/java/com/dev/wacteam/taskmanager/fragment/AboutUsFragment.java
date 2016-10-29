@@ -76,11 +76,12 @@ public class AboutUsFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) return;
         if (activity instanceof AboutUsFragment.OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (AboutUsFragment.OnFragmentInteractionListener) activity;
         } else {
             throw new RuntimeException(activity.toString()
                     + " must implement OnFragmentInteractionListener ");

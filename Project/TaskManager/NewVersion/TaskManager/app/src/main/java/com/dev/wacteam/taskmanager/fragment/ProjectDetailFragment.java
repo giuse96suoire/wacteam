@@ -1,16 +1,20 @@
 package com.dev.wacteam.taskmanager.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.adapter.TabFragmentAdapter;
+import com.dev.wacteam.taskmanager.model.Project;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,8 +31,13 @@ public class ProjectDetailFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String mProjectId;
     private String mParam2;
+    private Project mProject;
+    Toolbar toolbar;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -58,8 +67,10 @@ public class ProjectDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
+
+
         }
     }
 
@@ -67,7 +78,7 @@ public class ProjectDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_project_detail, container, false);
+        return inflater.inflate(R.layout.activity_tab_layout, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -76,16 +87,20 @@ public class ProjectDetailFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) return;
-        if (activity instanceof FriendFragment.OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) activity;
-        } else {
-            throw new RuntimeException(activity.toString()
-                    + " must implement OnFragmentInteractionListener ");
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        viewPager = (ViewPager) getView().findViewById(R.id.viewPager);
+        viewPager.setAdapter(new TabFragmentAdapter(getFragmentManager()));
+        tabLayout = (TabLayout) getView().findViewById(R.id.tablayout);
+        tabLayout.setupWithViewPager(viewPager);
+        String[] title = getResources().getStringArray(R.array.tab_title_array);
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            tabLayout.getTabAt(i).setText(title[i]);
         }
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -95,6 +110,10 @@ public class ProjectDetailFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    public OnFragmentInteractionListener getmListener() {
+        return mListener;
     }
 
     @Override

@@ -5,12 +5,25 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.activity.MainActivity;
+import com.dev.wacteam.taskmanager.adapter.ProjectAdapter;
+import com.dev.wacteam.taskmanager.listener.OnChildEventListener;
+import com.dev.wacteam.taskmanager.manager.NotificationsManager;
+import com.dev.wacteam.taskmanager.model.Project;
+import com.dev.wacteam.taskmanager.system.CurrentUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,16 +89,126 @@ public class ProjectFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) return;
-        if (activity instanceof FriendFragment.OnFragmentInteractionListener) {
+        if (activity instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) activity;
         } else {
             throw new RuntimeException(activity.toString()
                     + " must implement OnFragmentInteractionListener ");
         }
     }
+
+    private RecyclerView mLvListProject;
+    private ProjectAdapter mAdapter;
+    private ArrayList<Project> mListProject;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mListProject = new ArrayList<>();
+
+        mAdapter = new ProjectAdapter(getContext(), getActivity(), mListProject);
+//        mListProject = CurrentProject.getListProject(new CurrentProject.onDataChangeListener() {
+//            @Override
+//            public void onDateChange(ArrayList<Project> list) {
+//                mListProject = list;
+//                mAdapter.notifyDataSetChanged();
+//            }
+//        });
+
+        mLvListProject = (RecyclerView) getView().findViewById(R.id.rv_project);
+
+        mLvListProject.setHasFixedSize(true);
+        mLvListProject.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mLvListProject.setAdapter(mAdapter);
+
+        mGetAllProject();
+
+    }
+
+    private void mGetAllProject() {
+        CurrentUser.getAllProject(new OnChildEventListener() {
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Project p = dataSnapshot.getValue(Project.class);
+                boolean notFound = true;
+//                mListProject.clear();
+                if (mListProject.size() > 0) {
+                    for (int i = 0; i < mListProject.size(); i++) {
+                        if (mListProject.get(i).getmProjectId().equals(p.getmProjectId())) {
+                            NotificationsManager.notifyProjectChange(mListProject.get(i), p, getContext());
+//                            ((MainActivity) getActivity()).changeNotificationIcon(true);
+                            mListProject.remove(i);
+                            mListProject.add(i, p);
+                            notFound = false;
+                            break;
+                        }
+                    }
+                }
+                if (notFound) {
+                    mListProject.add(p);
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Project p = dataSnapshot.getValue(Project.class);
+//                mListProject.clear();
+                if (mListProject.size() > 0) {
+                    for (int i = 0; i < mListProject.size(); i++) {
+                        if (mListProject.get(i).getmProjectId().equals(p.getmProjectId())) {
+                            NotificationsManager.notifyProjectChange(mListProject.get(i), p, getContext());
+                            if (getActivity() != null) {
+                                ((MainActivity) getActivity()).changeNotificationIcon(true);
+                            }
+                            mListProject.remove(i);
+                            break;
+                        }
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Project p = dataSnapshot.getValue(Project.class);
+                boolean notFound = true;
+//                mListProject.clear();
+                if (mListProject.size() > 0) {
+                    for (int i = 0; i < mListProject.size(); i++) {
+                        if (mListProject.get(i).getmProjectId().equals(p.getmProjectId())) {
+                            NotificationsManager.notifyProjectChange(mListProject.get(i), p, getContext());
+                            ((MainActivity) getActivity()).changeNotificationIcon(true);
+                            mListProject.remove(i);
+                            mListProject.add(i, p);
+                            notFound = false;
+                            break;
+                        }
+                    }
+                }
+                if (notFound) {
+                    mListProject.add(p);
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+        }, getContext());
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

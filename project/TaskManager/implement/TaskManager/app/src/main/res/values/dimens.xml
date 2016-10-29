@@ -17,6 +17,8 @@
     <dimen name="project_text_size_medium">24dp</dimen>
     <dimen name="project_text_size_small">16dp</dimen>
     <!--padding,margin-->
+    <dimen name="max_width">270dp</dimen>
+    <dimen name="max_height_medium">60dp</dimen>
     <dimen name="max_height">40dp</dimen>
     <dimen name="project_padding">8dp</dimen>
     <dimen name="padding_large">16dp</dimen>

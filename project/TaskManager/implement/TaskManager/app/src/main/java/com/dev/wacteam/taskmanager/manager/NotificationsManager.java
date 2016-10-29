@@ -80,11 +80,7 @@ public class NotificationsManager {
         if (oldTask != null && newTask != null) {
             int sizeOld = oldTask.size();
             int sizeNew = newTask.size();
-            if (newTask.get(sizeOld - 1).getmTaskId() == oldTask.get(sizeNew - 1).getmTaskId()) {
-                for (int i = 0; i < sizeNew; i++) {
-                    message += notifyTaskChangeDetail(oldTask.get(i), newTask.get(i));
-                }
-            } else {
+
                 int sOld = 0, sNew = 0;
                 do {
                     if (sOld < sizeOld) {
@@ -103,7 +99,7 @@ public class NotificationsManager {
                 }
                 while (sNew < sizeNew);
             }
-        }
+
 
         return message;
 

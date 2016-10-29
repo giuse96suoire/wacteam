@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/friendName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_fragment"
+            android:text="Nguyen Thi Tram Anh"
+            android:textColor="@color/cardview_light_background"
+            android:textSize="@dimen/project_name_large" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/padding_fragment"
+            android:paddingLeft="@dimen/padding_fragment">
+
+            <ImageView
+                android:layout_width="@dimen/icon_small_width"
+                android:layout_height="@dimen/icon_small_height"
+                android:src="@android:drawable/ic_dialog_email" />
+
+            <TextView
+                android:id="@+id/friendEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:text="tramanh@abc.com"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="@dimen/project_text_size_medium" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+
+        android:orientation="vertical"
+        android:padding="@dimen/padding_fragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/icon_small_width"
+                android:layout_height="@dimen/icon_small_height"
+                android:src="@drawable/ic_date_range_black_24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="29/06/1996"
+                android:textSize="@dimen/project_text_size_medium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/icon_small_width"
+                android:layout_height="@dimen/icon_small_height"
+                android:src="@drawable/ic_location_on_black_24dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4/3 Đồ Sơn Tân Bình HCM"
+                android:textSize="@dimen/project_text_size_medium" />
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

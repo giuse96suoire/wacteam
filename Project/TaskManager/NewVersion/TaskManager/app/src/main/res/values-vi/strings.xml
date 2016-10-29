@@ -42,7 +42,7 @@
     <string name="name_fragment_profile">Họ và tên:</string>
     <string name="gender_fragment_profile">Giới tính:</string>
     <string name="dob_fragment_profile">Ngày sinh:</string>
-    <string name="address_fragment_profile">Địa chỉ:</string>
+    <string name="address_fragment_profile">Địa chỉ</string>
     <string name="phoneNumber_fragment_profile">Số điện thoại:</string>
     <string name="email_fragment_profile">Email:</string>
     <string name="reset_fragment_profile">Phục hồi</string>
@@ -176,7 +176,7 @@
     <string name="add_more">+ Thêm nữa</string>
     <string name="add_to_project">Thêm vào dự án</string>
     <string name="already_login">Bạn đã đăng nhập</string>
-    <string name="ask_user_create">Bạn muốn tạo cái gì?</string>
+    <string name="ask_user_create">Tạo nhanh</string>
     <string name="auto_accept_friend_setting">Tự động kết bạn</string>
     <string name="auto_accept_join_project_setting">Tự động chấp nhận tham gia dự án</string>
     <string name="auto_backup_data_to_local_setting">Tự động đồng bộ dữ liệu với server</string>
@@ -207,7 +207,7 @@
     <string name="hours_item_schedule">giờ làm việc</string>
     <string name="go_to_main"><![CDATA[Đi tới trang chủ ===================>]]></string>
     <string name="in_current_user">người dùng hiện tại</string>
-    <string name="login">Đăng nhập</string>
+    <string name="login">ĐĂNG NHẬP</string>
     <string name="low_connection">Mạng của bạn quá chậm, vui lòng đợi...</string>
     <string name="member_task">Thành viên:</string>
     <string name="no_dialog">Không</string>
@@ -220,7 +220,7 @@
     <string name="register">ĐĂNG KÝ</string>
     <string name="remove_friend">Xóa kết bạn</string>
     <string name="save_your_time_save_your_life">Save your time, save your life</string>
-    <string name="search_by_name_or_email">Tìm kiếm theo tên hoặc email</string>
+    <string name="search_by_name_or_email">Tìm theo tên hoặc email</string>
     <string name="sign_in_failed">Đăng nhập thất bại!</string>
     <string name="sign_in_success">Đăng nhập thành công</string>
     <string name="sign_up_success">Đăng ký thành công!</string>
@@ -234,5 +234,5 @@
     <string name="weekdays_schedule">Weekdays</string>
     <string name="yes_dialog">Có</string>
     <string name="reset_input">"Khôi phục dữ liệu "</string>
-    <string name="update_profile">Cập nhật thông tin</string>
+    <string name="update_profile">Cập nhật</string>
 </resources>

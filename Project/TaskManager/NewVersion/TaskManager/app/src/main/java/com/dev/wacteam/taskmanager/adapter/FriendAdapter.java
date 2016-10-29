@@ -6,13 +6,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerViewAccessibilityDelegate;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
+import com.dev.wacteam.taskmanager.model.User;
+import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
@@ -22,7 +24,7 @@ import java.util.ArrayList;
  * Created by giuse96suoire on 10/29/2016.
  */
 
-public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder>
+public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder>
 {
 
     ArrayList<User> mUserList;

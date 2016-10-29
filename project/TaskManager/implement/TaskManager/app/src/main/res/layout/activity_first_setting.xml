@@ -28,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_fullName"
+                android:textSize="@dimen/project_text_size_small"
                 android:layout_weight="2.64"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -52,6 +53,7 @@
                 android:id="@+id/textView13"
                 android:layout_weight="3.07"
                 android:text="@string/address_activity_first_setting"
+                android:textSize="@dimen/project_text_size_small"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <EditText
@@ -74,6 +76,7 @@
                 android:id="@+id/tv_phoneNumber"
                 android:layout_weight="0.33"
                 android:text="@string/phoneNumber_activity_first_setting"
+                android:textSize="@dimen/project_text_size_small"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <EditText

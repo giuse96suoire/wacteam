@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/iv_friend_ava"
-            android:layout_width="@dimen/icon_medium_width"
-            android:layout_height="@dimen/icon_medium_height"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_alignParentLeft="true"
             android:background="@drawable/ic_ava" />
 
@@ -34,7 +34,7 @@
                 android:padding="@dimen/project_padding"
                 android:layout_marginBottom="-10dp"
                 android:text="anh kute vo doi "
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/tv_friend_email"

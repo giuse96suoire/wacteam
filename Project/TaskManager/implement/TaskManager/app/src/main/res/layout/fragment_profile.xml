@@ -138,7 +138,8 @@
             android:layout_weight="0.50"
             android:layout_marginRight="@dimen/padding_fragment"
             android:background="@drawable/border_button_profile"
-            android:text="@string/reset_input" />
+            android:text="@string/reset_input"
+            android:textColor="@color/colorPrimary"/>
 
         <Button
             android:id="@+id/btn_saveInfo"
@@ -147,7 +148,7 @@
             android:layout_weight="0.50"
             android:background="@drawable/border_button_profile"
             android:text="@string/update_profile"
-            android:textColor="#3378df" />
+            android:textColor="@color/colorPrimary" />
 
     </LinearLayout>
 </LinearLayout>

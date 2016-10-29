@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.CreateProject">
+    tools:context=".fragment.CreateProject"
+    android:scrollbars="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -155,29 +156,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/colorPrimary"
         android:gravity="bottom"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="0dp"
+        >
 
         <Button
             android:id="@+id/btn_reset"
+            android:textSize="@dimen/project_text_size_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
+            android:layout_marginRight="0.05dp"
             android:layout_weight="0.50"
-            android:background="@color/cardview_light_background"
-            android:text="@string/reset_fragment_profile" />
+            android:background="@color/colorPrimary"
+            android:textColor="#ffffff"
+            android:text="@string/reset_fragment_profile"
+            />
 
         <Button
             android:id="@+id/btn_save"
+            android:textSize="@dimen/project_text_size_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="0.05dp"
             android:layout_weight="0.50"
-            android:background="@color/cardview_light_background"
+            android:background="@color/colorPrimary"
             android:text="@string/save_fragment_profile"
-            android:textColor="#3378df" />
+            android:textColor="#ffffff" />
 
     </LinearLayout>
 

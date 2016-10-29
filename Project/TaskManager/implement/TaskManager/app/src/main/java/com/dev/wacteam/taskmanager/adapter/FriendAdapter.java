@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -48,6 +49,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         public TextView tv_friendName;
         public TextView tv_friendEmail;
         public ImageView iv_addFriend;
+
+
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview

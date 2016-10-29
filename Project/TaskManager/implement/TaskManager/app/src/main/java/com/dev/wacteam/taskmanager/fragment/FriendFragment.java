@@ -3,11 +3,13 @@ package com.dev.wacteam.taskmanager.fragment;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.ContentFrameLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -16,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.adapter.FriendAdapter;
@@ -59,6 +62,7 @@ public class FriendFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         mRvListFriend = (RecyclerView) getView().findViewById(R.id.rv_friends);
         mRvListFriend.setHasFixedSize(true);
         mRvListFriend.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -188,6 +192,7 @@ public class FriendFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -251,4 +256,7 @@ public class FriendFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    // thiet lap font chu friends:
+
 }

@@ -30,8 +30,8 @@
     <dimen name="icon_small_width">32dp</dimen>
     <dimen name="icon_small_height">32dp</dimen>
     <!--icon medium-->
-    <dimen name="icon_medium_width">48dp</dimen>
-    <dimen name="icon_medium_height">48dp</dimen>
+    <dimen name="icon_medium_width">40dp</dimen>
+    <dimen name="icon_medium_height">40dp</dimen>
     <!--icon big-->
     <dimen name="icon_big_width">72dp</dimen>
     <dimen name="icon_big_height">72dp</dimen>

@@ -8,7 +8,7 @@
 
 
     <TextView
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -23,7 +23,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorPrimary">
 
         <ImageView
             android:layout_centerInParent="true"
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         android:paddingTop="10dp"
         android:text="@string/save_your_time_save_your_life"
         android:textColor="#ffffff" />
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_save_time"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:paddingBottom="10dp"
         android:text="@string/everything_is_simple"
@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="@string/login"
@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorPrimaryDark"
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="@string/register"

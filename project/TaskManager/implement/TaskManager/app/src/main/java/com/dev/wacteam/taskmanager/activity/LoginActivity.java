@@ -170,8 +170,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 findViewById(R.id.tv_register_label);
 
-        int selectColor = Color.parseColor("#3f4284");
-        int noneSelectColor = Color.parseColor("#303F9F");
+        int selectColor = Color.parseColor("#3378DF");
+        int noneSelectColor = Color.parseColor("#32455F");
+
         LinearLayout loginLayout = (LinearLayout) findViewById(R.id.layout_login);
         LinearLayout registerLayout = (LinearLayout) findViewById(R.id.layout_register);
         mTvLoginLabel.setOnClickListener(new View.OnClickListener()

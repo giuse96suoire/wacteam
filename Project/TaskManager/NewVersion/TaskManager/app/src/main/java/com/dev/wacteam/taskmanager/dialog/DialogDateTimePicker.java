@@ -8,7 +8,7 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import java.util.Calendar;
 
 /**
- * Created by Ngoc on 10/29/2016.
+ * Created by giuse96suoire on 10/29/2016.
  */
 
 public class DialogDateTimePicker {

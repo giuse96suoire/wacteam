@@ -7,7 +7,7 @@ import android.content.DialogInterface;
 import com.dev.wacteam.taskmanager.R;
 
 /**
- * Created by Ngoc on 10/29/2016.
+ * Created by giuse96suoire on 10/29/2016.
  */
 
 public class DialogAlert {

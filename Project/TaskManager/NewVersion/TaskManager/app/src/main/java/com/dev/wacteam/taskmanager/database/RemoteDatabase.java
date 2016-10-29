@@ -7,7 +7,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 /**
- * Created by Ngoc on 10/29/2016.
+ * Created by giuse96suoire on 10/29/2016.
  */
 
 public class RemoteDatabase {

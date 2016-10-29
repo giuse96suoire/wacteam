@@ -3,7 +3,7 @@ package com.dev.wacteam.taskmanager.database;
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 
 /**
- * Created by Ngoc on 10/29/2016.
+ * Created by giuse96suoire on 10/29/2016.
  */
 
 public interface BaseModel {

@@ -4,7 +4,7 @@ import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.model.User;
 
 /**
- * Created by Ngoc on 10/29/2016.
+ * Created by giuse96suoire on 10/29/2016.
  */
 
 public class RemoteUser {

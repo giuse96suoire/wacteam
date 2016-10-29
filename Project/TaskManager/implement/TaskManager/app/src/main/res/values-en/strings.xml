@@ -145,7 +145,6 @@
         "Task Manager\n"
         "Version: 1.0\n"
         "Create and develop: Wacteam\n"
-        "Created date: 15/10/2016\n"
         "Contact us: wacteam.com and fb.com/wacteamvn\n"
         "Hope you enjoy it"
     </string>
@@ -179,7 +178,7 @@
     <string name="already_login">You\'re logined</string>
     <string name="add_to_project">Add to project</string>
     <string name="auto_accept_friend_setting">Auto accept friend</string>
-    <string name="ask_user_create">What you want to create?</string>
+    <string name="ask_user_create">Quick create</string>
     <string name="auto_backup_data_to_local_setting">Auto backup data to local</string>
     <string name="auto_accept_join_project_setting">Auto accept join project</string>
     <string name="begin_task">Begin:</string>

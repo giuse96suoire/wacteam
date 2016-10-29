@@ -12,19 +12,20 @@
 
     <ImageView
 
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/ic_wacteam"
         android:id="@+id/imageView2" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="292dp"
+        android:layout_height="187dp"
+
         android:text="@string/aboutUs"
         android:textAlignment="center"
-
         android:textAllCaps="true"
-        android:textSize="20sp"
-        tools:textColor="@android:color/black" />
+        android:textSize="16sp"
+        tools:textColor="@android:color/black"
+        android:id="@+id/textView3" />
 
 </LinearLayout>

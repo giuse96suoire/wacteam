@@ -17,10 +17,11 @@
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_search"/>
         <EditText
-            android:textSize="@dimen/project_text_size_medium"
+            android:textSize="16dp"
             android:id="@+id/et_searchFriend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="1"
             android:hint="@string/search_by_name_or_email" />
     </LinearLayout>
 

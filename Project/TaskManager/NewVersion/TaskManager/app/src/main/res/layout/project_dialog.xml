@@ -179,6 +179,7 @@
             android:orientation="horizontal">
 
             <ImageView
+
                 android:layout_width="@dimen/icon_small_width"
                 android:layout_height="@dimen/icon_small_height"
                 android:src="@drawable/ic_failed_48" />

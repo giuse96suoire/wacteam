@@ -4,9 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-/**
- * Created by anhntt on 10/29/2016.
- */
+
 
 public class TabFragmentAdapter extends FragmentPagerAdapter {
 
@@ -28,5 +26,4 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return String.valueOf(position);
     }
-
 }

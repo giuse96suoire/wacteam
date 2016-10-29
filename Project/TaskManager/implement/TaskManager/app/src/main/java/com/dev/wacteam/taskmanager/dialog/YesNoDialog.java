@@ -6,9 +6,7 @@ import android.content.DialogInterface;
 
 import com.dev.wacteam.taskmanager.R;
 
-/**
- * Created by huynh.mh on 10/24/2016.
- */
+
 public class YesNoDialog {
     public static void mShow(Context context, String message, OnClickListener listener) {
         new AlertDialog.Builder(context)

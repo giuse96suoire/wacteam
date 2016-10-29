@@ -1,8 +1,7 @@
 package com.dev.wacteam.taskmanager.manager;
 
-/**
- * Created by giuse96suoire on 10/11/2016.
- */
+
+
 public class EnumDefine {
     public static final int PICK_IMAGE_CODE = 0;
     public static final int TIME_OUT = 20; //sencond

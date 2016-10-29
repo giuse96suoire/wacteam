@@ -7,7 +7,7 @@ import com.dev.wacteam.taskmanager.model.User;
  * Created by giuse96suoire on 10/29/2016.
  */
 
-public class RemoteUser {
+public class RemoteUser extends RemoteDatabase implements BaseModel {
     public RemoteUser() {
 
     }
@@ -19,8 +19,9 @@ public class RemoteUser {
 
     @Override
     public void mCreate(Object o) {
-        this.mWriteIfNotExist(USER_LIST_CHILD + "/" + ((User) o).getProfile().getUid(), o);
+        this.mWriteIfNoExist(USER_LIST_CHILD + "/" + ((User) o).getProfile().getUid(), o);
     }
+
 
     @Override
     public void mUpdate(Object o) {

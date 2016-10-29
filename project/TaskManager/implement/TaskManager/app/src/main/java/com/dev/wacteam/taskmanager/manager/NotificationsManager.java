@@ -17,9 +17,7 @@ import com.dev.wacteam.taskmanager.model.User;
 
 import java.util.ArrayList;
 
-/**
- * Created by giuse96suoire on 10/12/2016.
- */
+
 public class NotificationsManager {
 
     private static void mNotify(Context mContext, String title, String content) {

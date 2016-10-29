@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "134539217268",
+    "firebase_url": "https://taskmanage.firebaseio.com",
+    "project_id": "project-1106967331332325764",
+    "storage_bucket": "project-1106967331332325764.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134539217268:android:ddc0e1f50892e356",
+        "android_client_info": {
+          "package_name": "com.dev.wacteam.taskmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "134539217268-avp4ll4eh1si1e77t7di6q8ust2hsnsg.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "134539217268-7fb7pbpqgorq1iojic2m4ekgcnjd7rd3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAocPE8Fwv3U7lTWHL58s3F87q9UlJplLw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,7 +3,7 @@
     <!--color and width of border -->
     <stroke
         android:width="2dp"
-        android:color="#000000">
+        android:color="#ffffff">
     </stroke>
     <padding
         android:left="10dp"
@@ -12,6 +12,6 @@
         android:bottom="10dp"></padding>
     <!--border radius -->
     <corners
-        android:radius="5dp"></corners>
+        android:radius="10dp"></corners>
 
 </shape>

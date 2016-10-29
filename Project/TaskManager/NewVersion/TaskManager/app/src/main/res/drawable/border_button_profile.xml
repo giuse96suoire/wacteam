@@ -3,7 +3,7 @@
     <!--color and width of border -->
     <stroke
         android:width="2dp"
-        android:color="#FF3378DF">
+        android:color="#ffffff">
     </stroke>
     <padding
         android:left="10dp"

@@ -5,12 +5,17 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import com.dev.wacteam.taskmanager.R;
+import com.dev.wacteam.taskmanager.activity.MainActivity;
+import com.dev.wacteam.taskmanager.manager.SettingManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +68,60 @@ public class SettingFragment extends Fragment {
         }
     }
 
+    private Switch mSwitchSound, mSwitchNotification, mSwitchAutoAcceptFriend, mSwitchAutoAcceptProject, mSwicthAutoBackup;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mSwitchSound = (Switch) getView().findViewById(R.id.switch_sound);
+        mSwitchNotification = (Switch) getView().findViewById(R.id.switch_notification);
+        mSwitchAutoAcceptProject = (Switch) getView().findViewById(R.id.switch_auto_accept_project);
+        mSwitchAutoAcceptFriend = (Switch) getView().findViewById(R.id.switch_auto_accept_friend);
+        mSwicthAutoBackup = (Switch) getView().findViewById(R.id.switch_auto_backup);
+
+        mSwitchSound.setChecked(SettingManager.isSound(getContext()));
+        mSwitchNotification.setChecked(SettingManager.isNotify(getContext()));
+        mSwitchAutoAcceptProject.setChecked(SettingManager.isAutoAcceptProject(getContext()));
+        mSwitchAutoAcceptFriend.setChecked(SettingManager.isAutoAcceptFriend(getContext()));
+        mSwicthAutoBackup.setChecked(SettingManager.isAutoBackup(getContext()));
+
+        mSwitchSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SettingManager.setIsSound(getContext(), isChecked);
+                ((MainActivity) getActivity()).changeSoundIcon(isChecked);
+            }
+        });
+
+        mSwitchNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SettingManager.setIsNotify(getContext(), isChecked);
+            }
+        });
+
+        mSwitchAutoAcceptProject.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SettingManager.setIsAutoAcceptProject(getContext(), isChecked);
+            }
+        });
+
+        mSwitchAutoAcceptFriend.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SettingManager.setIsAutoAcceptFriend(getContext(), isChecked);
+            }
+        });
+
+        mSwicthAutoBackup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SettingManager.setIsAutoBackup(getContext(), isChecked);
+            }
+        });
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,16 +135,19 @@ public class SettingFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) return;
-        if (activity instanceof FriendFragment.OnFragmentInteractionListener) {
+        if (activity instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) activity;
         } else {
             throw new RuntimeException(activity.toString()
                     + " must implement OnFragmentInteractionListener ");
         }
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

@@ -1,13 +1,121 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.dev.wacteam.taskmanager.fragment.SettingFragment">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:background="@drawable/border_bottom">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:textSize="@dimen/project_text_size_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sound_setting"
+                    android:padding="@dimen/project_padding"/>
+
+                <Switch
+                    android:layout_marginEnd="0dp"
+                    android:layout_gravity="right"
+                    android:id="@+id/switch_sound"
+                    android:paddingLeft="@dimen/project_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </TableRow>
+
+            <TableRow
+                android:background="@drawable/border_bottom">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:textSize="@dimen/project_text_size_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/notification_setting"
+                    android:padding="@dimen/project_padding"
+                    />
+
+                <Switch
+                    android:layout_gravity="right"
+                    android:paddingLeft="@dimen/project_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/switch_notification"/>
+
+            </TableRow>
+
+            <TableRow
+                android:background="@drawable/border_bottom">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:padding="@dimen/project_padding"
+                    android:textSize="@dimen/project_text_size_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auto_accept_join_project_setting"
+                    />
+
+                <Switch
+
+                    android:id="@+id/switch_auto_accept_project"
+                    android:paddingLeft="@dimen/project_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </TableRow>
+            <TableRow
+                android:background="@drawable/border_bottom">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:padding="@dimen/project_padding"
+                    android:textSize="@dimen/project_text_size_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auto_accept_friend_setting"
+                    />
+
+                <Switch
+
+                    android:id="@+id/switch_auto_accept_friend"
+                    android:paddingLeft="@dimen/project_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </TableRow>
+            <TableRow
+                android:background="@drawable/border_bottom">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:padding="@dimen/project_padding"
+                    android:textSize="@dimen/project_text_size_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auto_backup_data_to_local_setting"/>
+
+                <Switch
+                    android:id="@+id/switch_auto_backup"
+                    android:paddingLeft="@dimen/project_padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </TableRow>
+
+
+        </TableLayout>
+
+
+    </LinearLayout>
 
 </FrameLayout>

@@ -1,7 +1,6 @@
 package com.dev.wacteam.taskmanager.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class Task {
@@ -14,6 +13,15 @@ public class Task {
     private String mDescription;
     private String mDeadline;
     private ArrayList<String> mExecutors;
+    private int mDayOfWeek;
+
+    public void setmDayOfWeek(int mDayOfWeek) {
+        this.mDayOfWeek = mDayOfWeek;
+    }
+
+    public int getmDayOfWeek() {
+        return mDayOfWeek;
+    }
 
     public void setmTaskId(String mTaskId) {
         this.mTaskId = mTaskId;

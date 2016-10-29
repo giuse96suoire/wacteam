@@ -22,9 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-/**
- * Created by huynh.mh on 10/18/2016.
- */
+
 public class CurrentUser extends User {
     private static CurrentUser ourInstance = new CurrentUser();
     public static boolean isNotNull = false;

@@ -17,8 +17,13 @@
 
         <ImageView
             android:id="@+id/iv_friend_ava"
+<<<<<<< HEAD
             android:layout_width="@dimen/icon_small_width"
             android:layout_height="@dimen/icon_small_height"
+=======
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+>>>>>>> origin/ngoc
             android:layout_alignParentLeft="true"
             android:background="@drawable/ic_ava" />
 
@@ -34,8 +39,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="anh kute vo doi "
+<<<<<<< HEAD
                 android:textSize="@dimen/project_text_size_small"
                 android:textColor="@color/colorTextNormal"/>
+=======
+                android:textSize="16dp" />
+>>>>>>> origin/ngoc
 
             <TextView
                 android:id="@+id/tv_friend_email"

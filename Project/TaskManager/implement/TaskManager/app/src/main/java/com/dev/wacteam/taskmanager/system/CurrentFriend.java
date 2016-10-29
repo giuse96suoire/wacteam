@@ -5,9 +5,7 @@ import com.dev.wacteam.taskmanager.model.User;
 
 import java.util.ArrayList;
 
-/**
- * Created by giuse96suoire on 10/28/2016.
- */
+
 
 public class CurrentFriend {
     private static ArrayList<User> mListFriend = new ArrayList<>();

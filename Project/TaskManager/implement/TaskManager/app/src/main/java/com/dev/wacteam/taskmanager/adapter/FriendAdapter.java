@@ -23,9 +23,7 @@ import com.google.firebase.database.DatabaseError;
 
 import java.util.ArrayList;
 
-/**
- * Created by giuse96suoire on 10/23/2016.
- */
+
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
 

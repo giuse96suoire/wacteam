@@ -12,8 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 import com.dev.wacteam.taskmanager.model.User;
+import com.dev.wacteam.taskmanager.system.CurrentFriend;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

@@ -2,6 +2,7 @@ package com.dev.wacteam.taskmanager.adapter;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.dev.wacteam.taskmanager.R;
 
 public class TabFragment extends Fragment {
     TextView tvTitle;
+    TabLayout tablayout;
 
     public static TabFragment newInstance(String title) {
         Bundle args = new Bundle();
@@ -33,6 +35,7 @@ public class TabFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tab_item, container, false);
         tvTitle = (TextView) rootView.findViewById(R.id.tvTitle);
+        tablayout = (TabLayout) rootView.findViewById(R.id.tablayout);
         return rootView;
     }
 

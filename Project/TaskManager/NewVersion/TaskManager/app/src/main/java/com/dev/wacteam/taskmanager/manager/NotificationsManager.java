@@ -11,6 +11,9 @@ import android.support.v4.app.TaskStackBuilder;
 
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.activity.MainActivity;
+import com.dev.wacteam.taskmanager.model.Project;
+import com.dev.wacteam.taskmanager.model.Task;
+import com.dev.wacteam.taskmanager.model.User;
 
 import java.util.ArrayList;
 
@@ -94,8 +97,8 @@ public class NotificationsManager {
                         message += " Task title:" + newTask.get(sNew).getmTitle() + " had been added \n";
                         sNew++;
                     }
-                                while (sNew < sizeNew);
-            }
+        }                                while (sNew < sizeNew);
+
         }
 
         return message;

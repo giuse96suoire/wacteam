@@ -76,16 +76,17 @@ public class FriendFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().length() == 0 || s == null) {
+                if (s.length() == 0) {
+                    mListFriend.clear();
                     mGetAllFriend();
                 } else {
                     mSearchFriend(s.toString());
                 }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
         mFriendAdapter = new FriendAdapter(getContext(), getActivity(), mListFriend);
@@ -146,7 +147,7 @@ public class FriendFragment extends Fragment {
                 for (int i = 0; i < mListFriend.size(); i++) {
                     if (!(mListFriend.get(i).getProfile().getEmail().contains(emailOrName)) && !(mListFriend.get(i).getProfile().getDisplayName().contains(emailOrName))) {
                         mListFriend.remove(i);
-//                        mFriendAdapter.notifyDataSetChanged();
+                        mFriendAdapter.notifyDataSetChanged();
                     }
 //                    System.out.println(mListFriend.get(i).getEmail() +"email ==========>");
 

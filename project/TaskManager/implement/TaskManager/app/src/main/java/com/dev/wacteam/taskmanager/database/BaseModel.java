@@ -2,9 +2,6 @@ package com.dev.wacteam.taskmanager.database;
 
 import com.dev.wacteam.taskmanager.listener.OnGetDataListener;
 
-/**
- * Created by giuse96suoire on 10/16/2016.
- */
 
 public interface BaseModel {
     public void mCreate(Object o);

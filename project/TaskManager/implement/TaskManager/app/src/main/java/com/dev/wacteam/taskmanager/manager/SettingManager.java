@@ -5,9 +5,7 @@ import android.content.SharedPreferences;
 
 import com.dev.wacteam.taskmanager.R;
 
-/**
- * Created by giuse96suoire on 10/24/2016.
- */
+
 
 public class SettingManager {
     private static SharedPreferences sharedPref;

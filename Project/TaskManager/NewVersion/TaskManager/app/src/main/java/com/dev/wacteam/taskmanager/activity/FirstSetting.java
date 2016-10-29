@@ -18,7 +18,7 @@ import com.google.firebase.storage.StorageReference;
  * Created by anhntt on 10/29/2016.
  */
 
-public class FristSetting extends  AppCompatActivity{
+public class FirstSetting extends  AppCompatActivity{
 
     ImageView mIvAvatar;
     Spinner mSpGender;

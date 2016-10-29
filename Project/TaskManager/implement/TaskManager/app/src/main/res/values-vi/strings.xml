@@ -176,7 +176,7 @@
     <string name="add_more">+ Thêm nữa</string>
     <string name="add_to_project">Thêm vào dự án</string>
     <string name="already_login">Bạn đã đăng nhập</string>
-    <string name="ask_user_create">Bạn muốn tạo cái gì?</string>
+    <string name="ask_user_create">Tên dự án bạn muốn tạo.</string>
     <string name="auto_accept_friend_setting">Tự động kết bạn</string>
     <string name="auto_accept_join_project_setting">Tự động chấp nhận tham gia dự án</string>
     <string name="auto_backup_data_to_local_setting">Tự động đồng bộ dữ liệu với server</string>
@@ -220,7 +220,7 @@
     <string name="register">ĐĂNG KÝ</string>
     <string name="remove_friend">Xóa kết bạn</string>
     <string name="save_your_time_save_your_life">Save your time, save your life</string>
-    <string name="search_by_name_or_email">Tìm kiếm theo tên hoặc email</string>
+    <string name="search_by_name_or_email">Tìm theo tên hoặc email</string>
     <string name="sign_in_failed">Đăng nhập thất bại!</string>
     <string name="sign_in_success">Đăng nhập thành công</string>
     <string name="sign_up_success">Đăng ký thành công!</string>
@@ -229,10 +229,10 @@
     <string name="task_manager">QUẢN LÝ CÔNG VIỆC</string>
     <string name="task_member_task">Tên thành viên:</string>
     <string name="task_name_task">Tên công việc:</string>
-    <string name="to_do_item_schedule">Những gì cần làm</string>
+    <string name="to_do_item_schedule">Cần làm</string>
     <string name="try_reconnect">Đang kết nối lại internet, vui lòng chờ...</string>
     <string name="weekdays_schedule">Weekdays</string>
     <string name="yes_dialog">Có</string>
     <string name="reset_input">"Khôi phục dữ liệu "</string>
-    <string name="update_profile">Cập nhật thông tin</string>
+    <string name="update_profile">Cập nhật</string>
 </resources>

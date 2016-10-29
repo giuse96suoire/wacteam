@@ -160,7 +160,7 @@
     <string name="login_licence">By login, you are agree to the Terms of Use and Privacy Statement</string>
     <string name="member_label">Member</string>
     <string name="project_description">Desciption</string>
-    <string name="project_name_label">Project_name</string>
+    <string name="project_name_label">Project name</string>
     <string name="project_type_label">Type</string>
     <string name="task_list_label">Task list</string>
     <string name="title_create_project_fragment">Create project</string>

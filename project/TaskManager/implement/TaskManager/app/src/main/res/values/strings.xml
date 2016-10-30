@@ -157,6 +157,7 @@
     <string name="task_name_label">Task name</string>
     <string name="quick_create">Tạo nhanh</string>
     <string name="chat">Chat</string>
+    <string name="share_label">Chia sẻ</string>
     <string-array name="job_array">
         <item>Student</item>
         <item>Teacher</item>

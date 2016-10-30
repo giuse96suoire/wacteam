@@ -17,12 +17,14 @@ import android.widget.Toast;
 
 import com.dev.wacteam.taskmanager.R;
 import com.dev.wacteam.taskmanager.adapter.TaskAdapter;
+import com.dev.wacteam.taskmanager.dialog.DialogDateTimePicker;
 import com.dev.wacteam.taskmanager.listener.OnChildEventListener;
 import com.dev.wacteam.taskmanager.model.Project;
 import com.dev.wacteam.taskmanager.model.Task;
 import com.dev.wacteam.taskmanager.system.CurrentUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 
 import java.util.ArrayList;
 
@@ -173,6 +175,19 @@ public class TabFragment extends Fragment {
         title = getResources().getString(R.string.subject_name_label);
 
         final View view = inflater.inflate(R.layout.create_task_dialog, null);
+        TextView time = (TextView) view.findViewById(R.id.tv_task_time);
+        time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogDateTimePicker.showTimePicker(getActivity(), new DialogDateTimePicker.OnGetTimeListener() {
+                    @Override
+                    public void onChange(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                        String timeStr = hourOfDay + "h" + minute + "p";
+                        time.setText(timeStr);
+                    }
+                });
+            }
+        });
         AutoCompleteTextView name = (AutoCompleteTextView) view.findViewById(R.id.ac_subject_name);
         String[] listSubject = getResources().getStringArray(R.array.subject_array);
         name.setAdapter(
@@ -189,6 +204,7 @@ public class TabFragment extends Fragment {
                         Task t = new Task();
                         t.setmTitle(name.getText().toString());
                         t.setmDayOfWeek(mTabPostition);
+                        t.setmDeadline(time.getText().toString());
                         mAllTaskWithNoFillter.add(t);
                         CurrentUser.updateTask(mProjectId, mAllTaskWithNoFillter);
                     }

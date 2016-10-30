@@ -91,7 +91,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
                 }
             });
-            name.setText(t.getmTitle());
+            name.setText(t.getmDeadline() == null ? t.getmTitle() : t.getmDeadline() + ": " + t.getmTitle());
 //
 //            if (t.getmTitle() == null || t.getmTitle().length() == 0) {
 //                System.out.println("title null =============================>");

@@ -17,7 +17,7 @@
             android:padding="@dimen/padding_fragment"
             android:text="My Project"
             android:textColor="@color/cardview_light_background"
-            android:textSize="@dimen/project_name_large" />
+            android:textSize="@dimen/project_text_size_medium" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                 android:paddingLeft="4dp"
                 android:text="Deadline: 22/10/2016"
                 android:textColor="@color/cardview_light_background"
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="@dimen/project_text_size_small" />
         </LinearLayout>
 
 
@@ -62,15 +62,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Complete: "
-
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="@dimen/project_text_size_small"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_project_dialog_complete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="69%"
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="@dimen/project_text_size_small" />
         </LinearLayout>
 
         <LinearLayout
@@ -87,15 +87,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Leader: "
+                android:textSize="@dimen/project_text_size_small"
 
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_project_dialog_leader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hoang Huynh"
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="@dimen/project_text_size_small" />
         </LinearLayout>
 
         <LinearLayout
@@ -112,15 +113,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Members: "
-
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="@dimen/project_text_size_small"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_project_dialog_member"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="  9"
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="@dimen/project_text_size_small" />
         </LinearLayout>
 
         <LinearLayout
@@ -137,15 +138,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total task: "
-
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="@dimen/project_text_size_small"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_project_dialog_total_task"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="19"
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="@dimen/project_text_size_small" />
         </LinearLayout>
 
         <LinearLayout
@@ -162,15 +163,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Complete: "
+                android:textSize="@dimen/project_text_size_small"
 
-                android:textSize="@dimen/project_text_size_medium" />
+
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_project_dialog_total_task_complete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="9"
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="@dimen/project_text_size_small" />
         </LinearLayout>
 
         <LinearLayout
@@ -187,14 +190,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Task failed: "
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="@dimen/project_text_size_small"
+                android:textStyle="bold"
+                android:id="@+id/textView4" />
 
             <TextView
                 android:id="@+id/tv_project_dialog_total_task_failed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10"
-                android:textSize="@dimen/project_text_size_medium" />
+                android:textSize="@dimen/project_text_size_small" />
         </LinearLayout>
 
 

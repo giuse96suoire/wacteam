@@ -14,7 +14,7 @@
         <item
             android:id="@+id/nav_allProject"
             android:icon="@drawable/ic_menu_project"
-            android:title="Thời khóa biểu" />
+            android:title="@string/tittle_schedule" />
 
     </group>
 
@@ -27,11 +27,11 @@
             <item
                 android:id="@+id/nav_teacher"
                 android:icon="@drawable/ic_menu_friend"
-                android:title="Giáo viên" />
+                android:title="@string/tittle_teacher" />
             <item
                 android:id="@+id/nav_parent"
                 android:icon="@drawable/ic_menu_friend"
-                android:title="Phụ huynh" />
+                android:title="@string/title_parent" />
 
         </menu>
     </item>

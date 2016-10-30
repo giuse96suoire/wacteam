@@ -170,7 +170,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 findViewById(R.id.tv_register_label);
 
-        int selectColor = Color.parseColor("#3378DF");
+        int selectColor = Color.parseColor("#2E5674");
         int noneSelectColor = Color.parseColor("#32455F");
 
         LinearLayout loginLayout = (LinearLayout) findViewById(R.id.layout_login);

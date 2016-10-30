@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">Quản lý công việc</string>
+    <string name="app_name">Thời khóa biểu</string>
     <string name="app_id">1143162455758089</string>
     <string name="title_activity_main">Màn hình chủ</string>
     <string name="title_home_fragment">Màn hình chủ</string>
     <string name="title_profile_fragment">Thông tin cá nhân</string>
-    <string name="title_all_project_fragment">Dự án</string>
+    <string name="title_all_project_fragment">Thời kháo biểu</string>
     <string name="title_all_today_fragment">Công việc hôm nay</string>
     <string name="title_friend_fragment">Bạn bè</string>
     <string name="title_setting_fragment">Thiết lập ứng dụng</string>
@@ -145,8 +145,8 @@
         "Quản lý công việc\n"
         "Phiên bản: 1.0\n"
         "Thiết kế và thực hiện: Wacteam\n"
-        "Liên hệ chúng tôi: wacteam.com và fb.com/wacteamvn\n"
-        "Hi vọng bạn sẽ thích nó"
+        "Liên hệ chúng tôi: wacteam.com \n fb.com/wacteamvn\n"
+        "Hi vọng bạn sẽ thích ứng dụng này"
     </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -159,12 +159,12 @@
     <string name="project_name_label">Tên dự án</string>
     <string name="project_type_label">Loại</string>
     <string name="task_list_label">Danh sách công việc cần làm</string>
-    <string name="title_create_project_fragment">Tạo dự án</string>
+    <string name="title_create_project_fragment">Tạo thời khóa biểu</string>
     <string name="preference_file_key">người dùng hiện tại</string>
     <string name="login_licence">Bằng cách đăng nhập, bạn đồng ý dịch vụ và chính sách bảo mật của chúng tôi!</string>
     <string name="default_uid">id người dùng</string>
     <string name="Authenticating">Đang xác thực...</string>
-    <string name="Create_project">Dự án của tôi</string>
+    <string name="Create_project">Thời khóa biểu của tôi</string>
     <string name="Dismiss">Bỏ qua</string>
     <string name="Email"><![CDATA[Email==============>]]></string>
     <string name="Error_Dialog">Lỗi</string>
@@ -177,13 +177,13 @@
     <string name="already_login">Bạn đã đăng nhập</string>
     <string name="ask_user_create">Tạo nhanh</string>
     <string name="auto_accept_friend_setting">Tự động kết bạn</string>
-    <string name="auto_accept_join_project_setting">Tự động chấp nhận tham gia dự án</string>
+    <string name="auto_accept_join_project_setting">Tự động chấp nhận tham gia thời khóa biểu</string>
     <string name="auto_backup_data_to_local_setting">Tự động đồng bộ dữ liệu với server</string>
     <string name="begin_task">Bắt đầu:</string>
     <string name="cancel_add_member">Hủy bỏ</string>
     <string name="cancel_create_project">Hủy bỏ</string>
     <string name="chat_to_friend">Nói chuyện</string>
-    <string name="check_internect_connection">Vui lòng kiểm tra lại kết nối internet</string>
+    <string name="check_internect_connection">Vui lòng kiểm tra lại thông tin đăng nhập</string>
     <string name="check_user_in_server">Kiểm tra người dùng ở server</string>
     <string name="choose_member">Chọn thành viên</string>
     <string name="confirm_dialog">Xác nhận</string>
@@ -210,7 +210,7 @@
     <string name="low_connection">Mạng của bạn quá chậm, vui lòng đợi...</string>
     <string name="member_task">Thành viên:</string>
     <string name="no_dialog">Không</string>
-    <string name="no_network_connection">Không có kết nối internet</string>
+    <string name="no_network_connection">Lỗi</string>
     <string name="nothing_to_display">Không có gì để hiện thị</string>
     <string name="notification_setting">Thông báo</string>
     <string name="oke_dialog">Chấp nhận</string>
@@ -225,7 +225,7 @@
     <string name="sign_up_success">Đăng ký thành công!</string>
     <string name="sound_setting">Âm thanh</string>
     <string name="task_create_label">Công việc</string>
-    <string name="task_manager">QUẢN LÝ CÔNG VIỆC</string>
+    <string name="task_manager">Thời khóa biểu</string>
     <string name="task_member_task">Tên thành viên:</string>
     <string name="task_name_task">Tên công việc:</string>
     <string name="to_do_item_schedule">Cần làm</string>
@@ -234,4 +234,8 @@
     <string name="yes_dialog">Có</string>
     <string name="reset_input">"Khôi phục dữ liệu "</string>
     <string name="update_profile">Cập nhật</string>
+    <string name="tittle_schedule">Thời khóa biểu</string>
+    <string name="tittle_teacher">Giáo viên</string>
+    <string name="title_parent">Phụ huynh</string>
+    <string name="quick_create">Tạo nhanh</string>
 </resources>

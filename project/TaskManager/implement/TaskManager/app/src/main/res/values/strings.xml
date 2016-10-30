@@ -158,6 +158,8 @@
     <string name="quick_create">Tạo nhanh</string>
     <string name="chat">Chat</string>
     <string name="share_label">Chia sẻ</string>
+    <string name="mother_name">Mẹ yêu</string>
+    <string name="teacher_name">Thầy chủ nhiệm</string>
     <string-array name="job_array">
         <item>Student</item>
         <item>Teacher</item>

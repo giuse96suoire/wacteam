@@ -72,9 +72,9 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                         public void onYes(DialogInterface dialog, int which) {
                             //delete
                             remove(t);
-                            syncData();
+//                            syncData();
                             notifyDataSetChanged();
-                            CurrentUser.updateTask(mProjectId, mListTask);
+//                            CurrentUser.updateTask(mProjectId, mListTask);
                         }
 
                         @Override

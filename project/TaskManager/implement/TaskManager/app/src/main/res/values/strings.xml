@@ -55,7 +55,7 @@
     <string name="title_system_activity_main_drawer">System</string>
     <string name="title_aboutUs_fragment">About us</string>
     <string name="aboutUs">
-        "Schedule\n"
+        "Task Manager\n"
         "Version: 1.0\n"
         "Create and develop: Wac team\n"
         "Contact us: wacteam.com and fb.com/wacteamvn\n"
@@ -126,7 +126,7 @@
     <string name="dialog_get_friend">Get your friends...</string>
     <string name="dialog_update_information">Update your information?</string>
     <string name="nothing_to_display">No thing to display</string>
-    <string name="task_manager">SCHEDULE</string>
+    <string name="task_manager">TASK MANAGER</string>
     <string name="save_your_time_save_your_life">Save your time, save your life</string>
     <string name="everything_is_simple">EVERYTHING IS SIMPLE</string>
     <string name="login">LOGIN</string>
@@ -157,6 +157,9 @@
     <string name="task_name_label">Task name</string>
     <string name="quick_create">Tạo nhanh</string>
     <string name="chat">Chat</string>
+    <string name="share_label">Chia sẻ</string>
+    <string name="mother_name">Mẹ yêu</string>
+    <string name="teacher_name">Thầy chủ nhiệm</string>
     <string-array name="job_array">
         <item>Student</item>
         <item>Teacher</item>

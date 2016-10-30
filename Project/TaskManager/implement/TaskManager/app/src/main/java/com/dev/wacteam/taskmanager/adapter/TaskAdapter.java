@@ -72,9 +72,9 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                         public void onYes(DialogInterface dialog, int which) {
                             //delete
                             remove(t);
-                            syncData();
+//                            syncData();
                             notifyDataSetChanged();
-                            CurrentUser.updateTask(mProjectId, mListTask);
+//                            CurrentUser.updateTask(mProjectId, mListTask);
                         }
 
                         @Override
@@ -91,7 +91,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
                 }
             });
-            name.setText(t.getmTitle());
+            name.setText(t.getmDeadline() == null ? t.getmTitle() : t.getmDeadline() + ": " + t.getmTitle());
 //
 //            if (t.getmTitle() == null || t.getmTitle().length() == 0) {
 //                System.out.println("title null =============================>");

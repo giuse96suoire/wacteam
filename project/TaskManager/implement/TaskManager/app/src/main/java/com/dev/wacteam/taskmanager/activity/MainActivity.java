@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.nav_home);
+        navigationView.setCheckedItem(R.id.nav_allProject);
         View header = navigationView.getHeaderView(0);
         mTvUserFullName = (TextView) header.findViewById(R.id.tv_userFullName);
         mTvUserEmail = (TextView) header.findViewById(R.id.tv_userEmail);

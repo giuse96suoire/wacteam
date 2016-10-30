@@ -138,7 +138,6 @@ public class CurrentUser extends User {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-
                     User u = data.getValue(User.class);
                     if (u.getProfile().getEmail() != null) {
                         if (u.getProfile().getEmail().toLowerCase().contains(emailOrName.toLowerCase()) || u.getProfile().getDisplayName().toLowerCase().contains(emailOrName.toLowerCase())
@@ -155,7 +154,6 @@ public class CurrentUser extends User {
             }
         });
     }
-
 
 
     public static void getAllProject(OnChildEventListener listener, Context context) {
@@ -277,7 +275,6 @@ public class CurrentUser extends User {
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         String friendId = data.getValue(String.class);
                         listFriend.add(friendId);
-                        System.out.println("Friend ID: " + friendId);
                     }
                 }
                 FirebaseDatabase.getInstance()
@@ -286,12 +283,14 @@ public class CurrentUser extends User {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                                    User u = data.getValue(User.class);
-                                    if (listFriend.contains(u.getProfile().getUid())) {
-                                        listener.onSuccess(data);
-                                        System.out.println("Friend OK");
+                                    System.out.println("==================================================");
+                                    System.out.println(data);
+                                    System.out.println("==================================================");
 
-                                    }
+//                                    User u = data.getValue(User.class);
+//                                    if (listFriend.contains(u.getProfile().getUid())) {
+//                                        listener.onSuccess(data);
+//                                    }
                                 }
                             }
 

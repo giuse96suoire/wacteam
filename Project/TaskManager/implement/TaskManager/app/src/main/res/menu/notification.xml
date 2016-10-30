@@ -5,17 +5,17 @@
 
     <item
         android:id="@+id/action_walk"
-        android:title="Quân đã nhắc tới bạn trong một bình luận \n"
+        android:title="Nghỉ học tránh bão số 12 \n"
         android:titleCondensed="@string/aboutUs"
         />
 
     <item
         android:id="@+id/action_bus"
-        android:title="Trâm Anh đã xóa thẻ [...]" />
+        android:title="Thời khóa biểu có thay đổi" />
 
     <item
         android:id="@+id/action_car"
-        android:title="Cường đã nhận nhiệm vụ [...]" />
+        android:title="Có tin nhắn mới từ thầy giáo" />
 
 </group>
 

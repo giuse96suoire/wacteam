@@ -111,14 +111,14 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
                 ArrayList<User> friend = new ArrayList<User>();
                 User u = new User();
                 Profile p0 = new Profile();
-                p0.setDisplayName("Mẹ yêu");
+                p0.setDisplayName(mContext.getString(R.string.mother_name));
                 p0.setEmail("me@me.com");
                 p0.setUid("ezVdoJYc1mhPpOAnrwlirAkxnrq2");
                 u.setProfile(p0);
                 User u1 = new User();
 
                 Profile p1 = new Profile();
-                p1.setDisplayName("Thầy chủ nhiệm");
+                p1.setDisplayName(mContext.getString(R.string.teacher_name));
                 p1.setEmail("thay@thay.com");
                 p1.setUid("ZUJHpXmgFNhY7fhHJKgm8iCvS0H2");
                 u1.setProfile(p1);

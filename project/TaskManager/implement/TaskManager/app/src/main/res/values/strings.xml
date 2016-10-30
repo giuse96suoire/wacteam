@@ -1,14 +1,14 @@
 <resources>
-    <string name="app_name">Task Manager</string>
+    <string name="app_name">Schedule</string>
     <string name="app_id">1143162455758089</string>
     <string name="title_activity_main">Home</string>
     <string name="title_home_fragment">Home</string>
     <string name="title_profile_fragment">Profile</string>
-    <string name="title_all_project_fragment">Project manager</string>
+    <string name="title_all_project_fragment">Schedule</string>
     <string name="title_all_today_fragment">Today</string>
     <string name="title_friend_fragment">Friends</string>
     <string name="title_setting_fragment">Setting</string>
-    <string name="title_create_project_fragment">Create project</string>
+    <string name="title_create_project_fragment">Create schedule</string>
     <string name="title_signOut">Sign out</string>
     <string name="action_settings">Setting</string>
     <string name="navigation_drawer_open">Open</string>
@@ -122,7 +122,7 @@
     <string name="add_member">Add</string>
     <string name="cancel_add_member">Cancel</string>
     <string name="Remove_member">Remove</string>
-    <string name="Create_project">My project</string>
+    <string name="Create_project">My schedule</string>
     <string name="dialog_get_friend">Get your friends...</string>
     <string name="dialog_update_information">Update your information?</string>
     <string name="nothing_to_display">No thing to display</string>
@@ -134,7 +134,7 @@
     <string name="search_by_name_or_email">Search by name or email</string>
     <string name="sound_setting">Sound</string>
     <string name="notification_setting">Notification</string>
-    <string name="auto_accept_join_project_setting">Auto accept join project</string>
+    <string name="auto_accept_join_project_setting">Auto accept join schedule</string>
     <string name="auto_accept_friend_setting">Auto accept friend</string>
     <string name="auto_backup_data_to_local_setting">Auto backup data to local</string>
     <string name="task_name_task">Task name:</string>
@@ -155,8 +155,11 @@
     <string name="update_profile">Update profile</string>
     <string name="subject_name_label">New subject</string>
     <string name="task_name_label">Task name</string>
-    <string name="quick_create">Tạo nhanh</string>
+    <string name="quick_create">Quick create</string>
     <string name="chat">Chat</string>
+    <string name="tittle_schedule">Schedule</string>
+    <string name="tittle_teacher">Teacher</string>
+    <string name="title_parent">Parent</string>
     <string-array name="job_array">
         <item>Student</item>
         <item>Teacher</item>

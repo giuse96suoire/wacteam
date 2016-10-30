@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Task Manager</string>
+    <string name="app_name">Schedule</string>
     <string name="app_id">1143162455758089</string>
     <string name="title_activity_main">Home</string>
     <string name="title_home_fragment">Home</string>
@@ -162,11 +162,11 @@
     <string name="project_name_label">Project name</string>
     <string name="project_type_label">Type</string>
     <string name="task_list_label">Task list</string>
-    <string name="title_create_project_fragment">Create project</string>
+    <string name="title_create_project_fragment">Create schedule</string>
     <string name="preference_file_key">current_user</string>
     <string name="default_uid">user_id</string>
     <string name="Authenticating">Authenticating...</string>
-    <string name="Create_project">My project</string>
+    <string name="Create_project">My schedule</string>
     <string name="Dismiss">Dismiss</string>
     <string name="Email"><![CDATA[Email==============>]]></string>
     <string name="Error_Dialog">Error</string>
@@ -180,7 +180,7 @@
     <string name="auto_accept_friend_setting">Auto accept friend</string>
     <string name="ask_user_create">Quick create</string>
     <string name="auto_backup_data_to_local_setting">Auto backup data to local</string>
-    <string name="auto_accept_join_project_setting">Auto accept join project</string>
+    <string name="auto_accept_join_project_setting">Auto accept join schedule</string>
     <string name="begin_task">Begin:</string>
     <string name="cancel_add_member">Cancel</string>
     <string name="cancel_create_project">Cancel</string>
@@ -237,4 +237,8 @@
     <string name="yes_dialog">Yes</string>
     <string name="reset_input">Reset input</string>
     <string name="update_profile">Update profile</string>
+    <string name="tittle_schedule">Thời khóa biểu</string>
+    <string name="tittle_teacher">Giáo viên</string>
+    <string name="title_parent">Phụ huynh</string>
+    <string name="quick_create">Tạo nhanh</string>
 </resources>
